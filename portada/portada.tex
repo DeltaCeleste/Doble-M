@@ -1,0 +1,137 @@
+\documentclass[a4paper,12pt]{article}%book}
+
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+%\usepackage{mathptmx}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{epsfig}
+\usepackage{type1cm}
+\usepackage{makeidx}        
+\usepackage[bottom]{footmisc}
+\usepackage[all]{xy}
+\usepackage{fancybox}
+\usepackage[latin1]{inputenc}	%acentos
+\usepackage[spanish]{babel}		%ordenes en español
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{epstopdf}
+\usepackage{wrapfig}
+\usepackage{pgf,tikz}
+\usepackage{subfigure}
+\usepackage{bm}
+\usepackage{hyperref}
+\usepackage{yhmath}
+\usepackage{float}
+\usepackage[mathscr]{euscript}
+\usetikzlibrary{shapes.gates.logic.US,trees,positioning,arrows}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage[spanish]{babel} %%Para notas a pie de página
+
+\usepackage{amsthm}
+
+\usepackage{tabularx}
+
+\def\proof{\paragraph{}}
+\def\endproof{\hfill$\blacksquare$}
+
+\usepackage{mathtools}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Márgenes
+\usepackage{geometry}
+\geometry{
+top=3cm,
+bottom=3cm,
+left=3cm,
+right=3cm
+}
+
+%% Encabezados y pie de página
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\lhead{}
+\rhead{Metodologías de Desarrollo Ágil}
+\renewcommand{\headrulewidth}{0.08pt}
+
+\lfoot{}
+\rfoot{DobleM - MDA DGP}
+\cfoot{\thepage}
+\renewcommand{\footrulewidth}{0.08pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Portada:	
+\pagestyle{empty}
+
+\begin{center}
+	\hspace{-1cm}
+	\centering
+	
+	\vfill
+	
+	{\textsc{\Huge DOBLE-M SOFTWARE}}\\[0.4cm]
+	{\textsc{\large Metodologías de Desarrollo Ágil}} \\[0.2cm]
+	{\textsc{\large Dirección y Gestión de Proyectos}}
+	\vfill
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.88\textwidth]{ugr.png}
+		%\label{fig:familia1}
+	\end{figure}
+	
+	\vfill
+	{\Large{Minerva Cebrián Marín}} {(mcm17@correo.ugr.es)} \\
+	
+	\vfill
+	{\Large{Jorge García Gámiz}} {(jorgegarciag@correo.ugr.es)} \\
+
+	\vfill
+	{\Large{Ángela García Olmos}} {(angelagrc@correo.ugr.es)} \\
+
+	\vfill
+	{\Large{Pedro Javier Pérez Jiménez}} {(pjpz@correo.ugr.es)}\\
+	
+	\vfill
+	{\Large{Daniel Vega Jiménez}} {(deltac@correo.ugr.es)} \\
+	
+	
+	\vfill
+	{Curso 2026-2027}
+		
+	\vfill
+	{\small }
+\end{center} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% ---------------- Índice ----------------
+\newpage
+\pagestyle{fancy}
+\setcounter{page}{1}
+
+\makeatletter
+\let\ps@plain\ps@fancy
+\makeatother
+
+\tableofcontents
+
+
+\end{document}
+
+
