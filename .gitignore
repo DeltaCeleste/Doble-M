@@ -1,0 +1,47 @@
+# ==========================================
+# DOCUMENTACIÓN (LaTeX)
+# ==========================================
+# Archivos auxiliares, índices y logs
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.idx
+*.ind
+*.lof
+*.lot
+*.out
+*.toc
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.run.xml
+
+# Archivos de herramientas de compilación (latexmk, synctex, etc.)
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.synctex.gz(busy)
+*.synctex(busy)
+*.pdfsync
+
+# Editores y temporales
+*.swp
+*~
+*.bak
+*.sav
+
+# PDFs generados
+# NOTA: Descomentar la siguiente línea para NO subir los PDFs al repositorio 
+# (suele ser buena práctica ignorar los PDF compilados para no inflar el historial de Git).
+# *.pdf
+
+
+# ==========================================
+# FUTURA APLICACIÓN WEB (TODO: cuando elijamos las tecnologías)
+# ==========================================
