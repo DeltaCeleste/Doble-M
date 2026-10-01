@@ -1,9 +1,8 @@
-\documentclass[a4paper,12pt]{article}%book}
+\documentclass[a4paper,12pt]{article}
 
 \usepackage{graphicx}
 \usepackage{amsfonts}
 \usepackage{fancyhdr}
-%\usepackage{mathptmx}
 \usepackage{helvet}
 \usepackage{courier}
 \usepackage{epsfig}
@@ -12,8 +11,9 @@
 \usepackage[bottom]{footmisc}
 \usepackage[all]{xy}
 \usepackage{fancybox}
-\usepackage[latin1]{inputenc}	%acentos
-\usepackage[spanish]{babel}		%ordenes en espaÒol
+\usepackage[utf8]{inputenc}    % Acentos en UTF-8
+\usepackage[spanish]{babel}    % √ìrdenes e idioma en espa√±ol
+\usepackage[table]{xcolor}     % Necesario para las filas sombreadas de las tablas
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{wasysym}
@@ -24,30 +24,29 @@
 \usepackage{pgf,tikz}
 \usepackage{subfigure}
 \usepackage{bm}
-\usepackage{hyperref}
 \usepackage{yhmath}
 \usepackage{float}
 \usepackage[mathscr]{euscript}
 \usetikzlibrary{shapes.gates.logic.US,trees,positioning,arrows}
-\usepackage{hyperref}
-\hypersetup{colorlinks=true}
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-
-\usepackage[spanish]{babel} %%Para notas a pie de p·gina
-
 \usepackage{amsthm}
-
 \usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{eso-pic}
+\hypersetup{colorlinks=true}
 
 \def\proof{\paragraph{}}
 \def\endproof{\hfill$\blacksquare$}
-
-\usepackage{mathtools}
-
+\usepackage[table]{xcolor}
+\definecolor{verdeApagado}{HTML}{A4BEA7}
+\definecolor{azulPastelApagado}{HTML}{ABBBCB}
+\definecolor{azulclaro}{HTML}{d1dbe4}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% M·rgenes
+%% M√°rgenes
 \usepackage{geometry}
 \geometry{
 top=3cm,
@@ -56,71 +55,80 @@ left=3cm,
 right=3cm
 }
 
-%% Encabezados y pie de p·gina
-\usepackage{fancyhdr}
+%% Encabezados y pie de p√°gina
 \pagestyle{fancy}
 \fancyhf{}
 
 \lhead{}
-\rhead{MetodologÌas de Desarrollo ¡gil}
+\rhead{Metodolog√≠as de Desarrollo √Ågil}
 \renewcommand{\headrulewidth}{0.08pt}
 
 \lfoot{}
 \rfoot{DobleM - MDA DGP}
 \cfoot{\thepage}
 \renewcommand{\footrulewidth}{0.08pt}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{document}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Portada:	
+%%%% Portada:   
+% --- IMAGEN DE FONDO DE PORTADA ---
+\AddToShipoutPictureBG*{%
+  \AtPageLowerLeft{%
+    \includegraphics[width=\paperwidth,height=\paperheight]{img/Fondo_Portada.png}%
+  }%
+}
 \pagestyle{empty}
 
 \begin{center}
-	\hspace{-1cm}
-	\centering
-	
+    \hspace{-1cm}
+    \centering
+    
+    \vfill
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.4\textwidth]{img/logo.png}
+    \end{figure}
+	 \vfill
+    {\textsc{\Huge DOBLE-M SOFTWARE}}\\[0.4cm]
+	 \vfill
+    {\textsc{\large Metodolog√≠as de Desarrollo √Ågil}} \\[0.2cm]
+    {\textsc{\large Direcci√≥n y Gesti√≥n de Proyectos}}
+    
+    
+    \vfill
 	\vfill
-	
-	{\textsc{\Huge DOBLE-M SOFTWARE}}\\[0.4cm]
-	{\textsc{\large MetodologÌas de Desarrollo ¡gil}} \\[0.2cm]
-	{\textsc{\large DirecciÛn y GestiÛn de Proyectos}}
 	\vfill
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.88\textwidth]{ugr.png}
-		%\label{fig:familia1}
-	\end{figure}
-	
-	\vfill
-	{\Large{Minerva Cebri·n MarÌn}} {(mcm17@correo.ugr.es)} \\
-	
-	\vfill
-	{\Large{Jorge GarcÌa G·miz}} {(jorgegarciag@correo.ugr.es)} \\
+    {\Large{Minerva Cebri√°n Mar√≠n}} {(mcm17@correo.ugr.es)} \\
+    
+    \vfill
+    {\Large{Jorge Garc√≠a G√°miz}} {(jorgegarciag@correo.ugr.es)} \\
 
-	\vfill
-	{\Large{¡ngela GarcÌa Olmos}} {(angelagrc@correo.ugr.es)} \\
+    \vfill
+    {\Large{√Ångela Garc√≠a Olmos}} {(angelagrc@correo.ugr.es)} \\
 
+    \vfill
+    {\Large{Pedro Javier P√©rez Jim√©nez}} {(pjpz@correo.ugr.es)}\\
+    
+    \vfill
+    {\Large{Daniel Vega Jim√©nez}} {(deltac@correo.ugr.es)} \\
+    
+    \vfill
 	\vfill
-	{\Large{Pedro Javier PÈrez JimÈnez}} {(pjpz@correo.ugr.es)}\\
-	
-	\vfill
-	{\Large{Daniel Vega JimÈnez}} {(deltac@correo.ugr.es)} \\
-	
-	
-	\vfill
-	{Curso 2026-2027}
-		
-	\vfill
-	{\small }
+    {Curso 2026-2027}
+        \vfill
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.2\textwidth]{ugr.png}
+    \end{figure}
+    \vfill
+    {\small }
 \end{center} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% ---------------- Õndice ----------------
+% ---------------- √çndice ----------------
 \newpage
 \pagestyle{fancy}
 \setcounter{page}{1}
@@ -130,8 +138,10 @@ right=3cm
 \makeatother
 
 \tableofcontents
+\newpage
+\include{cap/personas}
+\newpage
+\include{cap/roles}
 
 
 \end{document}
-
-
