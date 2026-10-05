@@ -1,24 +1,54 @@
-# DobleM — MDA & DGP
+<div align="center">
 
-Repositorio oficial para la documentación del proyecto **DobleM**, desarrollado para las asignaturas de **Metodologías de Desarrollo Ágil (MDA)** y **Dirección y Gestión de Proyectos (DGP)**.
+  <img src="portada/img/logo.png" alt="Logo DobleM" width="160" />
+
+  #  Proyecto DobleM
+
+  **Asignaturas:** Metodologías de Desarrollo Ágil (MDA) & Dirección y Gestión de Proyectos (DGP)  
+  **Universidad de Granada (UGR)**
+
+  [![LaTeX](https://img.shields.io/badge/Documentación-LaTeX-008080?style=for-the-badge&logo=LaTeX&logoColor=white)](https://www.latex-project.org/)
+  [![GitHub](https://img.shields.io/badge/Repositorio-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
+  [![Jira](https://img.shields.io/badge/Gestión-Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white)](https://www.atlassian.com/software/jira)
+
+</div>
+
+---
+
+## 📌 Visión General del Proyecto
+
+**DobleM** es una solución desarrollada de forma colaborativa para aplicar los principios de la gestión de proyectos de software, desarrollo ágil (Scrum/Kanban) y estandarización de procesos de calidad.
+
+---
+
+## 👥 Equipo de Trabajo y Roles
+
+| Miembro | Asignatura | Rol |
+| :--- | :---: | :--- |
+| **Minerva Cebrián Marín** | MDA & DGP |  **Gestora de Calidad** |
+| **Pedro Javier Pérez Jiménez** | MDA & DGP |  **Gestor de Accesibilidad** |
+| **Ángela García Olmos** | MDA & DGP | 
+| **Daniel Vega Jiménez** | MDA & DGP |
+| **Cristina García Gázquez** | Solo DGP |
+| **Jorge García Gámiz** | Solo MDA | 
+
+> 🔄 *Nota:* El rol de **Coordinador** es rotatorio según la fase del proyecto.
 
 ---
 
 ## 🎨 Guía de Estilo y Paleta de Colores (LaTeX)
 
-Para mantener la coherencia visual en todos los documentos y plantillas generadas (`cap/personas.tex`, `cap/roles.tex`, etc.), utilizamos una paleta de colores personalizada definida en el archivo principal `main.tex`.
+Para garantizar la coherencia tipográfica y visual en todas las memorias oficiales, se ha definido una paleta institucional en el archivo `main.tex`:
 
-### Paleta Oficial
-
-| Muestra | Nombre en LaTeX | Código HEX | Uso Principal |
+| Muestra | Nombre en LaTeX | Código HEX | Uso en Documentación |
 | :---: | :--- | :--- | :--- |
 | 🟩 | `verdeApagado` | `#A4BEA7` | Destacados y acentos primarios |
-| 🟦 | `azulPastelApagado` | `#ABBBCB` | Cabeceras de tablas y secciones principales |
-| 🩵 | `azulclaro` | `#D1DBE4` | Fondos de columnas laterales e indicadores |
+| 🟦 | `azulPastelApagado` | `#ABBBCB` | Cabeceras de tablas y secciones |
+| 🩵 | `azulclaro` | `#D1DBE4` | Fondos de bloques e indicadores |
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Arquitectura del Repositorio
 
 ```mermaid
 graph TD
@@ -34,7 +64,7 @@ graph TD
     D --> D2[Fondo_Portada.png]
     D --> D3[ugr.png]
 
-    %% Personalización con los colores del proyecto
+    %% Estilos institucionales
     style A fill:#A4BEA7,stroke:#333,stroke-width:2px,color:#000
     style C fill:#ABBBCB,stroke:#333,stroke-width:1px,color:#000
     style D fill:#ABBBCB,stroke:#333,stroke-width:1px,color:#000
