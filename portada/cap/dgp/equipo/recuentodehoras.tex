@@ -1,0 +1,166 @@
+
+
+
+% Definición de una lista compacta para usar dentro de celdas de tabla
+\newlist{tabitem}{itemize}{1}
+\setlist[tabitem]{label=$\bullet$, leftmargin=*, nosep, topsep=2pt, partopsep=0pt}
+
+
+
+\section{Recuento de Horas y Actividades}
+
+\subsection{Resumen General del Equipo}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{X c c c c c c}
+\toprule
+ & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Formación} & \textbf{Cliente} & \textbf{Grupo} & \textbf{Total Horas} \\
+\midrule
+Ángela    & 9 h & 9 h & 0 h & 0 h & 0 h & \textbf{18 h} \\
+Daniel    & 8 h & 8 h & 0 h & 0 h & 0 h & \textbf{16 h} \\
+Pedro     & 11 h & 11 h & 0 h & 0 h & 0 h & \textbf{22 h} \\
+Cristina  & 0 h & 0 h & 0 h & 0 h & 0 h & \textbf{0 h}  \\
+Minerva   & 10 h & 10 h & 0 h & 0 h & 0 h & \textbf{20 h} \\
+\textit{Kirsten} & 0 h & 0 h & 0 h & 0 h & 0 h & \textbf{0 h} \\
+\midrule
+\textbf{Total Grupo} & \textbf{38 h} & \textbf{38 h} & \textbf{0 h} & \textbf{0 h} & \textbf{0 h} & \textbf{76 h} \\
+\bottomrule
+\end{tabularx}
+\caption{Resumen comparativo de horas de dedicación por integrante.}
+\label{tab:resumen-general}
+\end{table}
+
+\newpage
+\subsection{Desglose Individual por Integrante}
+
+% -----------------------------------------------------------------
+% ÁNGELA
+% -----------------------------------------------------------------
+\subsubsection{Ángela}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Tareas / Comentarios} \\
+\midrule
+25/09/2026 & 2 h & 2 h & Kick-off inicial y reparto de tareas. \\
+01/10/2026 & 2 h & 2 h & Revisar escenarios e Historias de Usuario. \\
+08/10/2026 & 2 h & 2 h & Preparación de entregable y redacción. \\
+11/10/2026 & 1 h & 1 h & Revisión de avances. \\
+15/10/2026 & 2 h & 2 h & Ensayo y estructuración del \textit{Elevator Pitch}. \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total Ángela:}} & \textbf{18 h} \\
+\bottomrule
+\end{tabularx}
+\caption{Registro de horas — Ángela}
+\end{table}
+
+% -----------------------------------------------------------------
+% DANIEL
+% -----------------------------------------------------------------
+\subsubsection{Daniel}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Tareas / Comentarios} \\
+\midrule
+25/09/2026 & 2 h & 2 h & Reunión de toma de requisitos. \\
+01/10/2026 & 2 h & 2 h & Análisis de casos de uso. \\
+08/10/2026 & 2 h & 2 h & Trabajo en documentación técnica. \\
+16/10/2026 & 2 h & 2 h & Revisión final del trabajo del módulo. \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total Daniel:}} & \textbf{16 h} \\
+\bottomrule
+\end{tabularx}
+\caption{Registro de horas — Daniel}
+\end{table}
+
+% -----------------------------------------------------------------
+% PEDRO
+% -----------------------------------------------------------------
+\subsubsection{Pedro}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Tareas / Comentarios} \\
+\midrule
+25/09/2026 & 2 h & 2 h & Organización de repositorio y gestión. \\
+01/10/2026 & 2 h & 2 h & Historias de usuario (Estudiante con discapacidad funcional). \\
+02/10/2026 & 1 h & 1 h & Seguimiento técnico. \\
+06/10/2026 & 1 h & 1 h & Ajustes de arquitectura. \\
+07/10/2026 & 1 h & 1 h & Corrección de documentación. \\
+08/10/2026 & 2 h & 2 h & Revisión global de escenarios. \\
+15/10/2026 & 2 h & 2 h & Feedback y cierre de iteración. \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total Pedro:}} & \textbf{22 h} \\
+\bottomrule
+\end{tabularx}
+\caption{Registro de horas — Pedro}
+\end{table}
+
+% -----------------------------------------------------------------
+% CRISTINA
+% -----------------------------------------------------------------
+\subsubsection{Cristina}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Tareas / Comentarios} \\
+\midrule
+-- & 0 h & 0 h & Sin actividad registrada en este periodo. \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total Cristina:}} & \textbf{0 h} \\
+\bottomrule
+\end{tabularx}
+\caption{Registro de horas — Cristina}
+\end{table}
+
+% -----------------------------------------------------------------
+% MINERVA
+% -----------------------------------------------------------------
+\subsubsection{Minerva}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Tareas / Comentarios} \\
+\midrule
+25/09/2026 & 2 h & 2 h & Planificación de tareas. \\
+01/10/2026 & 2 h & 2 h & Redacción de escenarios de uso. \\
+08/10/2026 & 2 h & 2 h & Elaboración de la presentación. \\
+15/10/2026 & 2 h & 2 h & Revisión del contenido de la entrega. \\
+16/10/2026 & 2 h & 2 h & Cierre y formato final en LaTeX. \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total Minerva:}} & \textbf{20 h} \\
+\bottomrule
+\end{tabularx}
+\caption{Registro de horas — Minerva}
+\end{table}
+
+% -----------------------------------------------------------------
+% Kirsten
+% -----------------------------------------------------------------
+\subsubsection{Kirsten}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Tareas / Comentarios} \\
+\midrule
+-- & 0 h & 0 h & Sin actividad registrada en este periodo. \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total Kirsten:}} & \textbf{0 h} \\
+\bottomrule
+\end{tabularx}
+\caption{Registro de horas — Kirsten}
+\end{table}
