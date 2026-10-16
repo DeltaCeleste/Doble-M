@@ -37,6 +37,11 @@
 \usepackage{multirow}
 \usepackage{hyperref}
 \usepackage{eso-pic}
+\usepackage{colortbl}
+\usepackage{hhline}
+\usepackage{xltabular}
+
+
 \hypersetup{colorlinks=true}
 
 \def\proof{\paragraph{}}
@@ -104,8 +109,14 @@ right=3cm
     \vfill
     {\Large{Jorge García Gámiz}} {(jorgegarciag@correo.ugr.es)} \\
 
+     \vfill
+    {\Large{Cristina García Gázquez}} {(jorgegarciag@correo.ugr.es)} \\
+
     \vfill
     {\Large{Ángela García Olmos}} {(angelagrc@correo.ugr.es)} \\
+
+    \vfill
+    {\Large{Kirsten Gazy Manalo}} {(kirstenmanalo@correo.ugr.es)} \\
 
     \vfill
     {\Large{Pedro Javier Pérez Jiménez}} {(pjpz@correo.ugr.es)}\\
@@ -137,11 +148,16 @@ right=3cm
 \let\ps@plain\ps@fancy
 \makeatother
 
-\tableofcontents
+\tableofcontents 
+% MDA
+ \newpage
+\include{cap/mda/roles}
 \newpage
-\include{cap/personas}
+\include{cap/mda/personas}
 \newpage
-\include{cap/roles}
+\include{cap/mda/visiondelproducto}
+% DGP
+
 
 
 \end{document}
