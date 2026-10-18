@@ -27,10 +27,10 @@
 | :--- | :---: | :--- |
 | **Minerva Cebrián Marín** | MDA & DGP |  **Gestora de Calidad** |
 | **Pedro Javier Pérez Jiménez** | MDA & DGP |  **Gestor de Accesibilidad** |
-| **Ángela García Olmos** | MDA & DGP | 
-| **Daniel Vega Jiménez** | MDA & DGP |
-| **Cristina García Gázquez** | Solo DGP |
-| **Jorge García Gámiz** | Solo MDA | 
+| **Ángela García Olmos** | MDA & DGP | **Moderador** |
+| **Daniel Vega Jiménez** | MDA & DGP | **Presentador** |
+| **Cristina García Gázquez** | Solo DGP | **Catalogador** |
+| **Jorge García Gámiz** | Solo MDA | **Catalogador** |
 
 > 🔄 *Nota:* El rol de **Coordinador** es rotatorio según la fase del proyecto.
 
