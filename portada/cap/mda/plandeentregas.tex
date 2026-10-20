@@ -1,0 +1,114 @@
+\section{Plan de Entregas}
+
+\subsection{Breve descripción del alcance del sistema}
+El proyecto consiste en el diseño, planificación y desarrollo de una aplicación web acerca de una agenda personalizada, orientada a facilitar la organización, autonomía y estructuración del tiempo a estudiantes con discapacidad intelectual, especialmente del Programa de Transición a la Vida Adulta (PTVAL).
+
+Algunos de los objetivos principales son:
+
+\begin{itemize}
+    \item \textbf{Gestión de Tareas Escolares y Específicas:} Permitir la asignación y seguimiento de tareas propias del centro educativo (como reprografía, comedor, menú mensual, guías de visita) por parte del profesorado y de los estudiantes..
+    \item \textbf{Creación y Gestión de actividads Personales:} Dar autonomía a los estudiantes y padres o madres para crear actividads cotidianas con horas de inicio/fin, imágenes, y formatos accesibles (texto, audio, vídeo o secuencias de pasos).
+    \item \textbf{Adaptabilidad y Accesibilidad Total:} Configurar perfiles personalizados que ajusten colores, tipos y tamaños de letra, disposición de menús y botones.
+    \item \textbf{Roles Definidos:} Estructurar los permisos y funcionalidades para Administradores, Profesores/Tutores y Estudiantes.
+\end{itemize}
+
+\subsection{Listado Inicial de HU}
+
+\begin{xltabular}{\textwidth}{p{1.8cm} X p{1.3cm} p{1.1cm}}
+\toprule
+\rowcolor{azulPastelApagado}
+\textbf{Ident.} & \textbf{Título} & \textbf{Estim.} & \textbf{Prio.} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\rowcolors{2}{azulclaro}{white}
+HU-F1 & Como Familia quiero iniciar sesión en la aplicación para acceder a la funcionalidad de esta. & 3 & 2 \\
+HU-F2 & Como Familia quiero seleccionar uno de mis hijos para acceder a su perfil. & 1 & 2 \\
+HU-F3 & Como Familia quiero consultar el perfil de un hijo para ver su configuración. & 1 & 3 \\
+HU-F4 & Como Familia quiero cambiar la configuración de un hijo para hacer la aplicación más accesible para él/ella. & 1 & 3 \\
+HU-F5 & Como Familia quiero comprobar la agenda de un hijo para ver sus actividads planeadas . & 2 & 2 \\
+HU-F6 & Como Familia quiero consultar los detalles específicos de una actividad que tiene mi hijo para conocer los detalles de esta. & 2 & 3 \\
+HU-F7 & Como Familia quiero crear una actividad para un hijo para que pueda tenerla presente y pueda realizarla por su cuenta. & 5 & 2 \\
+HU-F8 & Como Familia quiero editar una actividad que le cree a mi hijo para corregir o añadir detalles de esta. & 5 & 3 \\
+HU-F9 & Como Familia quiero borrar una actividad que le cree a mi hijo para que no la realice. & 5 & 3 \\
+HU-F10 & Como Familia quiero abrir un canal de comunicación en la aplicación con mi hijo para poder comunicarme con él~ & 21 & 5 \\
+HU-P1 & Como profesor/a, quiero iniciar sesión en la aplicación para consultar la agenda escolar. & 3 & 1 \\
+HU-P2 & Como profesor/a, quiero consultar las actividades programadas y sus detalles para conocer la información necesaria sobre cada actividad. & 2 & 1 \\
+HU-P3 & Como profesor/a, quiero crear actividades para mantener actualizada la planificación escolar según las necesidades del alumnado.~ & 5 & 1 \\
+HU-P4 & Como profesor/a, quiero cancelar actividades para mantener actualizada la planificación escolar según las necesidades del alumnado.~ & 5 & 2 \\
+HU-P5 & Como profesor/a, quiero editar actividades para mantener actualizada la planificación escolar según las necesidades del alumnado.~ & 5 & 3 \\
+HU-P6 & Como profesor/a, quiero asignar una actividad a un estudiante o grupo para adaptar la planificación a sus necesidades educativas.~ & 3 & 1 \\
+HU-P7 & Como profesor/a, quiero consultar qué estudiantes participan en una actividad para conocer quiénes deben realizarla y organizar su desarrollo.~ & 2 & 3 \\
+HU-P8 & Como profesor/a, quiero consultar qué estudiantes han comenzado o completado una actividad para realizar un seguimiento individual de su progreso.~ & 8 & 4 \\
+HU-P9 & Como profesor/a, quiero marcar una actividad como realizada para mantener actualizado el calendario y registrar las actividades que ya se han llevado a cabo.~ & 2 & 3 \\
+HU-P10 & Como profesor/a, quiero consultar la información relevante de un estudiante para adaptar las actividades a sus necesidades y facilitar su participación y aprendizaje.~ & 3 & 2 \\
+HU-E1 & Como estudiante, quiero iniciar sesión en la aplicación, para acceder a mi agenda y a mis actividades personales.~ & 3 & 1 \\
+HU-E2 & Como estudiante, quiero consultar mi agenda personalizada, para saber qué actividades tengo programadas durante el día. & 3 & 1 \\
+HU-E3 & Como estudiante, quiero consultar la información de una actividad para comprender fácilmente qué tengo que hacer.~ & 3 & 1 \\
+HU-E4 & Como estudiante, quiero consultar las actividades de los próximos días, para organizarme y saber qué tengo programado durante la semana.~ & 2 & 2 \\
+HU-E5 & Como estudiante, quiero añadir actividades personales a mi agenda, para organizar mis actividades de forma autónoma.~ & 5 & 3 \\
+HU-E6 & Como estudiante, quiero recibir avisos cuando llegue la hora de realizar una actividad, para saber cuándo debo comenzar.~ & 8 & 4 \\
+HU-E7 & Como estudiante, quiero marcar los pasos de una actividad conforme los voy realizando, para saber qué pasos he completado y cuál debo realizar a continuación. & 2 & 3 \\
+HU-E8 & Como estudiante, quiero consultar el tiempo restante de una actividad, para saber cuánto tiempo tengo para realizarla.~ & 2 & 4 \\
+HU-E9 & Como estudiante, quiero confirmar el inicio de una actividad, para registrar su inicio y llevar un seguimiento de mi progreso.~ & 1 & 4 \\
+HU-E10 & Como estudiante, quiero confirmar la finalización de una actividad, para registrar su finalización y saber qué actividad debo realizar a continuación.~ & 1 & 3 \\
+HU-E11 & Como estudiante, quiero recibir un aviso cuando se cancele una actividad de mi agenda, para saber que ya no tengo que realizarla.~ & 3 & 4 \\
+HU-E12 & Como estudiante, quiero recibir una sugerencia de actividad alternativa cuando se cancele una actividad programada, para saber qué puedo hacer en su lugar y mantener organizada mi rutina.~ & 21 & 5 \\
+HU-E13 & Como estudiante, quiero valorar una actividad realizada, para que la aplicación pueda tener en cuenta mis preferencias en futuras sugerencias.~ & 5 & 5 \\
+HU-E14 & Como estudiante, quiero adaptar las preferencias de visualización de mi agenda a mis necesidades, para consultar las actividades de una forma que me resulte cómoda y comprensible.~ & 8 & 2 \\
+HU-E15 & Como estudiante, quiero enviar mensajes a través de un chat accesible, para solicitar ayuda o resolver dudas mientras realizo mis actividades.~ & 21 & 5 \\
+HU-E16 & Como estudiante, quiero recibir mensajes a través de un chat accesible, para recibir indicaciones, en caso de necesitarlo, mientras realizo mis actividades.~ & 21 & 5 \\
+HUT-A0 & Como administrador quiero montar infraestructura de la aplicación para que mis usuarios puedan utilizarla.~ & 2 & 1 \\
+HU-A1 & Como administrador quiero crear un usuario estudiante para que cierto estudiante pueda usar la aplicación.~ & 2 & 1 \\
+HU-A2 & Como administrador quiero crear usuarios profesor y familia para que cierto profesor y familiar pueda usar la aplicación & 1 & 1 \\
+HU-A3 & Como administrador quiero eliminar usuarios para cuando dejen de estar en la institución y ahorrar almacenamiento.~ & 1 & 3 \\
+HU-A4 & Como administrador quiero asignar un estudiante /profesor a un grupo de clase para que yo y los usuarios trabajen con interfaces con menos opciones & 2 & 2 \\
+HU-A5 & Como administrador quiero asignar un profesor a un estudiante para que el profesor pueda interactuar con la agenda del estudiante & 2 & 1 \\
+HU-A6 & Como administrador quiero asignar un padre/madre/tutor a un estudiante para que el padre pueda/madre/tutor pueda interactuar con la agenda del estudiante.~ & 2 & 2 \\
+\end{xltabular}
+
+\subsubsection{2.1. Historias que se han dividido en varias}
+
+\subsubsection{2.2. Historias eliminadas}
+
+\subsubsection{2.3. Historias añadidas.}
+
+\subsubsection{2.4. Historias modificadas.}
+
+\subsection{Cálculo de la velocidad del equipo.}
+Partimos de un equipo de desarrollo formado por 5 programadores que van a dedicar un 50\% de su tiempo de trabajo al proyecto (debido a otras asignaturas). La duración de cada una de las iteraciones que vamos a realizar en el proyecto van a ser de 3 semanas. La estimación realizada del esfuerzo de cada una de las historias de usuario se ha expresado en días ideales de programación. En nuestro entorno de trabajo estimamos que un día ideal de programación se va a corresponder con 2 a 3 días reales de trabajo.
+
+La duración de una iteración va a ser:
+\begin{center}
+1 Iteración = 3 semanas = 15 Días reales
+\end{center}
+
+\begin{itemize}
+    \item 1ª iteracion $\rightarrow$ 30  
+    \item 2ª iteracion $\rightarrow$ 33
+    \item 3ª iteracion $\rightarrow$ 32
+\end{itemize}
+
+La Velocidad del equipo de desarrollo medido en punto de historia es:
+\begin{center}
+5 Programadores * 15 = 75 días reales por iteración => de 25 a 38 PH por iteración. Se ha decidido usar 33 Puntos de historia como la velocidad estimada del equipo.
+\end{center}
+
+\subsection{Descripción de las entregas.}
+
+Esfuerzo total del proyecto =  PH 
+
+Velocidad del equipo = 33 PH (por iteración) 
+
+En base al esfuerzo necesario y la velocidad estimada del equipo, para el desarrollo del proyecto se van a realizar una entregas de tres iteraciones cada  una de ellas. 
+
+El desarrollo del producto empieza el 22 de Octubre y el plan de entregas es el siguiente:
+
+\begin{description}[font=\normalfont, style=multiline, leftmargin=3.2cm]
+    \item[{Iteración 1:}] Hasta el 11 de Noviembre. El objetivo es crear una aplicación funcional que permita registrar estudiantes y profesores, que estos inicien sesión, crear y asignar tareas y que los perfiles de usuario puedan visualizar la agenda con las tareas a un nivel básico.
+    \item[{Iteración 2:}] Hasta 2 de Diciembre. El objetivo es añadir el perfil de la familia, completar el de administrador y ampliar funcionalidades básicas.
+    \item[{Iteración 3:}] Hasta 21 de Diciembre. El objetivo es implementar toda la personalización del usuario y lo referente a la accesibilidad.
+\end{description}
