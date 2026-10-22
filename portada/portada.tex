@@ -1,6 +1,5 @@
 \documentclass[a4paper,12pt]{article}
 
-\usepackage{graphicx}
 \usepackage{amsfonts}
 \usepackage{fancyhdr}
 \usepackage{helvet}
@@ -42,7 +41,8 @@
 \usepackage{colortbl}
 \usepackage{hhline}
 \usepackage{xltabular}
-
+\usepackage{pgfgantt}
+\usepackage{graphicx}
 
 \hypersetup{colorlinks=true}
 
@@ -67,11 +67,11 @@ right=3cm
 \fancyhf{}
 
 \lhead{}
-\rhead{Metodologías de Desarrollo Ágil}
+\rhead{Dirección y Gestión de Proyectos}
 \renewcommand{\headrulewidth}{0.08pt}
 
 \lfoot{}
-\rfoot{DobleM - MDA }
+\rfoot{DobleM - DGP }
 \cfoot{\thepage}
 \renewcommand{\footrulewidth}{0.08pt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -99,8 +99,8 @@ right=3cm
 	 \vfill
     {\textsc{\Huge DOBLE-M SOFTWARE}}\\[0.4cm]
 	 \vfill
-    {\textsc{\large Metodologías de Desarrollo Ágil}} \\[0.2cm]
-    % {\textsc{\large Dirección y Gestión de Proyectos}}
+   % {\textsc{\large Metodologías de Desarrollo Ágil}} \\[0.2cm]
+     {\textsc{\large Dirección y Gestión de Proyectos}}\\[0.2cm]
     
     
     \vfill
@@ -108,17 +108,17 @@ right=3cm
 	\vfill
     {\Large{Minerva Cebrián Marín}} {(mcm17@correo.ugr.es)} \\
     
-    \vfill
-    {\Large{Jorge García Gámiz}} {(jorgegarciag@correo.ugr.es)} \\
+    %\vfill
+   % {\Large{Jorge García Gámiz}} {(jorgegarciag@correo.ugr.es)} \\
 
-    %  \vfill
-    % {\Large{Cristina García Gázquez}} {(jorgegarciag@correo.ugr.es)} \\
+      \vfill
+     {\Large{Cristina García Gázquez}} {(jorgegarciag@correo.ugr.es)} \\
 
     \vfill
     {\Large{Ángela García Olmos}} {(angelagrc@correo.ugr.es)} \\
 
-    % \vfill
-    % {\Large{Kirsten Gazy Manalo}} {(kirstenmanalo@correo.ugr.es)} \\
+     \vfill
+    {\Large{Kirsten Gazy Manalo}} {(kirstenmanalo@correo.ugr.es)} \\
 
     \vfill
     {\Large{Pedro Javier Pérez Jiménez}} {(pjpz@correo.ugr.es)}\\
@@ -152,37 +152,44 @@ right=3cm
 
 \tableofcontents 
 % MDA
- \newpage
-\include{cap/mda/roles}
-\newpage
-\include{cap/mda/personas}
-\newpage
-\include{cap/mda/visiondelproducto}
-\newpage
-
-\include{cap/mda/plandeentregas}
-\newpage
-
-
-\include{cap/mda/backlog} 
-\newpage
-
-
-\include{cap/mda/jira}
-% DGP
+%  \newpage
+% \include{cap/mda/roles}
 % \newpage
-% \include{cap/dgp/equipo/recuentodehoras}
+% \include{cap/mda/personas}
+% \newpage
+% \include{cap/mda/visiondelproducto}
+% \newpage
+
+% \include{cap/mda/plandeentregas}
+% \newpage
+
+
+%\include{cap/mda/backlog} 
+\newpage
+
+
+%\include{cap/mda/jira}
+% DGP
+%\newpage
+%  \include{cap/dgp/equipo/recuentodehoras}
 % \newpage
 % \include{cap/dgp/equipo/actas/acta}
 % \newpage
 
-% \include{cap/dgp/cliente/manualdecoordinacion}
+% \include{cap/dgp/equipo/manualdecoordinacion}
+% \include{cap/dgp/equipo/actas/planificacion}
 % \newpage
-% \include{cap/dgp/cliente/propuestatecnica}
-% \newpage
-%\include{cap/dgp/cliente/jira}
+
+
+\include{cap/dgp/cliente/propuestatecnica}
+
 \newpage
-%\include{cap/dgp/cliente/propuestadesolucion}
+\include{cap/dgp/cliente/propuestadesolucion}
+
+\newpage
+\include{cap/dgp/cliente/cronograma}
+
+
 
 
 

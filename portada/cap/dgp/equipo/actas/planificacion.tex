@@ -1,0 +1,67 @@
+\section{Planificación de la Primera Iteración (Diagrama de Gantt)}
+
+A continuación se detalla la planificación de tareas asignadas para la primera iteración del proyecto, divididas en las áreas de \textit{Front-End} y \textit{Back-End}, abarcando desde finales de octubre hasta mediados de noviembre.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{ganttchart}[
+    x unit=0.55cm,
+    y unit title=0.6cm,
+    y unit chart=0.6cm,
+    vgrid,
+    hgrid,
+    title height=1,
+    title label font=\tiny\bfseries,
+    bar label font=\tiny,
+    group label font=\tiny\bfseries,
+    bar/.append style={fill=blue!40},
+    bar complete/.append style={fill=blue!80},
+    group right peak width=0.2,
+    group left peak width=0.2
+]{1}{21}
+  % Días de Octubre (22 a 31) y Noviembre (1 a 11)
+  \gantttitle{Octubre}{10}
+  \gantttitle{Noviembre}{11} \\
+  \gantttitlelist{22,...,31}{1}
+  \gantttitlelist{1,...,11}{1} \\
+
+  % --- FRONT-END ---
+  \ganttgroup{Front-End}{1}{21} \\
+  \ganttbar{Boceto Inicio de sesión genérico}{1}{1} \\
+  \ganttbar{Bocetos Inicios de sesión específicos}{2}{2} \\
+  \ganttbar{Boceto vista actividades}{3}{3} \\
+  \ganttbar{Boceto crear actividad y asignar}{4}{4} \\
+  \ganttbar{Boceto Agenda}{5}{5} \\
+  \ganttbar{Boceto interfaz creación usuarios}{6}{6} \\
+  \ganttbar{Boceto interfaz de creación de grupos}{7}{7} \\
+  \ganttbar{Boceto interfaz asignación grupos/prof/est}{8}{8} \\
+  \ganttbar{Implementar Inicios de sesión}{9}{11} \\
+  \ganttbar{Implementar vista actividades}{12}{12} \\
+  \ganttbar{Implementar crear actividad y asignar}{13}{14} \\
+  \ganttbar{Implementar interfaz de agenda}{15}{15} \\
+  \ganttbar{Implementar creación usuarios y grupos}{16}{16} \\
+  \ganttbar{Implementar asignación est.-prof. y grupos}{17}{18} \\
+  \ganttbar{Integración FrontEnd y BackEnd}{19}{20} \\
+  \ganttbar{Revisión del contenido generado}{21}{21} \\
+
+  % --- BACK-END ---
+  \ganttgroup{Back-End}{1}{21} \\
+  \ganttbar{Crear la infraestructura de la aplicación}{1}{3} \\
+  \ganttbar{Implementar la base de datos}{4}{5} \\
+  \ganttbar{API de creación de usuarios}{6}{7} \\
+  \ganttbar{API verificación de usuario}{8}{9} \\
+  \ganttbar{API actividades (crear, ver y modificar)}{10}{10} \\
+  \ganttbar{API actividades asignadas a usuarios}{11}{11} \\
+  \ganttbar{API creación de grupos}{12}{13} \\
+  \ganttbar{Integración FrontEnd y BackEnd}{14}{15} \\
+  \ganttbar{API asignación usuarios a grupos/usuarios}{16}{17} \\
+  \ganttbar{API asignación estudiante-profesor}{18}{18} \\
+  \ganttbar{Integración FrontEnd y BackEnd}{19}{20} \\
+  \ganttbar{Revisión del contenido generado}{21}{21}
+
+\end{ganttchart}
+}
+\caption{Diagrama de Gantt — Planificación detallada de la Iteración 1.}
+\label{fig:gantt-iteracion1}
+\end{figure}

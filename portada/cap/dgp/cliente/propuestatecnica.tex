@@ -186,88 +186,6 @@ Gestión de actividades personales & Sí, mediante secuencias & Sí, mediante di
 
 En definitiva, aunque ya existen herramientas que ofrecen buenas funciones para organizar actividades visualmente, nuestro objetivo es unificar la gestión de usuarios, perfiles personalizados y un control completo de las tareas escolares y personales en nuestra aplicación, siendo lo más personalizable posible y adaptado al día a día del estudiante.
 
-\subsection{Descripción y Esquema de Solución}
-\textit{(CREO QUE ESTA ES LA PROPUESTA DE SOLUCIÓN)}
-
-La solución consistirá en una aplicación web accesible y adaptable a distintos dispositivos, destinada principalmente a estudiantes del PTVAL y a las personas autorizadas que les acompañan. La aplicación organizará sus funcionalidades según el perfil del usuario, evitando mostrar opciones innecesarias y facilitando una interacción sencilla.
-
-El estudiante podrá consultar su agenda, visualizar la información de las actividades, acceder a instrucciones adaptadas, marcar los pasos realizados y confirmar el inicio y la finalización de las tareas. Según la configuración disponible, podrá consultar actividades de los próximos días, personalizar sus preferencias y crear actividades personales.
-
-Los tutores y profesores podrán gestionar las actividades de los estudiantes que tengan asignados, consultar sus perfiles y realizar un seguimiento de su progreso. El administrador se encargará de gestionar las cuentas y las relaciones entre usuarios. Las funcionalidades se implementarán de forma progresiva, atendiendo a la prioridad de las historias de usuario y al tiempo disponible.
-
-\subsubsection{Tecnologías Previstas}
-\begin{itemize}
-    \item \textbf{HTML:} estructura de las páginas.
-    \item \textbf{CSS:} presentación visual y adaptación de la interfaz a diferentes necesidades.
-    \item \textbf{JavaScript:} interacciones y funcionalidades del lado del cliente.
-    \item \textbf{PHP:} lógica del servidor, validación de peticiones y comunicación con la base de datos.
-    \item \textbf{MySQL:} almacenamiento de usuarios, perfiles, actividades y registros de seguimiento.
-    \item \textbf{Docker:} ejecución de los servicios en contenedores.
-    \item \textbf{Git y GitHub:} control de versiones y trabajo compartido.
-\end{itemize}
-
-\subsubsection{Arquitectura Propuesta}
-La aplicación seguirá una arquitectura web cliente-servidor organizada en tres niveles: interfaz de usuario, lógica de aplicación y almacenamiento de datos.
-
-\begin{enumerate}
-    \item \textbf{Presentación:} el navegador mostrará la interfaz desarrollada con HTML, CSS y JavaScript.
-    \item \textbf{Lógica de aplicación:} el servidor PHP gestionará la autenticación, los permisos, las operaciones sobre las actividades y las solicitudes de los usuarios.
-    \item \textbf{Persistencia:} MySQL almacenará la información necesaria para el funcionamiento del sistema.
-    \item \textbf{Despliegue:} Docker permitirá configurar y ejecutar los servicios necesarios de forma organizada.
-\end{enumerate}
-
-\paragraph{Esquema general:}
-Usuario $\rightarrow$ Interfaz web (HTML, CSS y JavaScript) $\rightarrow$ Servidor PHP $\rightarrow$ Base de datos MySQL
-
-\vspace{0.3cm}
-Docker facilitará la ejecución de los componentes y GitHub permitirá mantener el código y su historial de cambios.
-
-La aplicación deberá diseñarse teniendo en cuenta la accesibilidad cognitiva, visual y motora, así como la protección de los datos personales. Se priorizarán las instrucciones claras, los elementos visuales comprensibles, los controles fáciles de utilizar y la adaptación de la interfaz a cada perfil. La solución definitiva se concretará a partir de los requisitos acordados con el cliente y de las pruebas realizadas durante el desarrollo.
-
-\subsection{Actividades a Realizar}
-Las actividades se organizan provisionalmente en función de los objetivos específicos del proyecto. Su distribución definitiva se ajustará a la planificación acordada por el equipo.
-
-\begin{table}[H]
-\centering
-\rowcolors{2}{azulclaro}{white}
-\begin{tabularx}{\textwidth}{p{4.5cm} p{3.2cm} X}
-\toprule
-\rowcolor{azulPastelApagado}
-\textbf{Actividad} & \textbf{Objetivos} & \textbf{Resultado esperado} \\
-\midrule
-A1. Análisis de requisitos y necesidades del cliente & 1, 2 & Especificación de requisitos e historias de usuario. \\
-A2. Diseño de la interfaz y de la arquitectura & 2, 8 & Prototipos, diseño de la base de datos y arquitectura del sistema. \\
-A3. Implementación de usuarios y perfiles & 4, 7 & Gestión de cuentas, permisos y preferencias. \\
-A4. Desarrollo de la agenda y las actividades & 3, 4, 5, 6 & Consulta y gestión de actividades personales y escolares. \\
-A5. Implementación de la personalización y accesibilidad & 2, 5, 8 & Interfaz adaptada a las necesidades de los usuarios. \\
-A6. Pruebas y evaluación de calidad & 8, 9 & Registro de pruebas, incidencias y correcciones. \\
-A7. Gestión y documentación del proyecto & 10 & Documentación actualizada, seguimiento y entregas. \\
-\bottomrule
-\end{tabularx}
-\caption{Matriz de actividades, objetivos y resultados esperados.}
-\end{table}
-
-\subsection{Cronograma}
-
-El proyecto seguirá una planificación basada en una fase inicial y tres iteraciones de desarrollo. Las fechas siguientes corresponden a la planificación proporcionada por el equipo.
-
-\begin{table}[H]
-\centering
-\rowcolors{2}{azulclaro}{white}
-\begin{tabularx}{\textwidth}{p{3cm} p{3cm} p{3cm} X}
-\toprule
-\rowcolor{azulPastelApagado}
-\textbf{Fase} & \textbf{Inicio} & \textbf{Entrega prevista} & \textbf{Principales resultados} \\
-\midrule
-Iteración 0 & Fase inicial & 21-22 oct 2026 & Manual de coordinación, propuesta técnica y documentación inicial. \\
-Iteración 1 & 22-23 oct 2026 & 11-12 nov 2026 & Primer incremento funcional y presentación de la iteración. \\
-Iteración 2 & 12-13 nov 2026 & 2-3 dic 2026 & Segundo incremento, pruebas y presentación de resultados. \\
-Iteración 3 & 3-4 dic 2026 & 21 dic 2026 & Incremento final previsto, pruebas y documentación asociada. \\
-Cierre del proyecto & Tras iteración 3 & 6 feb 2027 & Revisión final, documentación pendiente y entrega definitiva. \\
-\bottomrule
-\end{tabularx}
-\caption{Planificación y cronograma por fases e iteraciones.}
-\end{table}
 
 \subsection{Implicación de los Participantes}
 \begin{itemize}
@@ -291,19 +209,17 @@ Al finalizar cada iteración se revisará el incremento desarrollado, se comprob
 
 \subsection{Valor Añadido}
 
-
-Además de las funcionalidades básicas descritas en el pliego, la aplicación pretende aportar los siguientes elementos de valor añadido:
+\textit{Doble Agenda} busca diferenciarse de otras soluciones existentes mediante una propuesta centrada en la personalización, la accesibilidad y la adaptación continua a las necesidades e intereses individuales del alumnado. Para alcanzar este objetivo, se incorporan los siguientes elementos clave de valor añadido:
 
 \begin{itemize}
-    \item \textbf{Personalización centrada en el usuario:} adaptación de los elementos visuales y de la presentación de la agenda según las necesidades de cada estudiante.
-    \item \textbf{Integración de actividades escolares y personales:} posibilidad de reunir en una misma herramienta las tareas asignadas en el centro y las actividades cotidianas.
-    \item \textbf{Seguimiento del progreso:} consulta del estado de las actividades para facilitar el acompañamiento educativo.
-    \item \textbf{Diseño modular:} organización de las funcionalidades por perfiles para facilitar su adaptación a las necesidades del centro.
-    \item \textbf{Accesibilidad como criterio transversal:} consideración de las necesidades cognitivas, visuales y motoras desde el análisis hasta las pruebas finales.
-    \item \textbf{Posible reutilización fuera del centro:} diseño de una herramienta que también pueda utilizarse como agenda personal por otros usuarios.
+    \item \textbf{Paletas de colores personalizables y accesibles:} Selección de diversas combinaciones cromáticas adaptables a los gustos de cada estudiante, garantizando en todo momento un contraste óptimo entre el texto, la iconografía y el fondo para evitar la fatiga visual.
+    
+    \item \textbf{Personalización de la experiencia visual:} Posibilidad de ajustar parámetros de la interfaz como el tamaño tipográfico o la inclusión de pictogramas e imágenes, simplificando la comprensión de la información y logrando una navegación más cómoda e intuitiva.
+    
+    \item \textbf{Seguimiento paso a paso de las actividades:} Desglose de instrucciones en pasos independientes que el alumnado puede ir marcando como completados. Esta visualización progresiva del avance promueve el desarrollo de una mayor autonomía en la ejecución de tareas.
 \end{itemize}
 
-Las funcionalidades adicionales, como el chat accesible, las sugerencias de actividades alternativas o la valoración de tareas, se considerarán mejoras potenciales sujetas a la prioridad acordada y a la capacidad de desarrollo del equipo.
+En conjunto, estos pilares consolidan a \textit{Doble Agenda} como una herramienta altamente accesible, visual y adaptable, facilitando el seguimiento de las dinámicas diarias y favoreciendo el aprendizaje autónomo del estudiante.
 
 \subsection{Beneficios y Beneficiarios}
 
