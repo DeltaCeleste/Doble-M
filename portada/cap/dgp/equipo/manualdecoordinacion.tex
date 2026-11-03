@@ -1,13 +1,5 @@
-\hypersetup{
-    colorlinks=true,
-    linkcolor=verdeApagado!80!black,
-    filecolor=verdeApagado!80!black,      
-    urlcolor=azulPastelApagado!80!black,
-    pdftitle={Manual de Coordinación y Plan de Dirección}
-}
 
-\setlist[itemize]{leftmargin=1.5em, itemsep=3pt, topsep=3pt}
-\setlist[enumerate]{leftmargin=1.5em, itemsep=3pt, topsep=3pt}
+
 
 \section{Manual de Coordinación / Plan de Dirección}
 
@@ -171,6 +163,19 @@ Después de cada reunión o entrevista, se recogerán los aspectos tratados, los
 
 Los cambios solicitados por el cliente se evaluarán teniendo en cuenta su prioridad, su impacto sobre las funcionalidades existentes, el esfuerzo necesario y los plazos de entrega.
 
+La comunicación oficial y el seguimiento de las relaciones con el cliente y el equipo docente se centralizarán a través de una figura responsable única para mantener la coherencia y el control de los acuerdos.
+
+\begin{itemize}
+    \item \textbf{Responsable de Relaciones con el Cliente:} Daniel Vega Jiménez (Presentador).
+    \item \textbf{Canales Oficiales:} Entrevistas presenciales/virtuales programadas y correo electrónico institucional.
+    \item \textbf{Protocolo de Comunicación y Avisos:}
+    \begin{itemize}
+        \item \textbf{Antelación de avisos y convocatorias:} Cualquier solicitud de reunión, cambio relevante en los requisitos o entrega de documentación intermedia deberá notificarse al cliente/profesorado con una antelación mínima de \textbf{48 horas}.
+        \item \textbf{Envío de entregables:} Los documentos finales se enviarán para revisión con al menos \textbf{24 horas} de antelación respecto a la fecha límite oficial.
+    \end{itemize}
+    \item \textbf{Registro de acuerdos:} Tras cada reunión o hito con el cliente, se redactará un documento con los acuerdos alcanzados y cambios aprobados, que se registrarán en Jira y en la documentación del proyecto.
+\end{itemize}
+
 % -----------------------------------------------------------------
 % ESTÁNDARES
 % -----------------------------------------------------------------
@@ -186,6 +191,14 @@ La documentación del proyecto se elaborará utilizando \LaTeX, con el objetivo 
     \item Las figuras y capturas tendrán un título o pie explicativo y se numerarán cuando corresponda.
     \item Se utilizará un lenguaje claro, preciso y coherente en todos los documentos.
     \item Los documentos se guardarán en las carpetas acordadas y se mantendrá un control de sus versiones.
+\end{itemize}
+Para garantizar la calidad del proyecto, se establecen métricas objetivas y medibles tanto para la documentación como para el código fuente:
+
+\subsubsection{Dimensiones de Calidad para Documentación (\LaTeX)}
+\begin{itemize}
+    \item \textbf{Formato e Imagen Corporativa (100\%):} Todos los documentos deben compilar sin errores en \LaTeX, incluir portada corporativa oficial, encabezados/pies de página con logo de DobleM y colores corporativos definidos (\texttt{verdeApagado}, \texttt{azulPastelApagado}).
+    \item \textbf{Trazabilidad de Requisitos:} El 100\% de las propuestas técnicas y soluciones deben vincular explícitamente sus secciones con las referencias de requisitos (RF / RNF).
+    \item \textbf{Ortografía y Redacción:} Cero errores ortográficos y uso uniforme de terminología técnica en español.
 \end{itemize}
 
 \subsection{Estándares de Código}
@@ -203,6 +216,14 @@ El código del proyecto seguirá unos estándares comunes para facilitar su lect
     \item Se evitará introducir cambios que no estén relacionados con la tarea asignada, salvo que sean necesarios y se comuniquen al equipo.
 \end{itemize}
 
+
+\subsubsection{Dimensiones de Calidad para Código Fuente}
+\begin{itemize}
+    \item \textbf{Legibilidad y Estándares de Nombres (100\%):} Nombres de variables y funciones en \texttt{camelCase}, clases en \texttt{PascalCase} y constantes en \texttt{UPPER\_SNAKE\_CASE}. Comentarios explicativos en español e identificadores en inglés.
+    \item \textbf{Modularidad:} Ninguna función o método superará las \textbf{50 líneas de código}.
+    \item \textbf{Mantenibilidad:} Duplicación de código inferior al \textbf{5\%} mediante reutilización de funciones y componentes.
+    \item \textbf{Ausencia de Errores Críticos:} El código desplegado en la rama principal (\texttt{main}) no debe contener errores de sintaxis ni fallos de ejecución en las rutas principales de usuario.
+\end{itemize}
 Cuando se incorporen nuevas funcionalidades o se modifique código existente, se realizarán las pruebas que correspondan. Los errores detectados deberán corregirse o registrarse como tareas pendientes en Jira.
 
 % -----------------------------------------------------------------
@@ -255,3 +276,15 @@ Si un integrante tiene dificultades para completar su trabajo, el equipo analiza
 Cuando un integrante asuma una carga de trabajo superior a la prevista, se tendrá en cuenta en la planificación posterior para procurar un reparto equilibrado y evitar la sobrecarga.
 
 Como incentivo colectivo, el equipo propone celebrar el logro de una calificación de sobresaliente mediante una actividad de ocio acordada por todos los miembros, como una visita a un parque de atracciones o a un centro recreativo.
+
+El rendimiento y desempeño de cada integrante del equipo se evaluará semanalmente en cada reunión, en función de indicadores medibles:
+
+\begin{itemize}
+    \item \textbf{Cumplimiento de Tareas en Jira ($\ge 85\%$):} Porcentaje de tareas completadas dentro del plazo fijado para cada iteración.
+    \item \textbf{Gestión de Estados en Jira (100\%):} Obligatoriedad de registrar la fecha de inicio, la fecha de fin y el estado correcto de cada tarea asignada.
+    \item \textbf{Registro y Desglose de Horas:} Registro semanal de las horas invertidas en la herramienta común, desglosando la actividad realizada con un margen de desviación máximo del \textbf{15\%} respecto a lo estimado.
+    \item \textbf{Asistencia y Puntualidad ($\ge 90\%$):} Asistencia a las reuniones semanales de coordinación programadas y participación activa.
+\end{itemize}
+
+\paragraph{Medidas de Corrección y Desempeño:}
+Si un integrante registra un cumplimiento inferior al 70\% en los indicadores sin justificación previa, se revisará la carga de trabajo en la siguiente reunión y se reasignarán tareas para equilibrar el volumen del equipo.

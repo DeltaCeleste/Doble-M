@@ -1,185 +1,204 @@
-
-\newlist{tabitem}{itemize}{1}
-\setlist[tabitem]{label=$\bullet$, leftmargin=*, nosep, topsep=2pt, partopsep=0pt}
-
-
-
-\section{Recuento de Horas y Actividades}
+\section{Recuento de Actividades y Dedicación por Integrante}
 
 \subsection{Resumen General del Equipo}
 
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{X c c c c c c}
+\rowcolors{2}{white}{azulclaro!30}
+\begin{tabularx}{\textwidth}{X c X c}
 \toprule
- & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Formación} & \textbf{Cliente} & \textbf{Grupo} & \textbf{Total Horas} \\
+\rowcolor{azulPastelApagado}
+\textbf{\color{textoOscuro}Integrante} & \textbf{\color{textoOscuro}Rol} & \textbf{\color{textoOscuro}Foco de Contribución Principal} & \textbf{\color{textoOscuro}Total Horas} \\
 \midrule
-Ángela    & 2 h  & 2 h  & 0 h & 2 h & 10 h & \textbf{16 h} \\
-Daniel    & 0 h  & 1 h  & 0 h & 2 h & 13 h & \textbf{16 h} \\
-Pedro     & 2 h  & 2 h  & 1 h & 3 h & 10 h & \textbf{18 h} \\
-Cristina  & 2 h  & 4 h  & 0 h & 0 h & 4 h  & \textbf{10 h} \\
-Minerva   & 2 h  & 4 h  & 0 h & 2 h & 12 h & \textbf{20 h} \\
-Kirsten   & 2 h  & 4 h  & 2 h & 0 h & 6 h  & \textbf{14 h} \\
+Ángela   & Moderadora & Manual de coordinación, comparativa de agendas y seguimiento. & \textbf{16 h} \\
+Daniel   & Presentador & Planificación, arquitectura back-end y coordinación de reuniones. & \textbf{16 h} \\
+Pedro    & Gestor de Accesibilidad & Visita a colegio, análisis de accesibilidad (WAVE, ACE, ARASAAC) y BBDD. & \textbf{18 h} \\
+Cristina & Catalogadora & Configuración de repositorio GitHub, orden documental y requisitos. & \textbf{10 h} \\
+Minerva  & Gestora de Calidad & Plantilla \LaTeX, estándares de calidad, protocolo cliente y revisión. & \textbf{20 h} \\
+Kirsten  & Integrante & Incorporada el 15/10. Apoyo en usabilidad y revisión documental. & \textbf{16 h} \\
 \midrule
-\textbf{Total Grupo} & \textbf{10 h} & \textbf{17 h} & \textbf{3 h} & \textbf{9 h} & \textbf{55 h} & \textbf{94 h} \\
+\rowcolor{azulclaro!60}
+\multicolumn{3}{l}{\textbf{\color{textoOscuro}Total Horas Invertidas por el Equipo:}} & \textbf{\color{textoOscuro}96 h} \\
 \bottomrule
 \end{tabularx}
-\caption{Resumen comparativo de horas de dedicación por integrante.}
-\label{tab:resumen-general}
+\caption{Resumen comparativo de actividades y dedicación total.}
+\label{tab:resumen-general-dgp}
 \end{table}
+
 \newpage
-\subsection{Desglose Individual por Integrante}
+\subsection{Desglose de Tareas, Horas y Entregables}
 
 % -----------------------------------------------------------------
 % ÁNGELA
 % -----------------------------------------------------------------
-\subsubsection{Ángela}
+\subsubsection{Ángela (Moderadora)}
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{l c c c c c}
+\rowcolors{2}{white}{azulclaro!30}
+\begin{tabularx}{\textwidth}{l c X c}
 \toprule
-\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Formación} & \textbf{Cliente} & \textbf{Grupo} \\
+\rowcolor{verdeApagado}
+\textbf{\color{textoOscuro}Fecha} & \textbf{\color{textoOscuro}Tipo} & \textbf{\color{textoOscuro}Descripción de la Actividad / Entregable} & \textbf{\color{textoOscuro}Horas} \\
 \midrule
-25/09/2026 & 0 h & 0 h & 0 h & 2 h & 0 h \\
-01/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-08/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-11/10/2026 & 0 h & 1 h & 0 h & 0 h & 0 h \\
-15/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-16/10/2026 & 0 h & 1 h & 0 h & 0 h & 0 h \\
-17/10/2026 & 2 h & 0 h & 0 h & 0 h & 2 h \\
-22/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
+25/09/2026 & Cliente & Reunión inicial de toma de contacto y requisitos con el cliente. & 2 h \\
+01/10/2026 & Grupo & Reunión de coordinación de clase. & 2 h \\
+08/10/2026 & Grupo & Sesión de trabajo en grupo y seguimiento de tareas. & 2 h \\
+11/10/2026 & Autónomo & Redacción y desarrollo del Manual de Coordinación. & 2 h \\
+15/10/2026 & Grupo & Reunión de equipo de trabajo. & 2 h \\
+16/10/2026 & Autónomo & Estudio comparativo de nuestra propuesta de agenda frente a otras soluciones existentes. & 2 h \\
+17/10/2026 & Grupo & Sesión de trabajo en equipo para consolidación de documentación. & 2 h \\
+22/10/2026 & Grupo & Revisión general y cierre de entregables de la iteración. & 2 h \\
 \midrule
-\textbf{Total Ángela:} & \textbf{2 h} & \textbf{2 h} & \textbf{0 h} & \textbf{2 h} & \textbf{10 h} \\
+\rowcolor{azulclaro!60}
+\multicolumn{3}{l}{\textbf{\color{textoOscuro}Total Horas Dedicadas — Ángela:}} & \textbf{\color{textoOscuro}16 h} \\
 \bottomrule
 \end{tabularx}
-\caption{Registro de horas — Ángela}
+\caption{Registro de actividades y horas — Ángela}
 \end{table}
 
 % -----------------------------------------------------------------
 % DANIEL
 % -----------------------------------------------------------------
-\subsubsection{Daniel}
+\subsubsection{Daniel (Presentador)}
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{l c c c c c}
+\rowcolors{2}{white}{azulclaro!30}
+\begin{tabularx}{\textwidth}{l c X c}
 \toprule
-\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Formación} & \textbf{Cliente} & \textbf{Grupo} \\
+\rowcolor{verdeApagado}
+\textbf{\color{textoOscuro}Fecha} & \textbf{\color{textoOscuro}Tipo} & \textbf{\color{textoOscuro}Descripción de la Actividad / Entregable} & \textbf{\color{textoOscuro}Horas} \\
 \midrule
-25/09/2026 & 0 h & 0 h & 0 h & 2 h & 0 h \\
-01/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-08/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-16/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-17/10/2026 & 0 h & 0 h & 0 h & 0 h & 3 h \\
-18/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-22/10/2026 & 0 h & 1 h & 0 h & 0 h & 2 h \\
+25/09/2026 & Cliente & Reunión oficial con el cliente para análisis de necesidades. & 2 h \\
+01/10/2026 & Grupo & Reunión de seguimiento en clase. & 2 h \\
+08/10/2026 & Grupo & Reunión de coordinación de clase. & 2 h \\
+15/10/2026 & Grupo & Reunión de seguimiento en clase. & 2 h \\
+17/10/2026 & Grupo / Gestión & Sesión de planificación de la iteración y estructuración de la documentación. & 3 h \\
+18/10/2026 & Técnica & Reunión de arquitectura y desarrollo Back-end. & 3 h \\
+22/10/2026 & Grupo / Calidad & Finalización, revisión y consolidación de la documentación del proyecto. & 2 h \\
 \midrule
-\textbf{Total Daniel:} & \textbf{0 h} & \textbf{1 h} & \textbf{0 h} & \textbf{2 h} & \textbf{13 h} \\
+\rowcolor{azulclaro!60}
+\multicolumn{3}{l}{\textbf{\color{textoOscuro}Total Horas Dedicadas — Daniel:}} & \textbf{\color{textoOscuro}16 h} \\
 \bottomrule
 \end{tabularx}
-\caption{Registro de horas — Daniel}
+\caption{Registro de actividades y horas — Daniel}
 \end{table}
+
 % -----------------------------------------------------------------
 % PEDRO
 % -----------------------------------------------------------------
-\subsubsection{Pedro}
+\subsubsection{Pedro (Gestor de Accesibilidad)}
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{l c c c c c}
+\rowcolors{2}{white}{azulclaro!30}
+\begin{tabularx}{\textwidth}{l c X c}
 \toprule
-\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Formación} & \textbf{Cliente} & \textbf{Grupo} \\
+\rowcolor{verdeApagado}
+\textbf{\color{textoOscuro}Fecha} & \textbf{\color{textoOscuro}Tipo} & \textbf{\color{textoOscuro}Descripción de la Actividad / Entregable} & \textbf{\color{textoOscuro}Horas} \\
 \midrule
-25/09/2026 & 0 h & 0 h & 0 h & 2 h & 0 h \\
-01/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-02/10/2026 & 0 h & 0 h & 0 h & 1 h & 0 h \\
-06/10/2026 & 0 h & 1 h & 0 h & 0 h & 0 h \\
-07/10/2026 & 0 h & 0 h & 1 h & 0 h & 0 h \\
-08/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-15/10/2026 & 2 h & 0 h & 0 h & 0 h & 0 h \\
-16/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-17/10/2026 & 0 h & 1 h & 0 h & 0 h & 0 h \\
-20/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-22/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
+25/09/2026 & Cliente & Entrevista de toma de requisitos con el cliente. & 2 h \\
+01/10/2026 & Grupo & Reunión de clase y coordinación inicial. & 2 h \\
+02/10/2026 & Cliente & Visita presencial al colegio para observación de necesidades de los usuarios. & 2 h \\
+07/10/2026 & Formación & Investigación de las extensiones de accesibilidad WAVE y ACE, y exploración de ARASAAC. & 2 h \\
+08/10/2026 & Grupo & Sesión de trabajo grupal. & 2 h \\
+15/10/2026 & Reunión & Reunión de seguimiento de equipo. & 2 h \\
+16/10/2026 & Autónomo / Técnica & Diseño y modelado de la Base de Datos del sistema. & 2 h \\
+17/10/2026 & Autónomo & Redacción del documento oficial del Plan de Accesibilidad. & 2 h \\
+20/10/2026 & Grupo & Coordinación técnica en equipo. & 1 h \\
+22/10/2026 & Grupo & Revisión final de documentación y entregables. & 1 h \\
 \midrule
-\textbf{Total Pedro:} & \textbf{2 h} & \textbf{2 h} & \textbf{1 h} & \textbf{3 h} & \textbf{10 h} \\
+\rowcolor{azulclaro!60}
+\multicolumn{3}{l}{\textbf{\color{textoOscuro}Total Horas Dedicadas — Pedro:}} & \textbf{\color{textoOscuro}18 h} \\
 \bottomrule
 \end{tabularx}
-\caption{Registro de horas — Pedro}
+\caption{Registro de actividades y horas — Pedro}
+\end{table}
+% -----------------------------------------------------------------
+% CRISTINA
+% -----------------------------------------------------------------
+\subsubsection{Cristina (Catalogadora)}
+\begin{table}[H]
+\centering
+\small
+\rowcolors{2}{white}{azulclaro!30}
+\begin{tabularx}{\textwidth}{l c X c}
+\toprule
+\rowcolor{verdeApagado}
+\textbf{\color{textoOscuro}Fecha} & \textbf{\color{textoOscuro}Tipo} & \textbf{\color{textoOscuro}Descripción de la Actividad / Entregable} & \textbf{\color{textoOscuro}Horas} \\
+\midrule
+17/10/2026 & Reunión & Asistencia y coordinación en la sesión de seguimiento de equipo. & 2 h \\
+17/10/2026 & Grupo & Estructuración del repositorio. & 2 h \\
+20/10/2026 & Autónomo & Redacción, ordenación y catalogación de las actas de reunión del equipo. & 2 h \\
+21/10/2026 & Autónomo & Verificación del etiquetado y presencia de anexos obligatorios en GitHub. & 2 h \\
+22/10/2026 & Grupo & Revisión conjunta del repositorio y catálogo documental previo a la entrega. & 2 h \\
+\midrule
+\rowcolor{azulclaro!60}
+\multicolumn{3}{l}{\textbf{\color{textoOscuro}Total Horas Dedicadas — Cristina:}} & \textbf{\color{textoOscuro}10 h} \\
+\bottomrule
+\end{tabularx}
+\caption{Registro detallado de actividades y horas — Cristina}
 \end{table}
 
 % -----------------------------------------------------------------
 % MINERVA
 % -----------------------------------------------------------------
-\subsubsection{Minerva}
+\subsubsection{Minerva (Gestora de Calidad)}
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{l c c c c c}
+\rowcolors{2}{white}{azulclaro!30}
+\begin{tabularx}{\textwidth}{l c X c}
 \toprule
-\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Formación} & \textbf{Cliente} & \textbf{Grupo} \\
+\rowcolor{verdeApagado}
+\textbf{\color{textoOscuro}Fecha} & \textbf{\color{textoOscuro}Tipo} & \textbf{\color{textoOscuro}Descripción de la Actividad / Entregable} & \textbf{\color{textoOscuro}Horas} \\
 \midrule
-25/09/2026 & 0 h & 0 h & 0 h & 2 h & 0 h \\
-01/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-08/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-15/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-16/10/2026 & 0 h & 2 h & 0 h & 0 h & 2 h \\
-17/10/2026 & 2 h & 0 h & 0 h & 0 h & 0 h \\
-18/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-21/10/2026 & 0 h & 2 h & 0 h & 0 h & 0 h \\
-22/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
+25/09/2026 & Cliente & Toma de requisitos en la entrevista inicial con el cliente. & 2 h \\
+01/10/2026 & Grupo & Planificación de criterios de calidad y plantillas de trabajo. & 2 h \\
+08/10/2026 & Técnico & Creación de la plantilla principal de \LaTeX{} e integración de estilos corporativos. & 2 h \\
+15/10/2026 & Gestión & Definición del protocolo de atención al cliente y gestión de avisos. & 2 h \\
+16/10/2026 & Calidad & Definición de las dimensiones objetivas de calidad para código y documentación. & 2 h \\
+17/10/2026 & Reunión & Coordinación del estado de las entregas e incidencias de compilación. & 2 h \\
+18/10/2026 & Gestión & Redacción del plan de medición del desempeño y métricas objetivas del equipo. & 3 h \\
+21/10/2026 & Calidad & Revisión y corrección de errores de compilación y maquetación del documento. & 3 h \\
+22/10/2026 & Grupo & Control de calidad final y compilación definitiva del Manual de Coordinación. & 2 h \\
 \midrule
-\textbf{Total Minerva:} & \textbf{2 h} & \textbf{4 h} & \textbf{0 h} & \textbf{2 h} & \textbf{12 h} \\
+\rowcolor{azulclaro!60}
+\multicolumn{3}{l}{\textbf{\color{textoOscuro}Total Horas Dedicadas — Minerva:}} & \textbf{\color{textoOscuro}20 h} \\
 \bottomrule
 \end{tabularx}
-\caption{Registro de horas — Minerva}
-\end{table}
-
-% -----------------------------------------------------------------
-% CRISTINA
-% -----------------------------------------------------------------
-\subsubsection{Cristina}
-\begin{table}[H]
-\centering
-\small
-\begin{tabularx}{\textwidth}{l c c c c c}
-\toprule
-\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Formación} & \textbf{Cliente} & \textbf{Grupo} \\
-\midrule
-17/10/2026 & 4 h & 0 h & 0 h & 0 h & 2 h \\
-20/10/2026 & 0 h & 2 h & 0 h & 0 h & 0 h \\
-21/10/2026 & 0 h & 2 h & 0 h & 0 h & 0 h \\
-22/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-\midrule
-\textbf{Total Cristina:} & \textbf{4 h} & \textbf{4 h} & \textbf{0 h} & \textbf{0 h} & \textbf{4 h} \\
-\bottomrule
-\end{tabularx}
-\caption{Registro de horas — Cristina}
+\caption{Registro de actividades y horas — Minerva}
 \end{table}
 
 % -----------------------------------------------------------------
 % KIRSTEN
 % -----------------------------------------------------------------
-\subsubsection{Kirsten}
+
+\subsubsection{Kirsten (Integrante  — Incorporación 15/10)}
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{l c c c c c}
+\rowcolors{2}{white}{azulclaro!30}
+\begin{tabularx}{\textwidth}{l c X c}
 \toprule
-\textbf{Fecha} & \textbf{Reunión} & \textbf{Autónomo} & \textbf{Formación} & \textbf{Cliente} & \textbf{Grupo} \\
+\rowcolor{verdeApagado}
+\textbf{\color{textoOscuro}Fecha} & \textbf{\color{textoOscuro}Tipo} & \textbf{\color{textoOscuro}Descripción de la Actividad / Entregable} & \textbf{\color{textoOscuro}Horas} \\
 \midrule
-15/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-16/10/2026 & 0 h & 0 h & 0 h & 0 h & 0 h \\
-17/10/2026 & 2 h & 0 h & 0 h & 0 h & 0 h \\
-19/10/2026 & 0 h & 2 h & 0 h & 0 h & 0 h \\
-20/10/2026 & 0 h & 2 h & 2 h & 0 h & 0 h \\
-21/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
-22/10/2026 & 0 h & 0 h & 0 h & 0 h & 2 h \\
+15/10/2026 & Grupo & Incorporación al equipo y asignación de responsabilidades. & 2 h \\
+16/10/2026 & Autónomo & Estudio del proyecto y revisión de la documentación existente. & 2 h \\
+17/10/2026 & Reunión & Asistencia a la reunión semanal de seguimiento y planificación. & 2 h \\
+17/10/2026 & Grupo & Sesión de trabajo grupal para análisis de requisitos. & 2 h \\
+19/10/2026 & Autónomo & Redacción de apartados asignados de usabilidad y manual. & 2 h \\
+20/10/2026 & Autónomo & Trabajo autónomo en la elaboración de bocetos de interfaz. & 4 h \\
+20/10/2026 & Formación & Formación en sintaxis \LaTeX{} y maquetación corporativa. & 2 h \\
+21/10/2026 & Grupo & Integración de contenidos en la documentación común del equipo. & 2 h \\
+22/10/2026 & Grupo & Revisión conjunta de entregables en la sesión de cierre de iteración. & 2 h \\
 \midrule
-\textbf{Total Kirsten:} & \textbf{2 h} & \textbf{4 h} & \textbf{2 h} & \textbf{0 h} & \textbf{6 h} \\
+\rowcolor{azulclaro!60}
+\multicolumn{3}{l}{\textbf{\color{textoOscuro}Total Horas Dedicadas — Kirsten:}} & \textbf{\color{textoOscuro}20 h} \\
 \bottomrule
 \end{tabularx}
-\caption{Registro de horas — Kirsten}
+\caption{Registro detallado de actividades y horas — Kirsten}
 \end{table}

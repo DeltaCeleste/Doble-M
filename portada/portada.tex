@@ -36,22 +36,47 @@
 \usepackage{tabularx}
 \usepackage{mathtools}
 \usepackage{multirow}
-\usepackage{hyperref}
 \usepackage{eso-pic}
 \usepackage{colortbl}
 \usepackage{hhline}
 \usepackage{xltabular}
 \usepackage{pgfgantt}
 \usepackage{graphicx}
-
-\hypersetup{colorlinks=true}
+\usepackage{titlesec}
 
 \def\proof{\paragraph{}}
 \def\endproof{\hfill$\blacksquare$}
-\usepackage[table]{xcolor}
+
+% --- DEFINICIÓN DE COLORES CORPORATIVOS ---
 \definecolor{verdeApagado}{HTML}{A4BEA7}
 \definecolor{azulPastelApagado}{HTML}{ABBBCB}
-\definecolor{azulclaro}{HTML}{d1dbe4}
+\definecolor{azulclaro}{HTML}{D1DBE4}
+\definecolor{textoOscuro}{HTML}{2B2B2B} % Títulos e índice legibles
+
+% --- FORMATO SOLO PARA \section (En textoOscuro) ---
+\titleformat{\section}
+  {\color{textoOscuro}\normalfont\Large\bfseries}
+  {\color{textoOscuro}\thesection}{1em}{}
+
+% --- PERSONALIZACIÓN DE PUNTOS Y NÚMEROS EN EL ÍNDICE ---
+\makeatletter
+
+\makeatother
+
+% --- HYPERREF ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=textoOscuro,       % Enlaces del índice y secciones legibles
+    citecolor=verdeApagado,
+    urlcolor=azulPastelApagado
+}
+
+% --- CONFIGURACIÓN DE LISTAS ---
+\setlist[itemize,1]{label=\color{verdeApagado}$\bullet$, leftmargin=1.5em, itemsep=3pt, topsep=3pt}
+\setlist[itemize,2]{label=\color{verdeApagado}$\circ$, leftmargin=1.5em, itemsep=3pt, topsep=3pt}
+\setlist[enumerate,1]{label=\color{azulPastelApagado}\arabic*., leftmargin=1.5em, itemsep=3pt, topsep=3pt}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Márgenes
 \usepackage{geometry}
@@ -63,17 +88,23 @@ right=3cm
 }
 
 %% Encabezados y pie de página
+
 \pagestyle{fancy}
 \fancyhf{}
 
-\lhead{}
-\rhead{Dirección y Gestión de Proyectos}
-\renewcommand{\headrulewidth}{0.08pt}
+% Esquina superior izquierda: Logo de DobleM
+\lhead{\raisebox{-0.2\height}{\includegraphics[height=0.8cm]{img/logo.png}}}
 
-\lfoot{}
-\rfoot{DobleM - DGP }
+% Esquina superior derecha: Nombre de la empresa / asignatura
+\rhead{\textbf{\color{azulPastelApagado}{DobleM Software}}}
+
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{{\color{verdeApagado}\hrule width\headwidth height\headrulewidth}}% Línea de color corporativo
+
+% Pie de página
+\rfoot{\small\color{gray}{Dirección y Gestión de Proyectos}}
 \cfoot{\thepage}
-\renewcommand{\footrulewidth}{0.08pt}
+\renewcommand{\footrulewidth}{0.4pt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{document}
 
@@ -96,16 +127,16 @@ right=3cm
         \centering
         \includegraphics[width=0.4\textwidth]{img/logo.png}
     \end{figure}
-	 \vfill
+     \vfill
     {\textsc{\Huge DOBLE-M SOFTWARE}}\\[0.4cm]
-	 \vfill
+     \vfill
    % {\textsc{\large Metodologías de Desarrollo Ágil}} \\[0.2cm]
      {\textsc{\large Dirección y Gestión de Proyectos}}\\[0.2cm]
     
     
     \vfill
-	\vfill
-	\vfill
+    \vfill
+    \vfill
     {\Large{Minerva Cebrián Marín}} {(mcm17@correo.ugr.es)} \\
     
     %\vfill
@@ -127,7 +158,7 @@ right=3cm
     {\Large{Daniel Vega Jiménez}} {(deltac@correo.ugr.es)} \\
     
     \vfill
-	\vfill
+    \vfill
     {Curso 2026-2027}
         \vfill
     
@@ -144,6 +175,7 @@ right=3cm
 % ---------------- Índice ----------------
 \newpage
 \pagestyle{fancy}
+\pagenumbering{arabic}
 \setcounter{page}{1}
 
 \makeatletter
@@ -165,19 +197,19 @@ right=3cm
 
 
 %\include{cap/mda/backlog} 
-\newpage
 
 
 %\include{cap/mda/jira}
 % DGP
 %\newpage
-%  \include{cap/dgp/equipo/recuentodehoras}
-% \newpage
-% \include{cap/dgp/equipo/actas/acta}
+  \include{cap/dgp/equipo/recuentodehoras}
+ \newpage
+\include{cap/dgp/equipo/actas/acta}
 % \newpage
 
- \include{cap/dgp/equipo/manualdecoordinacion}
-% \include{cap/dgp/equipo/actas/planificacion}
+\include{cap/dgp/equipo/manualdecoordinacion}
+ \newpage
+ \include{cap/dgp/equipo/planificacion}
 % \newpage
 
 
@@ -188,10 +220,5 @@ right=3cm
 
 \newpage
 %\include{cap/dgp/cliente/cronograma}
-
-
-
-
-
 
 \end{document}
