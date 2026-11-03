@@ -77,29 +77,50 @@ Definen las funcionalidades que deberá proporcionar la aplicación. A continuac
 
 \paragraph{Requisitos No Funcionales (RNF)}
 Definen las condiciones de calidad, accesibilidad, seguridad y funcionamiento que deberá cumplir la aplicación.
+% Cambiado: Añadida una referencia a la tabla de RNF
+En la Tabla \ref{tab:requisitos_no_funcionales} se especifican detalladamente estos requisitos adaptados al contexto del proyecto y a las necesidades de los usuarios.
 
 \begin{table}[H]
 \centering
+
+% Cambiado: Añadido caption y label
+\caption{Especificación de Requisitos No Funcionales}
+\label{tab:requisitos_no_funcionales}
+
 \rowcolors{1}{white}{white}
 \begin{tabularx}{\textwidth}{|p{2.2cm}|X|}
 \hline
 \rowcolor{azulPastelApagado}
 \textbf{Código} & \textbf{Criterios de Calidad y Usabilidad} \\ \hline
 \rowcolor{azulclaro}
-\textbf{RNF1} & Diseñar una interfaz sencilla, consistente y comprensible, reduciendo la cantidad de información y opciones mostradas simultáneamente al estudiante. \\ \hline
-\textbf{RNF2} & Permitir adaptar la presentación de la aplicación a las necesidades individuales mediante las opciones de personalización disponibles. \\ \hline
+% Cambiado: Modificada la redacción de los RNF y agrupamiento de estos
+% \textbf{RNF1} & Diseñar una interfaz sencilla, consistente y comprensible, reduciendo la cantidad de información y opciones mostradas simultáneamente al estudiante. \\ \hline
+% \textbf{RNF2} & Permitir adaptar la presentación de la aplicación a las necesidades individuales mediante las opciones de personalización disponibles. \\ \hline
+% \rowcolor{azulclaro}
+% \textbf{RNF3} & Utilizar textos claros y concisos, instrucciones breves, iconos comprensibles y apoyos visuales adecuados para facilitar la comprensión de las actividades. \\ \hline
+% \textbf{RNF4} & Facilitar la interacción mediante controles suficientemente grandes, una disposición clara de los elementos y una navegación sencilla, teniendo en cuenta las necesidades de movilidad de los usuarios. \\ \hline
+% \rowcolor{azulclaro}
+% \textbf{RNF5} & Garantizar que las funcionalidades principales puedan utilizarse desde los navegadores y dispositivos compatibles definidos para el proyecto. \\ \hline
+% \textbf{RNF6} & Proteger el acceso a la información mediante autenticación y comprobación de permisos según el perfil del usuario. \\ \hline
+% \rowcolor{azulclaro}
+% \textbf{RNF7} & Garantizar que los usuarios solo puedan consultar o modificar la información para la que tengan autorización. \\ \hline
+% \textbf{RNF8} & Aplicar medidas de protección de datos personales, limitando la información recogida a la necesaria y cumpliendo la normativa aplicable. \\ \hline
+% \rowcolor{azulclaro}
+% \textbf{RNF9} & Diseñar e implementar paletas de colores coherentes para mostrar en la aplicación. \\ \hline
+% \textbf{RNF10} & Diseñar una página de login accesible. \\ \hline
+\textbf{RNF1} & La interfaz del alumno limitará la carga cognitiva mostrando un máximo de 15 elementos interactivos contextuales por pantalla (botones, checks), excluyendo la barra de navegación global permanente. Las tareas complejas se dividirán en pasos secuenciales mostrando una sola acción principal a la vez. \\ \hline
+\textbf{RNF2} & El sistema permitirá adaptar la cuenta del alumno mediante las siguientes opciones de configuración: ajuste de tamaño y tipo de fuente, alternancia entre texto plano y pictogramas, selección de paletas de colores accesibles, entrada de texto por voz (opcional) y gestión de la imagen de perfil. \\ \hline
 \rowcolor{azulclaro}
-\textbf{RNF3} & Utilizar textos claros y concisos, instrucciones breves, iconos comprensibles y apoyos visuales adecuados para facilitar la comprensión de las actividades. \\ \hline
-\textbf{RNF4} & Facilitar la interacción mediante controles suficientemente grandes, una disposición clara de los elementos y una navegación sencilla, teniendo en cuenta las necesidades de movilidad de los usuarios. \\ \hline
+\textbf{RNF3} & Los textos dirigidos a los alumnos aplicarán principios de Lectura Fácil (frases cortas, estructura sintáctica directa) y estarán obligatoriamente apoyados por pictogramas de la base de datos ARASAAC. Se utilizarán tipografías sin serifa con un tamaño base mínimo equivalente a 18px. \\ \hline
+\textbf{RNF4} & Todos los elementos interactivos (botones, enlaces, casillas de verificación) deberán tener un área táctil mínima de 44x44 píxeles CSS para prevenir toques accidentales por dificultades de motricidad. \\ \hline
 \rowcolor{azulclaro}
-\textbf{RNF5} & Garantizar que las funcionalidades principales puedan utilizarse desde los navegadores y dispositivos compatibles definidos para el proyecto. \\ \hline
-\textbf{RNF6} & Proteger el acceso a la información mediante autenticación y comprobación de permisos según el perfil del usuario. \\ \hline
+\textbf{RNF5} & La interfaz será Responsive y estará optimizada para resoluciones de tablet (formato apaisado y vertical). Su correcto funcionamiento deberá ser evaluable mediante las herramientas de emulación de dispositivos (Device Mode) de los navegadores basados en Chromium y Safari. \\ \hline
+\textbf{RNF6} & El sistema implementará un modelo RBAC con cuatro perfiles estrictos: Alumno, Profesor, Familia y Administrador. Las comprobaciones de rol y permisos se validarán obligatoriamente en el lado del servidor (PHP/Twig) en cada petición. \\ \hline
 \rowcolor{azulclaro}
-\textbf{RNF7} & Garantizar que los usuarios solo puedan consultar o modificar la información para la que tengan autorización. \\ \hline
-\textbf{RNF8} & Aplicar medidas de protección de datos personales, limitando la información recogida a la necesaria y cumpliendo la normativa aplicable. \\ \hline
+\textbf{RNF7} & El proceso de login para el perfil de alumno prescindirá del teclado alfanumérico. Constará de una fase de identificación visual (selección de aula/avatar o mediante sesión recordada) y una fase de autenticación mediante un PIN basado en una secuencia de 3 a 4 pictogramas presentados en una cuadrícula. No se utilizarán CAPTCHAs visuales ni de texto. \\ \hline
+\textbf{RNF8} & La aplicación protegerá la información utilizando sentencias preparadas para prevenir inyecciones SQL. Las contraseñas de profesores y los PINs de pictogramas de alumnos se almacenarán exclusivamente como hashes utilizando funciones criptográficas nativas de PHP. Todo el tráfico en producción deberá viajar cifrado mediante HTTPS. \\ \hline
 \rowcolor{azulclaro}
-\textbf{RNF9} & Diseñar e implementar paletas de colores coherentes para mostrar en la aplicación. \\ \hline
-\textbf{RNF10} & Diseñar una página de login accesible. \\ \hline
+\textbf{RNF9} & La paleta de colores estándar garantizará un ratio de contraste mínimo de 4.5:1 para textos normales y 3:1 para textos grandes o iconos (Nivel AA de WCAG 2.1). Además, la información nunca se transmitirá exclusivamente a través del color (ej. los errores usarán color y un icono de alerta). \\ \hline
 \end{tabularx}
 \end{table}
 
