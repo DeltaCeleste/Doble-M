@@ -46,4 +46,6 @@
 # FUTURA APLICACIÓN WEB (TODO: cuando elijamos las tecnologías)
 # ==========================================
 app/data/
-app/data/
+app/www/composer.json
+app/www/composer.lock
+app/www/vendor/
