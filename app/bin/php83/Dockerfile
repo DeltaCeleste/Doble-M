@@ -100,3 +100,12 @@ RUN a2enmod rewrite headers
 
 # Cleanup
 RUN rm -rf /usr/src/*
+
+# 1. Descargar, verificar e instalar Composer globalmente de forma segura
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+    php -r "unlink('composer-setup.php');"
+
+# 2. Ir a la carpeta de tu aplicación e instalar Twig
+# WORKDIR /var/www/html
+# RUN composer require "twig/twig:^3.0"
