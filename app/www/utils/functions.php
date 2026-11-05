@@ -2,7 +2,8 @@
 
     require_once __DIR__ . "/../services/bd_manager.php"; 
 
-// Consultas --------------------------------------------------------------------------------------
+// Consultas ================================================================================================================
+    // Usuario --------------------------------------------------------------------------------------
     // Consulta el mayor id de usuario en la BD y lo devuelve incrementado
     function getNextUserID(){
         $conn = connect();
@@ -19,24 +20,6 @@
         disconnect($conn);
 
         return $idusr;
-    }
-
-    // Consulta el mayor id de grupo en la BD y lo devuelve incrementado
-    function getNextGroupID(){
-        $conn = connect();
-
-        $stmt = "SELECT MAX(id_grupo) FROM agenda.grupo;";
-        $result = $conn->query($stmt);
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $idgrp = $row["MAX(id_grupo)"];
-        }
-        $result->close();
-        $idgrp++;
-
-        disconnect($conn);
-
-        return $idgrp;
     }
 
     // Consulta el id de un usuario dado su nombre. Si no existe devuelve -1
@@ -61,11 +44,11 @@
         return $idusr;
     }
 
-    // Consulta el id de un grupo dado su nombre. Si no existe devuelve -1
-    function getGroupID($name){
+    // Consulta la categoría del usuario de nombre proporcionado. Si no existe devuelve -1
+    function getUserCategory($name){
         $conn = connect();
 
-        $stmt = "SELECT id_grupo FROM agenda.grupo WHERE nombre_grupo=?;";
+        $stmt = "SELECT categoria_usuario FROM agenda.usuario WHERE nombre_usuario=?;";
         $prepare = $conn->prepare($stmt);
 
         $prepare->bind_param("s", $name);
@@ -74,37 +57,13 @@
         $prepare->close();
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $idgrp = $row["id_grupo"];
+            $cat = $row["categoria_usuario"];
         }
-        else $idgrp = -1;
-        
+        else $cat = -1;
 
         disconnect($conn);
 
-        return $idgrp;
-    }
-
-    // Comprueba si una categoria existe (true) o no (false)
-    function categoryExists($category){
-        $conn = connect();
-
-        $stmt = "SELECT count(*) FROM agenda.categoria_usr WHERE tipo=?;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("s", $category);
-        $prepare->execute();
-        $result = $prepare->get_result();
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $count = $row["count(*)"];
-        }
-        $prepare->close();
-        
-        disconnect($conn);
-
-        if($count == 0){
-            return false;
-        }
-        return true;
+        return $cat;
     }
 
     // Comprueba si un usuario existe (true) o no (false)
@@ -114,51 +73,6 @@
         $stmt = "SELECT count(*) FROM agenda.usuario WHERE nombre_usuario=?;";
         $prepare = $conn->prepare($stmt);
         $prepare->bind_param("s", $name);
-        $prepare->execute();
-        $result = $prepare->get_result();
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $count = $row["count(*)"];
-        }
-        $prepare->close();
-        
-        disconnect($conn);
-
-        if($count == 0){
-            return false;
-        }
-        return true;
-    }
-
-    // Comprueba si un grupo existe (true) o no (false)
-    function groupExists($name){
-        $conn = connect();
-
-        $stmt = "SELECT count(*) FROM agenda.grupo WHERE nombre_grupo=?;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("s", $name);
-        $prepare->execute();
-        $result = $prepare->get_result();
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $count = $row["count(*)"];
-        }
-        $prepare->close();
-        
-        disconnect($conn);
-
-        if($count == 0){
-            return false;
-        }
-        return true;
-    }
-
-    function belongsToExists($idusr, $idgrp){
-        $conn = connect();
-
-        $stmt = "SELECT count(*) FROM agenda.pertenece WHERE id_usuario=? AND id_grupo=?;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("ii", $idusr, $idgrp);
         $prepare->execute();
         $result = $prepare->get_result();
         if ($result->num_rows > 0) {
@@ -198,7 +112,121 @@
         return true;
     }
 
-// Inserciones -----------------------------------------------------------------------------------
+    // Grupo --------------------------------------------------------------------------------------
+    // Consulta el mayor id de grupo en la BD y lo devuelve incrementado
+    function getNextGroupID(){
+        $conn = connect();
+
+        $stmt = "SELECT MAX(id_grupo) FROM agenda.grupo;";
+        $result = $conn->query($stmt);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $idgrp = $row["MAX(id_grupo)"];
+        }
+        $result->close();
+        $idgrp++;
+
+        disconnect($conn);
+
+        return $idgrp;
+    }
+
+    // Consulta el id de un grupo dado su nombre. Si no existe devuelve -1
+    function getGroupID($name){
+        $conn = connect();
+
+        $stmt = "SELECT id_grupo FROM agenda.grupo WHERE nombre_grupo=?;";
+        $prepare = $conn->prepare($stmt);
+
+        $prepare->bind_param("s", $name);
+        $prepare->execute();
+        $result = $prepare->get_result();
+        $prepare->close();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $idgrp = $row["id_grupo"];
+        }
+        else $idgrp = -1;
+        
+
+        disconnect($conn);
+
+        return $idgrp;
+    }
+
+    // Comprueba si un grupo existe (true) o no (false)
+    function groupExists($name){
+        $conn = connect();
+
+        $stmt = "SELECT count(*) FROM agenda.grupo WHERE nombre_grupo=?;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("s", $name);
+        $prepare->execute();
+        $result = $prepare->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $count = $row["count(*)"];
+        }
+        $prepare->close();
+        
+        disconnect($conn);
+
+        if($count == 0){
+            return false;
+        }
+        return true;
+    }
+
+    // Relación pertenece --------------------------------------------------------------------------
+    // Comprueba si existe la signación "usuario pertenece a grupo" existe para el usuario y grupo de los ids proporcionados
+    function belongsToExists($idusr, $idgrp){
+        $conn = connect();
+
+        $stmt = "SELECT count(*) FROM agenda.pertenece WHERE id_usuario=? AND id_grupo=?;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("ii", $idusr, $idgrp);
+        $prepare->execute();
+        $result = $prepare->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $count = $row["count(*)"];
+        }
+        $prepare->close();
+        
+        disconnect($conn);
+
+        if($count == 0){
+            return false;
+        }
+        return true;
+    }
+
+    // Categoría --------------------------------------------------------------------------------------
+    // Comprueba si una categoria existe (true) o no (false)
+    function categoryExists($category){
+        $conn = connect();
+
+        $stmt = "SELECT count(*) FROM agenda.categoria_usr WHERE tipo=?;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("s", $category);
+        $prepare->execute();
+        $result = $prepare->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $count = $row["count(*)"];
+        }
+        $prepare->close();
+        
+        disconnect($conn);
+
+        if($count == 0){
+            return false;
+        }
+        return true;
+    }
+
+// Inserciones =============================================================================================================
+    // Usuario --------------------------------------------------------------------------------------
     // Crea un nuevo usuario de cualquier categoría en la base de datos si no existe y la categoría esta en la base de datos
     function insertUser($name, $pass, $category){
         if(userExists($name)) return false;
@@ -240,6 +268,7 @@
         return insertUser($name, $pass, "administrador");
     }
 
+    // Grupo --------------------------------------------------------------------------------------
     // Crea un nuevo grupo con el nombre dado en la base de datos si no existe
     function insertGroup($name){
         if(groupExists($name)) return false;
@@ -258,13 +287,16 @@
         return true;
     }
 
-    // Crea una asociación usuario-grupo en la base de datos si ambos usuarios existen
+    // Relación pertenece --------------------------------------------------------------------------
+    // Crea una asociación usuario-grupo en la base de datos si ambos (usuario y grupo) existen y el usuario es un profesor o un estudiante
     function insertUsrBelongsToGrp($userName, $groupName){
         $idusr = getUserID($userName);
         $idgrp = getGroupID($groupName);
 
-        if($idusr < 0 || $idgrp < 0) return false;
-        if(belongsToExists($idusr, $idgrp)) return false;
+        if($idusr < 0 || $idgrp < 0) return false;                                     // Usuario o grupo inexistente
+        if(belongsToExists($idusr, $idgrp)) return false;                              // Relación existente
+        $userCategory = getUserCategory($userName);
+        if($userCategory != "estudiante" && $userCategory != "profesor") return false; // Categoría inválida
 
         $conn = connect();
         $stmt = $conn->prepare("INSERT INTO agenda.pertenece(id_usuario, id_grupo) VALUES (?, ?);");
