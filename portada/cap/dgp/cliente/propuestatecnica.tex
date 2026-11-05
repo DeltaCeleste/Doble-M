@@ -19,9 +19,27 @@ La iniciativa también responde a una necesidad de mejora de accesibilidad, ya q
 Diseñar, desarrollar y verificar una aplicación web accesible y personalizable que facilite la planificación y realización de actividades escolares y personales de estudiantes con discapacidad intelectual, permitiendo su gestión y seguimiento por parte de los propios estudiantes, sus tutores y los profesores autorizados.
 
 \subsubsection{Objetivos Específicos}
-\definecolor{verdeTag}{HTML}{2E7D32}
-\definecolor{amarilloTag}{HTML}{E65100}
-\definecolor{grisTag}{HTML}{616161}
+
+Para alcanzar el objetivo general, el proyecto se desglosa en los siguientes objetivos específicos, a los cuales se vinculan los requisitos técnicos del sistema:
+
+\begin{itemize}[leftmargin=1.2em, itemsep=0.8em]
+    \item \textbf{OE1. Gestión integral de usuarios, perfiles y control de acceso seguro:} Implementar un sistema de autenticación y autorización basado en roles (Administrador, Profesor, Familia y Estudiante) garantizando la gestión de altas, bajas, edición y la asignación de relaciones y permisos según el perfil.
+    \nobreak\\[0.2em]\textit{\footnotesize \textbf{Requisitos:} RF1, RF2, RF3 (RF3.1--RF3.4), RF5, RF24, RNF6--RNF8, RNF10, RI1--RI3, RI10, RI13.}
+
+    \item \textbf{OE2. Planificación, programación y seguimiento estructurado de la agenda:} Proporcionar mecanismos claros e intuitivos para la consulta temporalizada (vista diaria y semanal), creación detallada y asignación individual o grupal de actividades escolares y personales.
+    \nobreak\\[0.2em]\textit{\footnotesize \textbf{Requisitos:} RF9--RF11 (RF11.1), RF12--RF15, RNF5, RI5, RI8, RI9, RI11, RI12.}
+
+    \item \textbf{OE3. Promoción de la autonomía del estudiante y ejecución guiada:} Facilitar la realización independiente de tareas mediante la descomposición en pasos secuenciales verificables, la confirmación de estados de inicio/fin y el apoyo con temporizadores visuales y notificaciones.
+    \nobreak\\[0.2em]\textit{\footnotesize \textbf{Requisitos:} RF16--RF19, RF23, RNF1, RI6, RI7.}
+
+    \item \textbf{OE4. Personalización multidimensional y accesibilidad cognitiva y visual:} Adaptar la interfaz a las capacidades y preferencias individuales del alumnado mediante el uso de pictogramas ARASAAC, principios de Lectura Fácil, paletas cromáticas con contraste accesible (WCAG 2.1 AA) y opciones de configuración visual persistentes.
+    \nobreak\\[0.2em]\textit{\footnotesize \textbf{Requisitos:} RF6, RF7 (RF7.1--RF7.2), RF8, RNF2--RNF4, RNF9, RI4.}
+
+    \item \textbf{OE5. Módulos complementarios y canales de comunicación asistida (Fase Opcional):} Evaluar y prototipar funcionalidades adicionales de valor añadido, tales como el canal accesible tutor-estudiante y sistemas asistidos de sustitución o valoración de tareas.
+    \nobreak\\[0.2em]\textit{\footnotesize \textbf{Requisitos:} RF20, RF21, RF22.}
+\end{itemize}
+
+
 
 \paragraph{Requisitos Funcionales (RF)}
 Definen las funcionalidades que deberá proporcionar la aplicación. A continuación se detalla su alcance y nivel de cobertura en el proyecto:
@@ -160,9 +178,10 @@ Definen las tecnologías, herramientas y condiciones técnicas previstas para de
 \end{table}
 
 \subsection{Antecedentes del Equipo de Trabajo}
-El equipo está formado por seis estudiantes de último año con formación en Ingeniería Informática, los cuales contamos con conocimientos en distintas áreas, lenguajes de programación y herramientas de desarrollo que nos permiten afrontar el análisis, diseño, programación y pruebas del sistema exigidas.
-
-Dado que no todos tenemos la misma experiencia previa en desarrollo web, reservaremos un tiempo inicial para formarnos e igualar el nivel técnico del grupo. Además, aunque tenemos una base sólida en distintas áreas de trabajo, esta es nuestra primera experiencia trabajando en un equipo de desarrollo con un enfoque similar al profesional. Por ello, nos organizaremos bien a la hora de coordinarnos, repartirnos las tareas, gestionar el control de versiones y revisar el trabajo, asegurando así una buena colaboración y un resultado de calidad.
+El equipo está formado por seis estudiantes de último curso, con formación en Ingeniería Informática en la Universidad de Granada. Durante nuestra formación académica, hemos adquirido conocimientos en el desarrollo de software, el diseño de sistemas y la gestión de datos, a través de asignaturas como ”Fundamentos de Ingeniería del Software”, “Fundamentos de Bases de Datos”, entre otras.
+A lo largo de la carrera hemos trabajado con distintos lenguajes y tecnologías de programación, como C++, Java, Python, HTML, CSS y JavaScript, además de herramientas para el diseño de sistemas y la gestión de datos, como SQL Developer para trabajar con bases de datos, distintos entornos de programación, como Visual Studio, y herramientas para diseñar diagramas y representar sistemas. 
+Estos conocimientos nos proporcionan una base sólida para afrontar las distintas fases del proyecto, desde el análisis de los requisitos y el diseño de la aplicación hasta su desarrollo y pruebas necesarias.
+Aunque no todos tenemos la misma experiencia en desarrollo web, contamos con una formación común que nos permitirá compartir conocimientos, repartir las tareas según nuestras habilidades y trabajar de forma coordinada para desarrollar la aplicación con el nivel de calidad esperado.
 
 \subsection{Justificación: Revisión de Soluciones Relacionadas con la Temática Comparativa}
 Existen aplicaciones y recursos que permiten organizar actividades mediante agendas visuales, imágenes y pictogramas. Algunas de ellas son las siguientes:
