@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Actividad</title>
+    <link rel="stylesheet" href="css/asignar.css">
+</head>
+<body>
+
+    <div class="dispositivo-marco">
+        <!-- Barra superior del wireframe -->
+        <header class="barra-superior">
+            <div class="icono-placeholder"></div>
+            <button type="button" class="boton-menu" aria-label="Menú de navegación">
+                <span class="linea-hamburguesa"></span>
+                <span class="linea-hamburguesa"></span>
+                <span class="linea-hamburguesa"></span>
+            </button>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="contenedor-principal">
+            <h1 class="titulo-pagina">Asignar Actividad</h1>
+
+            <form action="{{ action_url|default('#') }}" method="POST" class="formulario-tarjeta">
+                
+                <!-- 1. Nombre Actividad -->
+                <div class="campo-grupo">
+                    <label for="nombre_actividad">Nombre Actividad:</label>
+                    <input type="text" 
+                           id="nombre_actividad" 
+                           name="nombre_actividad" 
+                           value="{{ actividad_previa.nombre|default('') }}" 
+                           required>
+                </div>
+
+                <!-- 2. Horario -->
+                <div class="campo-grupo">
+                    <label for="horario">Horario:</label>
+                    <input type="text" 
+                           id="horario" 
+                           name="horario" 
+                           placeholder="Ej. 10:00 - 11:30" 
+                           value="{{ actividad_previa.horario|default('') }}" 
+                           required>
+                </div>
+
+                <!-- 3. Alumnos (Select) -->
+                <div class="campo-grupo">
+                    <label for="alumnos">Alumnos:</label>
+                    <div class="select-wrapper">
+                        <select id="alumnos" name="alumno_id" required>
+                            <option value="" disabled selected>Selecciona un alumno</option>
+                            {% for alumno in lista_alumnos %}
+                                <option value="{{ alumno.id }}">
+                                    {{ alumno.nombre }} {{ alumno.apellidos|default('') }} ({{ alumno.aula|default('Sin aula') }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 4. Tareas -->
+                <div class="campo-grupo">
+                    <label for="tareas">Tareas:</label>
+                    <input type="text" 
+                           id="tareas" 
+                           name="tareas" 
+                           placeholder="Pasos o instrucciones" 
+                           value="{{ actividad_previa.tareas|default('') }}">
+                </div>
+
+                <!-- Botón Asignar -->
+                <div class="campo-boton">
+                    <button type="submit" class="boton-accion">Asignar</button>
+                </div>
+
+            </form>
+        </main>
+
+        <!-- Barra inferior del wireframe -->
+        <footer class="barra-inferior">
+            <div class="icono-placeholder derecha"></div>
+        </footer>
+    </div>
+
+</body>
+</html>
