@@ -1,0 +1,241 @@
+/* Reseteo básico y variables del proyecto Doble M */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --azul-pastel-apagado: #ABBCCB;
+    --azul-claro: #D1DBE4;
+    --azul-fondo-tarjeta: #D7E1EA;
+    --azul-primario: #0077CC;
+    --texto-oscuro: #1A202C;
+    --borde-gris: #90A4AE;
+    --blanco: #FFFFFF;
+}
+
+body {
+    background-color: #F4F6F8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--texto-oscuro);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor adaptativo: ahora ocupa el 100% del ancho disponible */
+.dispositivo-marco {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--blanco);
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+/* Barras superior e inferior a lo ancho de la pantalla */
+.barra-superior, 
+.barra-inferior {
+    background-color: var(--azul-claro);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
+    width: 100%;
+}
+
+.barra-inferior {
+    margin-top: auto;
+    justify-content: flex-end;
+}
+
+/* Placeholders de los extremos */
+.icono-placeholder {
+    width: 48px;
+    height: 26px;
+    border: 1px solid #78909C;
+    background: linear-gradient(to top right, transparent calc(50% - 1px), #78909C, transparent calc(50% + 1px)),
+                linear-gradient(to bottom right, transparent calc(50% - 1px), #78909C, transparent calc(50% + 1px));
+}
+
+/* Botón menú hamburguesa */
+.boton-menu {
+    background: none;
+    border: 1px solid #455A64;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+}
+
+.linea-hamburguesa {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: #263238;
+}
+
+/* Área central de trabajo: centrada y amplia */
+.contenedor-principal {
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 5vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+}
+
+/* Título */
+.titulo-pagina {
+    font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+    font-weight: 700;
+    color: #102A43;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 3px solid var(--azul-primario);
+    padding-bottom: 0.35rem;
+    display: inline-block;
+}
+
+/* Tarjeta central: en PC/laptop ocupa un ancho generoso y proporcionado (hasta 1050px) */
+.formulario-tarjeta {
+    background-color: var(--azul-fondo-tarjeta);
+    border: 1px solid var(--borde-gris);
+    border-radius: 8px;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    width: 100%;
+    max-width: 1000px; /* Ya no se queda pequeño en monitores y laptops */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Filas del formulario */
+.campo-grupo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.campo-grupo label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    flex: 0 0 240px; /* Ancho fijo para que todos los inputs queden perfectamente alineados a la izquierda */
+}
+
+.campo-grupo input,
+.select-wrapper select {
+    flex: 1;
+    width: 100%;
+    background-color: var(--blanco);
+    border: 1px solid #4A5568;
+    border-radius: 5px;
+    padding: 0.75rem 1rem;
+    font-size: 1.05rem;
+    color: #2D3748;
+    outline: none;
+    min-height: 48px;
+}
+
+.campo-grupo input:focus,
+.select-wrapper select:focus {
+    border-color: var(--azul-primario);
+    box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.25);
+}
+
+.select-wrapper {
+    flex: 1;
+    display: flex;
+}
+
+/* Botón inferior Asignar */
+.campo-boton {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.boton-accion {
+    background-color: var(--azul-pastel-apagado);
+    color: var(--texto-oscuro);
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 0.85rem 3.5rem;
+    border: 2px solid var(--texto-oscuro);
+    border-radius: 16px;
+    cursor: pointer;
+    min-height: 50px;
+    min-width: 180px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.2s ease, transform 0.05s ease;
+}
+
+.boton-accion:hover {
+    background-color: #97AAB9;
+}
+
+.boton-accion:active {
+    transform: translateY(1px);
+}
+
+/* =========================================================
+   ADAPTACIONES PARA IPAD / TABLET (ancho medio)
+   ========================================================= */
+@media (max-width: 820px) {
+    .formulario-tarjeta {
+        max-width: 95%;
+        padding: 1.75rem;
+    }
+
+    .campo-grupo label {
+        flex: 0 0 190px;
+        font-size: 1rem;
+    }
+}
+
+/* =========================================================
+   ADAPTACIONES PARA MÓVIL (pantallas pequeñas)
+   ========================================================= */
+@media (max-width: 560px) {
+    .contenedor-principal {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .formulario-tarjeta {
+        padding: 1.25rem 1rem;
+        gap: 1.2rem;
+    }
+
+    /* En móvil las etiquetas se colocan arriba del input para no apretarse */
+    .campo-grupo {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .campo-grupo label {
+        flex: none;
+        width: 100%;
+        font-size: 0.95rem;
+    }
+
+    .select-wrapper {
+        width: 100%;
+    }
+
+    .boton-accion {
+        width: 100%;
+    }
+}

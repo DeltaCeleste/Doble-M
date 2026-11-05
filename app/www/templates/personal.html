@@ -1,0 +1,71 @@
+{# Sección de detalles de la actividad seleccionada (Tarea P2.4 / HU-P2) #}
+{% if actividad is defined and actividad is not empty %}
+    <article class="actividad-detalle-card" aria-labelledby="actividad-titulo">
+        
+        {# Cabecera: Título y Pictograma / Imagen #}
+        <header class="actividad-header">
+            {% if actividad.imagen %}
+                <img src="{{ actividad.imagen }}" 
+                     alt="{{ actividad.nombre }}" 
+                     class="actividad-pictograma" />
+            {% endif %}
+            <h2 id="actividad-titulo" class="actividad-titulo">{{ actividad.nombre }}</h2>
+        </header>
+
+        <div class="actividad-cuerpo">
+            {# 1. Fecha y Horario #}
+            <section class="actividad-seccion temporalidad">
+                <h3>Temporalización</h3>
+                <p>
+                    <strong>Fecha:</strong> 
+                    <time datetime="{{ actividad.fecha }}">{{ actividad.fecha|date('d/m/Y') }}</time>
+                </p>
+                <p>
+                    <strong>Horario:</strong> 
+                    <time datetime="{{ actividad.hora_inicio }}">{{ actividad.hora_inicio }}</time> - 
+                    <time datetime="{{ actividad.hora_fin }}">{{ actividad.hora_fin }}</time>
+                </p>
+            </section>
+
+            {# 2. Descripción de la actividad #}
+            <section class="actividad-seccion descripcion">
+                <h3>Descripción</h3>
+                <p>{{ actividad.descripcion|default('Sin descripción detallada.') }}</p>
+            </section>
+
+            {# 3. Alumnado o grupo al que está dirigida #}
+            <section class="actividad-seccion destinatarios">
+                <h3>Alumnado asignado</h3>
+                
+                {% if actividad.grupo %}
+                    <p class="etiqueta-grupo">
+                        <strong>Grupo/Aula:</strong> {{ actividad.grupo.nombre }}
+                    </p>
+                {% endif %}
+
+                {% if actividad.estudiantes is defined and actividad.estudiantes is not empty %}
+                    <ul class="lista-alumnado">
+                        {% for estudiante in actividad.estudiantes %}
+                            <li class="item-estudiante">
+                                {% if estudiante.avatar %}
+                                    <img src="{{ estudiante.avatar }}" 
+                                         alt="Foto de perfil de {{ estudiante.nombre }}" 
+                                         class="avatar-mini" />
+                                {% endif %}
+                                <span class="nombre-estudiante">{{ estudiante.nombre }} {{ estudiante.apellidos|default('') }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="alerta-vacio">No hay estudiantes asignados directamente a esta actividad.</p>
+                {% endif %}
+            </section>
+        </div>
+
+    </article>
+{% else %}
+    {# Tarea P2.6: Mensaje cuando la actividad no existe o no está seleccionada #}
+    <div class="mensaje-aviso" role="status">
+        <p>No se ha seleccionado ninguna actividad para mostrar sus detalles.</p>
+    </div>
+{% endif %}
