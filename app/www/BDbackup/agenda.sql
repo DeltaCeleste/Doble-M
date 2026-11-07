@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: database:3306
--- Tiempo de generación: 03-11-2026 a las 21:41:38
+-- Tiempo de generación: 07-11-2026 a las 18:31:23
 -- Versión del servidor: 8.4.13
 -- Versión de PHP: 8.3.36
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `agenda`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asociado`
+--
+
+CREATE TABLE `asociado` (
+  `id_estudiante` int NOT NULL,
+  `id_responsable` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `asociado`
+--
+
+INSERT INTO `asociado` (`id_estudiante`, `id_responsable`) VALUES
+(1, 2),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -57,7 +76,7 @@ CREATE TABLE `grupo` (
 --
 
 INSERT INTO `grupo` (`id_grupo`, `nombre_grupo`) VALUES
-(1, 'Grupo de pruebas');
+(1, 'Grupo');
 
 -- --------------------------------------------------------
 
@@ -69,6 +88,14 @@ CREATE TABLE `pertenece` (
   `id_usuario` int NOT NULL,
   `id_grupo` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `pertenece`
+--
+
+INSERT INTO `pertenece` (`id_usuario`, `id_grupo`) VALUES
+(1, 1),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -89,11 +116,23 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `nombre_usuario`, `contraseña`, `categoria_usuario`, `estado_usuario`) VALUES
-(1, 'Estudiante de pruebas', 'contraseña no destinada a ser reproducible', 'estudiante', 0);
+(1, 'Estudiante', 'contraseña no destinada a ser reproducible', 'estudiante', 0),
+(2, 'Profesor', '$2y$10$aArA5AzzKNBWvGxBvQEYe.OUvCDDKrBJc32VgqKFQXGJc2XOvhASi', 'profesor', 1),
+(3, 'Familia', '$2y$10$VuSIt8lmhj6rn/W/RyoMsOZChSiQDYkSE.ZO9ROjIlRNxkLWpRbru', 'familia', 1),
+(4, 'Admin', '$2y$10$LB82qcERUbXkG.f6fXmyueSZ3LgWFtUJnuvMpdLqJF1j0uVNOtqe2', 'administrador', 1);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `asociado`
+--
+ALTER TABLE `asociado`
+  ADD PRIMARY KEY (`id_estudiante`,`id_responsable`),
+  ADD UNIQUE KEY `id_estudiante_2` (`id_estudiante`,`id_responsable`),
+  ADD KEY `id_estudiante` (`id_estudiante`),
+  ADD KEY `id_responsable` (`id_responsable`);
 
 --
 -- Indices de la tabla `categoria_usr`
@@ -112,6 +151,7 @@ ALTER TABLE `grupo`
 -- Indices de la tabla `pertenece`
 --
 ALTER TABLE `pertenece`
+  ADD PRIMARY KEY (`id_usuario`,`id_grupo`),
   ADD KEY `id_usuario` (`id_usuario`),
   ADD KEY `id_grupo` (`id_grupo`);
 
@@ -126,6 +166,13 @@ ALTER TABLE `usuario`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `asociado`
+--
+ALTER TABLE `asociado`
+  ADD CONSTRAINT `asociado_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `asociado_ibfk_2` FOREIGN KEY (`id_responsable`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Filtros para la tabla `pertenece`
