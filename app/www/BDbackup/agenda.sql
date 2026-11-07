@@ -121,6 +121,50 @@ INSERT INTO `usuario` (`id_usuario`, `nombre_usuario`, `contraseña`, `categoria
 (3, 'Familia', '$2y$10$VuSIt8lmhj6rn/W/RyoMsOZChSiQDYkSE.ZO9ROjIlRNxkLWpRbru', 'familia', 1),
 (4, 'Admin', '$2y$10$LB82qcERUbXkG.f6fXmyueSZ3LgWFtUJnuvMpdLqJF1j0uVNOtqe2', 'administrador', 1);
 
+-- --------------------------------------------------------
+-- Estructura para la tabla `preferencia`
+-- --------------------------------------------------------
+CREATE TABLE `preferencia` (
+  `id_preferencia` int NOT NULL AUTO_INCREMENT,
+  `formato_visual` varchar(20) NOT NULL DEFAULT 'texto' COMMENT 'texto o pictogramas',
+  `permite_vista_semanal` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id_preferencia`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+-- Estructura para la relación `configura` (Usuario - Preferencia)
+-- --------------------------------------------------------
+CREATE TABLE `configura` (
+  `id_usuario` int NOT NULL,
+  `id_preferencia` int NOT NULL,
+  PRIMARY KEY (`id_usuario`, `id_preferencia`),
+  KEY `id_preferencia` (`id_preferencia`),
+  CONSTRAINT `configura_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `configura_ibfk_2` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencia` (`id_preferencia`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+-- Estructura para la tabla `actividad`
+-- --------------------------------------------------------
+CREATE TABLE `actividad` (
+  `id_actividad` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_actividad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+-- Estructura para la relación `tiene` (Estudiante - Actividad, con atributo fecha)
+-- --------------------------------------------------------
+CREATE TABLE `tiene` (
+  `id_usuario` int NOT NULL,
+  `id_actividad` int NOT NULL,
+  `fecha` datetime NOT NULL,
+  PRIMARY KEY (`id_usuario`, `id_actividad`, `fecha`),
+  KEY `id_actividad` (`id_actividad`),
+  CONSTRAINT `tiene_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `tiene_ibfk_2` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- Índices para tablas volcadas
 --
