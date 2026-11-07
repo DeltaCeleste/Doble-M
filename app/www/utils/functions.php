@@ -185,13 +185,37 @@
     }
 
     // Relación pertenece --------------------------------------------------------------------------
-    // Comprueba si existe la signación "usuario pertenece a grupo" existe para el usuario y grupo de los ids proporcionados
+    // Comprueba si existe la asignación "usuario pertenece a grupo" existe para el usuario y grupo de los ids proporcionados
     function belongsToExists($idusr, $idgrp){
         $conn = connect();
 
         $stmt = "SELECT count(*) FROM agenda.pertenece WHERE id_usuario=? AND id_grupo=?;";
         $prepare = $conn->prepare($stmt);
         $prepare->bind_param("ii", $idusr, $idgrp);
+        $prepare->execute();
+        $result = $prepare->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $count = $row["count(*)"];
+        }
+        $prepare->close();
+        
+        disconnect($conn);
+
+        if($count == 0){
+            return false;
+        }
+        return true;
+    }
+
+    // Relación asociación --------------------------------------------------------------------------
+    // Comprueba si existe la asignación "usuario asociado a usuario" existe para los usuarios proporcionados
+    function assocToExists($idstd, $idotr){
+        $conn = connect();
+
+        $stmt = "SELECT count(*) FROM agenda.asociado WHERE id_estudiante=? AND id_responsable=?;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("ii", $idstd, $idotr);
         $prepare->execute();
         $result = $prepare->get_result();
         if ($result->num_rows > 0) {
@@ -300,15 +324,41 @@
         $idusr = getUserID($userName);
         $idgrp = getGroupID($groupName);
 
-        if($idusr < 0 || $idgrp < 0) return false;                                     // Usuario o grupo inexistente
-        if(belongsToExists($idusr, $idgrp)) return false;                              // Relación existente
+        if($idusr < 0) return 300;                                                   // Usuario inexistente
+        if($idgrp < 0) return 301;                                                   // Grupo inexistente
+        if(belongsToExists($idusr, $idgrp)) return 201;                              // Relación existente
         $userCategory = getUserCategory($userName);
-        if($userCategory != "estudiante" && $userCategory != "profesor") return false; // Categoría inválida
+        if($userCategory != "estudiante" && $userCategory != "profesor") return 400; // Categoría inválida
 
         $conn = connect();
         $stmt = $conn->prepare("INSERT INTO agenda.pertenece(id_usuario, id_grupo) VALUES (?, ?);");
 
         $stmt->bind_param("ii", $idusr, $idgrp);
+        $stmt->execute();
+
+        $stmt->close();
+        disconnect($conn);
+
+        return 0;
+    }
+
+    // Relación asociación --------------------------------------------------------------------------
+    // Crea una asociación estudiante-responsable en la base de datos si ambos existen. El primer ID debe ser de un "estudiante" y el segundo de un "profesor" o "familia"
+    function insertUsrAssoc($studentName, $otherName){
+        $idstd  = getUserID($studentName);
+        $idothr = getUserID($otherName);
+
+        if($idstd < 0 || $idothr < 0) return false;                                      // Alguno de los usuarios no existe
+        if(assocToExists($idstd, $idothr)) return false;                                  // Asociación existente
+        $studentCategory = getUserCategory($studentName);
+        if($studentCategory != "estudiante") return false;                               // Primer id es de categoría inválida
+        $otherCategory = getUserCategory($otherName);
+        if($otherCategory != "profesor" && $otherCategory != "familia") return false;    // Segundo id es de categoría inválida
+
+        $conn = connect();
+        $stmt = $conn->prepare("INSERT INTO agenda.asociado(id_estudiante, id_responsable) VALUES (?, ?);");
+
+        $stmt->bind_param("ii", $idstd, $idothr);
         $stmt->execute();
 
         $stmt->close();
