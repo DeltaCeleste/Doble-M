@@ -512,4 +512,57 @@
 
         return $result;
     }
+
+    // Consulta las preferencias de un estudiante dado su ID
+    function getStudentPreferences($userId) {
+        $conn = connect();
+
+        $stmt = "SELECT p.* 
+                 FROM agenda.preferencia p 
+                 JOIN agenda.configura c ON p.id_preferencia = c.id_preferencia 
+                 WHERE c.id_usuario = ?;";
+        
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("i", $userId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $preferences = null;
+        if ($result->num_rows > 0) {
+            $preferences = $result->fetch_assoc();
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $preferences;
+    }
+
+    // Consulta las actividades asignadas a un estudiante en un intervalo de fechas (diario o semanal)
+  // Consulta las actividades asignadas a un estudiante en un intervalo de fechas (diario o semanal)
+  function getStudentActivitiesByDateRange($userId, $startDate, $endDate) {
+      $conn = connect();
+
+      $stmt = "SELECT a.id_actividad, a.nombre, t.fecha 
+               FROM agenda.actividad a
+               JOIN agenda.tiene t ON a.id_actividad = t.id_actividad
+               WHERE t.id_usuario = ? AND t.fecha BETWEEN ? AND ?
+               ORDER BY t.fecha ASC;";
+
+      $prepare = $conn->prepare($stmt);
+      $prepare->bind_param("iss", $userId, $startDate, $endDate);
+      $prepare->execute();
+      $result = $prepare->get_result();
+
+      $activities = array();
+      while ($row = $result->fetch_assoc()) {
+          $activities[] = $row;
+      }
+
+      $prepare->close();
+      disconnect($conn);
+
+      return $activities;
+  }
+
 ?>
