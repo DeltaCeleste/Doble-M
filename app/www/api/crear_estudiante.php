@@ -11,12 +11,12 @@
         $result = insertStudent($name, $pass);
 
         if ($result) {
-            echo json_encode(["success" => true, "code" => 0, "message" => "Estudiante creado con exito."]);
+            echo json_encode(["success" => true, "code" => 0, "message" => "Student seccesfully created"]);
         } else {
-            echo json_encode(["success" => false, "code" => 200, "message" => "Usuario ya registrado (nombre duplicado)"]);
+            echo json_encode(["success" => false, "code" => 200, "message" => "User already registered (duplicated name)"]);
         }
     }
     else{
-        echo json_encode(["success" => false, "code" => 100, "message" => "Variables necesarias ausentes."]);
+        echo json_encode(["success" => false, "code" => 100, "message" => "Missing variables"]);
     }
 ?>

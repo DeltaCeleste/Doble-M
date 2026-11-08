@@ -348,12 +348,13 @@
         $idstd  = getUserID($studentName);
         $idothr = getUserID($otherName);
 
-        if($idstd < 0 || $idothr < 0) return false;                                      // Alguno de los usuarios no existe
-        if(assocToExists($idstd, $idothr)) return false;                                  // Asociación existente
+        if($idstd == $idothr) return 400;                                              // Ambos usuario son el mismo
+        if($idstd < 0 || $idothr < 0) return 300;                                      // Alguno de los usuarios no existe
+        if(assocToExists($idstd, $idothr)) return 202;                                 // Asociación existente
         $studentCategory = getUserCategory($studentName);
-        if($studentCategory != "estudiante") return false;                               // Primer id es de categoría inválida
+        if($studentCategory != "estudiante") return 400;                               // Primer id es de categoría inválida
         $otherCategory = getUserCategory($otherName);
-        if($otherCategory != "profesor" && $otherCategory != "familia") return false;    // Segundo id es de categoría inválida
+        if($otherCategory != "profesor" && $otherCategory != "familia") return 400;    // Segundo id es de categoría inválida
 
         $conn = connect();
         $stmt = $conn->prepare("INSERT INTO agenda.asociado(id_estudiante, id_responsable) VALUES (?, ?);");
@@ -364,7 +365,7 @@
         $stmt->close();
         disconnect($conn);
 
-        return true;
+        return 0;
     }
 
 // Cosas de actividades, a falta de actualizar la bd (hace falta para los pasos de actividady demas)
