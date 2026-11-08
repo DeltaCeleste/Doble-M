@@ -136,11 +136,7 @@ CREATE TABLE `preferencia` (
 -- --------------------------------------------------------
 CREATE TABLE `configura` (
   `id_usuario` int NOT NULL,
-  `id_preferencia` int NOT NULL,
-  PRIMARY KEY (`id_usuario`, `id_preferencia`),
-  KEY `id_preferencia` (`id_preferencia`),
-  CONSTRAINT `configura_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `configura_ibfk_2` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencia` (`id_preferencia`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `id_preferencia` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -158,11 +154,7 @@ CREATE TABLE `actividad` (
 CREATE TABLE `tiene` (
   `id_usuario` int NOT NULL,
   `id_actividad` int NOT NULL,
-  `fecha` datetime NOT NULL,
-  PRIMARY KEY (`id_usuario`, `id_actividad`, `fecha`),
-  KEY `id_actividad` (`id_actividad`),
-  CONSTRAINT `tiene_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `tiene_ibfk_2` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -208,6 +200,22 @@ ALTER TABLE `usuario`
   ADD KEY `categoria_usuario` (`categoria_usuario`);
 
 --
+-- Indices de la tabla `configura`
+--
+ALTER TABLE `configura`
+  ADD PRIMARY KEY (`id_usuario`,`id_preferencia`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_preferencia` (`id_preferencia`);
+
+--
+-- Indices de la tabla `tiene`
+--
+ALTER TABLE `tiene`
+  ADD PRIMARY KEY (`id_usuario`,`id_actividad`,`fecha`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_actividad` (`id_actividad`);
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -231,6 +239,20 @@ ALTER TABLE `pertenece`
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`categoria_usuario`) REFERENCES `categoria_usr` (`tipo`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
+
+--
+-- Filtros para la tabla `configura`
+--
+ALTER TABLE `configura`
+  ADD CONSTRAINT `configura_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `configura_ibfk_2` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencia` (`id_preferencia`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Filtros para la tabla `tiene`
+--
+ALTER TABLE `tiene`
+  ADD CONSTRAINT `tiene_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `tiene_ibfk_2` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
