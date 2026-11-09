@@ -43,10 +43,15 @@
 
     $activities = getStudentActivitiesByDateRange($studentId, $startDate, $endDate);
 
+    // Mostrar mensaje explícito si no hay actividades
+    $message = count($activities) > 0 
+        ? "Agenda retrieved successfully" 
+        : "No activities scheduled for this period";
+
     echo json_encode([
         "success" => true,
         "code" => 0,
-        "message" => "Agenda retrieved successfully",
+        "message" => $message,
         "view" => $viewMode,
         "dateRange" => [
             "start" => $startDate,
