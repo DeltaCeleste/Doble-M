@@ -590,15 +590,13 @@
     }
 
     // Consulta las actividades asignadas a un estudiante en un intervalo de fechas (diario o semanal)
-    // Consulta las actividades asignadas a un estudiante en un intervalo de fechas (diario o semanal)
     function getStudentActivitiesByDateRange($userId, $startDate, $endDate) {
         $conn = connect();
-
-        $stmt = "SELECT a.id_actividad, a.nombre, t.fecha 
+        $stmt = "SELECT a.id_actividad, a.nombre_actividad, a.fecha_inicio, a.fecha_fin 
                  FROM agenda.actividad a
-                 JOIN agenda.tiene t ON a.id_actividad = t.id_actividad
-                 WHERE t.id_usuario = ? AND t.fecha BETWEEN ? AND ?
-                 ORDER BY t.fecha ASC;";
+                 JOIN agenda.asignacion_actividad aa ON a.id_actividad = aa.id_actividad
+                 WHERE aa.id_usuario = ? AND a.fecha_inicio BETWEEN ? AND ?
+                 ORDER BY a.fecha_inicio ASC;";
 
         $prepare = $conn->prepare($stmt);
         $prepare->bind_param("iss", $userId, $startDate, $endDate);
@@ -609,10 +607,8 @@
         while ($row = $result->fetch_assoc()) {
             $activities[] = $row;
         }
-
         $prepare->close();
         disconnect($conn);
-
         return $activities;
     }
 
@@ -667,6 +663,29 @@
         $_SESSION['rol']     = 'estudiante';
 
         return 0; // Éxito
+    }
+
+    // Obtiene los detalles de una actividad asignada a un estudiante específico
+    function getStudentActivityDetails($userId, $activityId) {
+        $conn = connect();
+        // Las fechas están en la tabla actividad
+        $stmt = "SELECT a.id_actividad, a.nombre_actividad, a.fecha_inicio, a.fecha_fin 
+                 FROM agenda.actividad a
+                 JOIN agenda.asignacion_actividad aa ON a.id_actividad = aa.id_actividad
+                 WHERE aa.id_usuario = ? AND a.id_actividad = ?;";
+
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("ii", $userId, $activityId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $activity = null;
+        if ($result->num_rows > 0) {
+            $activity = $result->fetch_assoc();
+        }
+        $prepare->close();
+        disconnect($conn);
+        return $activity;
     }
 
 ?>

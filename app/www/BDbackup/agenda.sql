@@ -3,14 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: database:3306
--- Tiempo de generación: 07-11-2026 a las 18:31:23
+-- Tiempo de generación: 09-11-2026 a las 18:01:00
 -- Versión del servidor: 8.4.13
 -- Versión de PHP: 8.3.36
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -122,8 +121,49 @@ INSERT INTO `usuario` (`id_usuario`, `nombre_usuario`, `contraseña`, `categoria
 (4, 'Admin', '$2y$10$LB82qcERUbXkG.f6fXmyueSZ3LgWFtUJnuvMpdLqJF1j0uVNOtqe2', 'administrador', 1);
 
 -- --------------------------------------------------------
--- Estructura para la tabla `preferencia`
+
+--
+-- Estructura para la tabla `actividad`
+--
+
+CREATE TABLE `actividad` (
+  `id_actividad` int NOT NULL AUTO_INCREMENT,
+  `nombre_actividad` varchar(150) NOT NULL,
+  `fecha_inicio` datetime NOT NULL,
+  `fecha_fin` datetime NOT NULL,
+  PRIMARY KEY (`id_actividad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 -- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `asignacion_actividad`
+--
+
+CREATE TABLE `asignacion_actividad` (
+  `id_usuario` int NOT NULL,
+  `id_actividad` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `paso_actividad`
+--
+
+CREATE TABLE `paso_actividad` (
+  `id_actividad` int NOT NULL,
+  `num_paso` int NOT NULL,
+  `titulo_paso` varchar(150) NOT NULL,
+  `completado` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `preferencia`
+--
+
 CREATE TABLE `preferencia` (
   `id_preferencia` int NOT NULL AUTO_INCREMENT,
   `formato_visual` varchar(20) NOT NULL DEFAULT 'texto' COMMENT 'texto o pictogramas',
@@ -132,30 +172,16 @@ CREATE TABLE `preferencia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
--- Estructura para la relación `configura` (Usuario - Preferencia)
--- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `configura`
+--
+
 CREATE TABLE `configura` (
   `id_usuario` int NOT NULL,
   `id_preferencia` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- --------------------------------------------------------
--- Estructura para la tabla `actividad`
--- --------------------------------------------------------
-CREATE TABLE `actividad` (
-  `id_actividad` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_actividad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
--- Estructura para la relación `tiene` (Estudiante - Actividad, con atributo fecha)
--- --------------------------------------------------------
-CREATE TABLE `tiene` (
-  `id_usuario` int NOT NULL,
-  `id_actividad` int NOT NULL,
-  `fecha` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Índices para tablas volcadas
@@ -200,20 +226,24 @@ ALTER TABLE `usuario`
   ADD KEY `categoria_usuario` (`categoria_usuario`);
 
 --
+-- Indices de la tabla `asignacion_actividad`
+--
+ALTER TABLE `asignacion_actividad`
+  ADD PRIMARY KEY (`id_usuario`,`id_actividad`),
+  ADD KEY `id_actividad` (`id_actividad`);
+
+--
+-- Indices de la tabla `paso_actividad`
+--
+ALTER TABLE `paso_actividad`
+  ADD PRIMARY KEY (`id_actividad`,`num_paso`);
+
+--
 -- Indices de la tabla `configura`
 --
 ALTER TABLE `configura`
   ADD PRIMARY KEY (`id_usuario`,`id_preferencia`),
-  ADD KEY `id_usuario` (`id_usuario`),
   ADD KEY `id_preferencia` (`id_preferencia`);
-
---
--- Indices de la tabla `tiene`
---
-ALTER TABLE `tiene`
-  ADD PRIMARY KEY (`id_usuario`,`id_actividad`,`fecha`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_actividad` (`id_actividad`);
 
 --
 -- Restricciones para tablas volcadas
@@ -238,21 +268,28 @@ ALTER TABLE `pertenece`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`categoria_usuario`) REFERENCES `categoria_usr` (`tipo`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-COMMIT;
+
+--
+-- Filtros para la tabla `asignacion_actividad`
+--
+ALTER TABLE `asignacion_actividad`
+  ADD CONSTRAINT `asig_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE,
+  ADD CONSTRAINT `asig_ibfk_2` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `paso_actividad`
+--
+ALTER TABLE `paso_actividad`
+  ADD CONSTRAINT `paso_ibfk_1` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `configura`
 --
 ALTER TABLE `configura`
-  ADD CONSTRAINT `configura_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `configura_ibfk_2` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencia` (`id_preferencia`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `conf_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE,
+  ADD CONSTRAINT `conf_ibfk_2` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencia` (`id_preferencia`) ON DELETE CASCADE;
 
---
--- Filtros para la tabla `tiene`
---
-ALTER TABLE `tiene`
-  ADD CONSTRAINT `tiene_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `tiene_ibfk_2` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
