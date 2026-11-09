@@ -590,30 +590,83 @@
     }
 
     // Consulta las actividades asignadas a un estudiante en un intervalo de fechas (diario o semanal)
-  // Consulta las actividades asignadas a un estudiante en un intervalo de fechas (diario o semanal)
-  function getStudentActivitiesByDateRange($userId, $startDate, $endDate) {
-      $conn = connect();
+    // Consulta las actividades asignadas a un estudiante en un intervalo de fechas (diario o semanal)
+    function getStudentActivitiesByDateRange($userId, $startDate, $endDate) {
+        $conn = connect();
 
-      $stmt = "SELECT a.id_actividad, a.nombre, t.fecha 
-               FROM agenda.actividad a
-               JOIN agenda.tiene t ON a.id_actividad = t.id_actividad
-               WHERE t.id_usuario = ? AND t.fecha BETWEEN ? AND ?
-               ORDER BY t.fecha ASC;";
+        $stmt = "SELECT a.id_actividad, a.nombre, t.fecha 
+                 FROM agenda.actividad a
+                 JOIN agenda.tiene t ON a.id_actividad = t.id_actividad
+                 WHERE t.id_usuario = ? AND t.fecha BETWEEN ? AND ?
+                 ORDER BY t.fecha ASC;";
 
-      $prepare = $conn->prepare($stmt);
-      $prepare->bind_param("iss", $userId, $startDate, $endDate);
-      $prepare->execute();
-      $result = $prepare->get_result();
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("iss", $userId, $startDate, $endDate);
+        $prepare->execute();
+        $result = $prepare->get_result();
 
-      $activities = array();
-      while ($row = $result->fetch_assoc()) {
-          $activities[] = $row;
-      }
+        $activities = array();
+        while ($row = $result->fetch_assoc()) {
+            $activities[] = $row;
+        }
 
-      $prepare->close();
-      disconnect($conn);
+        $prepare->close();
+        disconnect($conn);
 
-      return $activities;
-  }
+        return $activities;
+    }
+
+    // Obtiene los datos de autenticación de un usuario por su nombre
+    function getUserAuthData($name) {
+        $conn = connect();
+
+        $stmt = "SELECT id_usuario, nombre_usuario, contraseña, categoria_usuario, estado_usuario 
+                 FROM agenda.usuario 
+                 WHERE nombre_usuario = ?;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("s", $name);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $userData = null;
+        if ($result->num_rows > 0) {
+            $userData = $result->fetch_assoc();
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $userData;
+    }
+
+    // Autentica a un estudiante y gestiona su sesión
+    function loginStudentUser($name, $pass) {
+        $userData = getUserAuthData($name);
+
+        if (!$userData) {
+            return 300; // Usuario no existe
+        }
+
+        if ($userData['categoria_usuario'] !== 'estudiante') {
+            return 400; // Categoría inválida
+        }
+
+        if ($userData['estado_usuario'] == 0) {
+            return 401; // Usuario inactivo / dado de baja
+        }
+
+        if (!password_verify($pass, $userData['contraseña'])) {
+            return 203; // Contraseña incorrecta
+        }
+
+        // Inicializar y poblar variables de sesión
+        cargarSesion();
+        $_SESSION['anonimo'] = false;
+        $_SESSION['id']      = $userData['id_usuario'];
+        $_SESSION['nombre']  = $userData['nombre_usuario'];
+        $_SESSION['rol']     = 'estudiante';
+
+        return 0; // Éxito
+    }
 
 ?>
