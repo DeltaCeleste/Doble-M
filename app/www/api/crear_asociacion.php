@@ -24,7 +24,7 @@
                 echo json_encode(["success" => false, "code" => 301, "message" => "Group does not exist"]);
                 break;
             case 400:
-                echo json_encode(["success" => false, "code" => 400, "message" => "Student has to be 'estudiante' and responsible 'profesor' or 'family' (category)"]);
+                echo json_encode(["success" => false, "code" => 400, "message" => "Student has to be 'estudiante' and responsible 'profesor' or 'familia' (category)"]);
                 break;
         }
 
