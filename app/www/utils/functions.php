@@ -688,4 +688,19 @@
         return $activity;
     }
 
+    // HU-P3: Crear actividad (Profesor)
+    function createActivity($activityName, $startDate, $endDate) {
+        $conn = connect();
+
+        $stmt = "INSERT INTO agenda.actividad (nombre_actividad, fecha_inicio, fecha_fin) VALUES (?, ?, ?);";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("sss", $activityName, $startDate, $endDate);
+        
+        $result = $prepare->execute();
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $result;
+    }
 ?>
