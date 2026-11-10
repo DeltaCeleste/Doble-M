@@ -1,35 +1,198 @@
-.aviso-error-actividad {
+/* ==========================================================================
+   PALETA Y VARIABLES OFICIALES (Manual de Coordinación y Plan de Accesibilidad)
+   ========================================================================== */
+:root {
+    --verde-apagado: #A4BEA7;
+    --azul-pastel: #ABBBCB;
+    --azul-claro: #D1DBE4;
+    --texto-oscuro: #1A1A1A;
+    --borde-wireframe: #2C3E50;
+    --fondo-fuera: #E2E8F0;
+    --blanco: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px 0;
+    background-color: var(--fondo-fuera);
+    font-family: Arial, Helvetica, sans-serif; /* RNF3: Palo seco */
+    font-size: 18px; /* RNF3: Mínimo 18px */
+    color: var(--texto-oscuro);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   MARCO SIMULADOR IPAD (RNF5: Proporción 768x1024px)
+   ========================================================================== */
+.ipad-frame {
+    width: 768px;
+    min-height: 1024px;
+    background-color: var(--blanco);
+    border: 3px solid var(--borde-wireframe);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Barra superior de navegación (Boceto Figma) */
+.ipad-top-bar {
+    height: 60px;
+    background-color: var(--azul-claro);
+    border-bottom: 2px solid var(--borde-wireframe);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 18px;
+}
+
+.icono-box {
+    width: 44px;
+    height: 44px; /* RNF4: Touch target >= 44x44px */
+    border: 2px solid var(--borde-wireframe);
+    background-color: var(--blanco);
     display: flex;
     align-items: center;
-    gap: 16px;
-    background-color: #D1DBE4; /* azulclaro */
-    border: 2px solid #ABBBCB; /* azulPastelApagado */
-    border-radius: 8px;
-    padding: 24px;
-    max-width: 600px;
-    margin: 30px auto;
-    color: #1A1A1A;
-    font-family: Arial, sans-serif;
-}
-.texto-alerta h2 {
-    margin: 0 0 8px 0;
+    justify-content: center;
     font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--texto-oscuro);
 }
-.texto-alerta p {
-    margin: 0 0 16px 0;
-    font-size: 1.125rem; /* 18px */
+
+.icono-box:focus,
+.icono-box:hover {
+    outline: 3px solid #000;
 }
-.btn-volver {
+
+/* Área central de contenido */
+.ipad-body {
+    flex: 1;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 20px 0;
+    color: var(--texto-oscuro);
+}
+
+.fecha-label {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0 0 24px 0;
+    color: var(--texto-oscuro);
+}
+
+/* ==========================================================================
+   VISTA 1: AGENDA DEL PROFESOR (SCRUM-61)
+   ========================================================================== */
+.lista-agenda-docente {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.tarjeta-actividad-docente {
+    background-color: var(--azul-claro); /* #D1DBE4 */
+    border: 2px solid var(--borde-wireframe);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ==========================================================================
+   VISTA 2: CONSULTAR ACTIVIDAD DETALLE (SCRUM-62 / SCRUM-63)
+   ========================================================================== */
+.card-figma {
+    width: 100%;
+    max-width: 580px;
+    background-color: var(--azul-claro); /* #D1DBE4 */
+    border: 3px solid var(--borde-wireframe);
+    border-radius: 10px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-figma.estado-aviso {
+    align-items: center;
+    text-align: center;
+    padding: 36px 24px;
+}
+
+.card-figma h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    color: var(--texto-oscuro);
+}
+
+.card-figma p {
+    font-size: 1.15rem;
+    line-height: 1.5;
+    margin: 6px 0;
+}
+
+.caja-blanca-alumnos {
+    background: var(--blanco);
+    padding: 10px 14px;
+    border: 2px solid var(--borde-wireframe);
+    border-radius: 6px;
+    font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   BOTONES ACCESIBLES (RNF4: >= 44x44px, Contraste >= 4.5:1)
+   ========================================================================== */
+.btn-figma {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
+    min-height: 48px;
+    min-width: 160px;
     padding: 10px 20px;
-    background-color: #A4BEA7; /* verdeApagado */
-    color: #000000;
-    text-decoration: none;
+    background-color: var(--verde-apagado); /* #A4BEA7 */
+    color: var(--texto-oscuro);
+    border: 2px solid var(--borde-wireframe);
+    border-radius: 8px;
+    font-size: 1.1rem;
     font-weight: bold;
-    border-radius: 6px;
-    font-size: 1.125rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-figma:focus,
+.btn-figma:hover {
+    outline: 3px solid #000;
+    background-color: #8fae93;
+}
+
+/* Barra inferior del marco de Figma */
+.ipad-bottom-bar {
+    height: 44px;
+    background-color: var(--azul-claro);
+    border-top: 2px solid var(--borde-wireframe);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 18px;
 }
