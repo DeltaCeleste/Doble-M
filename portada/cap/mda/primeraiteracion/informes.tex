@@ -1,0 +1,141 @@
+\section{Informe de Introspección, Desviaciones y Replanificación}
+
+\subsection{Desviaciones Detectadas en la Primera Iteración}
+
+A lo largo de la primera iteración, el equipo ha afrontado diversos eventos externos que han dificultado en varios aspectos la consecución de los objetivos previstos en la planificación inicial. Para analizar estas desviaciones de forma estructurada, se divide la evaluación según el área de trabajo:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Frontend y Accesibilidad:} Durante la iteración, los compromisos académicos y laborales externos (exámenes, prácticas en empresa y entregas coincidentes de otras asignaturas) afectaron sensiblemente a la capacidad de avance del equipo. A esto se sumó la necesidad de una formación técnica complementaria en la infraestructura de la interfaz web, lo que derivó en un ritmo de desarrollo más lento de lo estimado y en un resultado funcional incompleto para la primera entrega. Sin embargo, el equipo mantiene una perspectiva positiva, ya que la fase de diseño de la interfaz ha quedado prácticamente abarcada y existen numerosos componentes base reutilizables para acelerar la implementación en la siguiente fase.
+    
+    \item \textbf{Backend e Infraestructura:} El equipo de backend contó con una dinámica inicial más favorable, lo que permitió cumplir la mayor parte de las metas asignadas y establecer la arquitectura base del servidor (modelo MVC en PHP, Docker y base de datos MySQL). No obstante, la baja no prevista de uno de los integrantes a mitad de la iteración obligó a una reorganización interna de tareas. Esto impidió que el equipo de backend pudiese prestar el apoyo transversal previsto al área de frontend, limitando su aportación al despliegue de la infraestructura inicial y al asesoramiento técnico puntual.
+\end{itemize}
+
+\subsection{Introspección del Equipo}
+
+A la vista de los resultados obtenidos tras la primera iteración y comparándolos con las previsiones del plan inicial, se concluye que la estimación de capacidad de trabajo del equipo fue excesivamente optimista en relación con la carga horaria externa. 
+
+Considerando la reorganización tras la baja sufrida en la plantilla y anticipando un volumen similar de compromisos externos durante el próximo periodo, resulta imprescindible ejecutar una reestructuración de alcance para la Segunda Iteración basándonos en los siguientes principios:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Prioridad de Deuda Técnica:} Las tareas correspondientes a las Historias de Usuario de la primera iteración que aún no se han completado mantendrán la prioridad máxima hasta lograr su cierre definitivo.
+    \item \textbf{Ajuste y Recorte del Alcance:} En cuanto al nuevo bloque de Historias de Usuario previstas originalmente para la segunda iteración, se aplicará una reducción justificada con el objetivo de consolidar entregables tangibles, asequibles y completamente funcionales.
+\end{enumerate}
+
+\subsection{Replanificación para la Segunda Iteración}
+
+\subsubsection{Criterio de Selección de Historias de Usuario}
+Para priorizar el desarrollo y evitar la sobrecarga, se han seleccionado aquellas Historias de Usuario esenciales para la operación básica del sistema. En consecuencia, se acuerda \textbf{posponer para iteraciones futuras} las siguientes Historias de Usuario por ser las más complejas en esfuerzo de implementación:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textsf{HU-F7:} Crear una actividad para un hijo (Familia).
+    \item \textsf{HU-P4:} Cancelar actividades (Profesor/a).
+    \item \textsf{HU-P7:} Consultar estudiantes participantes en una actividad (Profesor/a).
+    \item \textsf{HU-P10:} Consultar información relevante de un estudiante (Profesor/a).
+    \item \textsf{HU-E14:} Adaptar preferencias de visualización de la agenda (Estudiante).
+\end{itemize}
+
+\subsubsection{Nuevo Objetivo de la Iteración 2}
+El objetivo fundamental para la Segunda Iteración consiste en obtener una \textbf{aplicación plenamente funcional a nivel básico para todos los perfiles de usuario} (Administrador, Profesor, Familia y Estudiante), garantizando la consistencia y estabilidad del sistema sobre la cual construir las funcionalidades avanzadas en la iteración final.
+
+\subsection{Nuevas Historias de Usuario Incorporadas}
+
+A continuación se detallan en formato tabla las Historias de Usuario seleccionadas para ser desarrolladas durante la Segunda Iteración, incluyendo sus parámetros de estimación, prioridad, entrega y sus correspondientes pruebas de aceptación:
+
+\vspace{0.3cm}
+
+% --- TABLA HU-F1 ---
+\begin{center}
+\rowcolors{2}{azulclaro!25}{white}
+\begin{tabularx}{\textwidth}{|p{2.6cm}|X|}
+\hline
+\rowcolor{azulPastelApagado}
+\multicolumn{2}{|c|}{\textbf{\color{white}HU-F1: Inicio de sesión (Familia)}} \\ \hline
+\textbf{Descripción} & Como Familia quiero iniciar sesión en la aplicación para acceder a la funcionalidad de esta. \\ \hline
+\textbf{Parámetros} & \mbox{\textbf{Estimación:} 3 ptos} \quad|\quad \mbox{\textbf{Prioridad:} 2} \quad|\quad \mbox{\textbf{Entrega:} 1} \\ \hline
+\textbf{Pruebas de Aceptación} & 
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=2pt]
+    \item En caso de introducir credenciales válidas, el sistema permite al perfil de Familia iniciar sesión y acceder a la plataforma.
+    \item En caso de introducir un usuario o contraseña incorrectos, el sistema muestra un aviso indicando que las credenciales no son válidas y deniega el acceso.
+    \item En caso de intentar iniciar sesión omitiendo alguno de los campos obligatorios, el sistema avisa de la falta de credenciales y deniega el acceso.
+\end{itemize} \\ \hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.3cm}
+
+% --- TABLA HU-F2 ---
+\begin{center}
+\rowcolors{2}{azulclaro!25}{white}
+\begin{tabularx}{\textwidth}{|p{2.6cm}|X|}
+\hline
+\rowcolor{azulPastelApagado}
+\multicolumn{2}{|c|}{\textbf{\color{white}HU-F2: Selección de hijo (Familia)}} \\ \hline
+\textbf{Descripción} & Como Familia quiero seleccionar uno de mis hijos para acceder a su perfil. \\ \hline
+\textbf{Parámetros} & \mbox{\textbf{Estimación:} 1 pto} \quad|\quad \mbox{\textbf{Prioridad:} 2} \quad|\quad \mbox{\textbf{Entrega:} 1} \\ \hline
+\textbf{Pruebas de Aceptación} & 
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=2pt]
+    \item En caso de seleccionar un estudiante (hijo) asociado al perfil de familiar, el sistema abre la vista de su perfil.
+    \item En caso de intentar seleccionar un estudiante no vinculado a dicho perfil de familiar, el sistema bloquea la operación y notifica del error de permisos.
+    \item En caso de seleccionar un estudiante inexistente o en estado de baja, el sistema restringe el acceso y muestra el mensaje explicativo correspondiente.
+\end{itemize} \\ \hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.3cm}
+
+% --- TABLA HU-F5 ---
+\begin{center}
+\rowcolors{2}{azulclaro!25}{white}
+\begin{tabularx}{\textwidth}{|p{2.6cm}|X|}
+\hline
+\rowcolor{azulPastelApagado}
+\multicolumn{2}{|c|}{\textbf{\color{white}HU-F5: Comprobar agenda de hijo (Familia)}} \\ \hline
+\textbf{Descripción} & Como Familia quiero comprobar la agenda de un hijo para ver sus actividades planeadas. \\ \hline
+\textbf{Parámetros} & \mbox{\textbf{Estimación:} 2 ptos} \quad|\quad \mbox{\textbf{Prioridad:} 2} \quad|\quad \mbox{\textbf{Entrega:} 1} \\ \hline
+\textbf{Pruebas de Aceptación} & 
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=2pt]
+    \item En caso de tener un estudiante asociado y seleccionado previamente, el sistema despliega su agenda de actividades.
+    \item En caso de no contar con ningún estudiante vinculado en la cuenta del familiar, el sistema imposibilita la carga de agendas mostrando un aviso contextual.
+\end{itemize} \\ \hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.3cm}
+
+% --- TABLA HU-E7 ---
+\begin{center}
+\rowcolors{2}{azulclaro!25}{white}
+\begin{tabularx}{\textwidth}{|p{2.6cm}|X|}
+\hline
+\rowcolor{azulPastelApagado}
+\multicolumn{2}{|c|}{\textbf{\color{white}HU-E7: Marcar progreso de actividad (Estudiante)}} \\ \hline
+\textbf{Descripción} & Como estudiante, quiero marcar los pasos de una actividad conforme los voy realizando, para saber qué pasos he completado y cuál debo realizar a continuación. \\ \hline
+\textbf{Parámetros} & \mbox{\textbf{Estimación:} 2 ptos} \quad|\quad \mbox{\textbf{Prioridad:} 2} \quad|\quad \mbox{\textbf{Entrega:} 1} \\ \hline
+\textbf{Pruebas de Aceptación} & 
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=2pt]
+    \item En caso de activar la casilla de completación de una actividad global, el sistema marca la tarea y la totalidad de sus pasos constituyentes como completados.
+    \item En caso de marcar individualmente un paso específico, el sistema registra dicho paso como completado y actualiza el indicador de progreso visual.
+    \item En caso de intentar marcar el progreso sobre una actividad inexistente o anulada, el sistema bloquea la acción.
+\end{itemize} \\ \hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.3cm}
+
+% --- TABLA HU-A6 ---
+\begin{center}
+\rowcolors{2}{azulclaro!25}{white}
+\begin{tabularx}{\textwidth}{|p{2.6cm}|X|}
+\hline
+\rowcolor{azulPastelApagado}
+\multicolumn{2}{|c|}{\textbf{\color{white}HU-A6: Asignar familiar (Administrador)}} \\ \hline
+\textbf{Descripción} & Como administrador quiero asignar un padre/madre/tutor a un estudiante para que el padre/madre/tutor pueda interactuar con la agenda del estudiante. \\ \hline
+\textbf{Parámetros} & \mbox{\textbf{Estimación:} 2 ptos} \quad|\quad \mbox{\textbf{Prioridad:} 2} \quad|\quad \mbox{\textbf{Entrega:} 1} \\ \hline
+\textbf{Pruebas de Aceptación} & 
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=2pt]
+    \item En caso de seleccionar un usuario de perfil Familia y un Estudiante activos en el sistema, el Administrador establece y guarda la vinculación en la base de datos.
+    \item En caso de seleccionar un familiar que no exista o no esté dado de alta, el sistema anula el proceso y notifica la falta de datos.
+    \item En caso de seleccionar un estudiante que no esté dado de alta, el sistema anula la asignación y advierte del error.
+\end{itemize} \\ \hline
+\end{tabularx}
+\end{center}

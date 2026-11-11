@@ -1,0 +1,310 @@
+
+\section{Plan de Iteración}
+El objetivo de esta primera iteración es desarrollar una versión inicial de la aplicación que permita gestionar los usuarios y las actividades, así como consultar la agenda de los estudiantes. Para ello, se implementarán las funcionalidades básicas de inicio de sesión para profesores y estudiantes, la creación y asignación de actividades y la gestión de usuarios, grupos y relaciones entre profesores y alumnos.
+
+Esta iteración no generará todavía un producto final entregable al cliente, sino una primera versión funcional que servirá como base para continuar el desarrollo de la aplicación en las siguientes iteraciones.
+
+\subsection{Listado Inicial de Historias de Usuario (HU)}
+A continuación se detallan las Historias de Usuario seleccionadas para la primera iteración junto con sus estimaciones iniciales en puntos de historia.
+
+\vspace{0.3cm}
+\begin{center}
+\rowcolors{2}{azulclaro!25}{white}
+\begin{tabularx}{\textwidth}{l X c}
+\rowcolor{azulPastelApagado}
+\textbf{\color{white}Identificativo} & \textbf{\color{white}Título de la Historia de Usuario} & \textbf{\color{white}Estimación (puntos)} \\
+\textsf{HU-P1} & Iniciar sesión (Profesor/a) & 3 \\
+\textsf{HU-P2} & Consultar actividades programadas y sus detalles (Profesor/a) & 2 \\
+\textsf{HU-P3} & Crear actividades (Profesor/a) & 5 \\
+\textsf{HU-P6} & Asignar actividades (Profesor/a) & 3 \\
+\textsf{HU-E1} & Iniciar sesión (Estudiante) & 3 \\
+\textsf{HU-E2} & Consultar agenda (Estudiante) & 3 \\
+\textsf{HU-E3} & Consultar información de una actividad (Estudiante) & 3 \\
+\textsf{HU-E4} & Consultar actividades (Estudiante) & 3 \\
+\textsf{HU-AT0} & Montar infraestructura de la web (Administrador) & 2 \\
+\textsf{HU-A1} & Crear usuario estudiante (Administrador) & 2 \\
+\textsf{HU-A2} & Crear profesor y familiares (Administrador) & 1 \\
+\textsf{HU-A4} & Asignar estudiante y profesor a grupos (Administrador) & 1 \\
+\textsf{HU-A5} & Asignar un profesor a un alumno (Administrador) & 2 \\
+\end{tabularx}
+\end{center}
+\vspace{0.3cm}
+
+\subsection{Descomposición en Tareas de Desarrollo y Estimaciones}
+A continuación se desglosa cada Historia de Usuario con sus tareas asociadas, recuperando las estimaciones exactas en días ideales del plan original:
+
+\begin{itemize}[leftmargin=1.2em, itemsep=4pt]
+    \item \textbf{HU-P1: Iniciar sesión (Profesor/a)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea P1.1:} Diseñar la interfaz de inicio de sesión.
+        \item \textsf{Tarea P1.2:} Crear el formulario con los campos de correo electrónico y contraseña.
+        \item \textsf{Tarea P1.3:} Implementar la validación de los campos obligatorios.
+        \item \textsf{Tarea P1.4:} Implementar la comprobación de las credenciales del profesor/a \hfill \textbf{(1/2 -- Minerva)}
+        \item \textsf{Tarea P1.5:} Mostrar un mensaje de error cuando las credenciales sean incorrectas.
+        \item \textsf{Tarea P1.6:} Permitir el acceso a la aplicación cuando las credenciales sean válidas \hfill \textbf{(1/2 -- Minerva)}
+    \end{itemize}
+
+    \item \textbf{HU-P2: Consultar actividades programadas y sus detalles (Profesor/a)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea P2.1:} Diseñar la interfaz de consulta de actividades \hfill \textbf{(1/2 -- Ángela)}
+        \item \textsf{Tarea P2.2:} Implementar la visualización de las actividades programadas en la agenda.
+        \item \textsf{Tarea P2.3:} Implementar la consulta de los detalles de una actividad.
+        \item \textsf{Tarea P2.4:} Mostrar la información de cada actividad (fecha, hora, descripción y alumnado).
+        \item \textsf{Tarea P2.5:} Mostrar un mensaje cuando no haya actividades programadas.
+        \item \textsf{Tarea P2.6:} Mostrar un mensaje cuando una actividad no exista o no esté disponible.
+        \item \textsf{Tarea P2.7:} Garantizar que se muestre la información actualizada de las actividades modificadas.
+        \item \textsf{Tarea P2.8:} Realizar pruebas de consulta de actividades y visualización de sus detalles \hfill \textbf{(1/2 -- Minerva)}
+    \end{itemize}
+
+    \item \textbf{HU-P3: Crear actividades (Profesor/a)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea P3.1:} Diseñar la interfaz de creación de actividades \hfill \textbf{(1/2 -- Ángela)}
+        \item \textsf{Tarea P3.2:} Crear la interfaz de creación de actividades.
+        \item \textsf{Tarea P3.3:} Conectar con la base de datos para almacenar actividades en la BD \hfill \textbf{(1/2 -- Minerva)}
+        \item \textsf{Tarea P3.4:} Hacer pruebas de inicio a fin para comprobar la correcta conexión cliente-BD \hfill \textbf{(1/2 -- Minerva)}
+        \item \textsf{Tarea P3.5:} Crear verificaciones a nivel de cliente.
+    \end{itemize}
+
+    \item \textbf{HU-P6: Asignar actividades (Profesor/a)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea P6.1:} Diseñar interfaz que permita seleccionar alumnos/grupos y actividades \hfill \textbf{(1/2 -- Ángela)}
+        \item \textsf{Tarea P6.2:} Permitir al profesor crear asignaciones actividad-estudiante (hora inicio/fin y fecha).
+        \item \textsf{Tarea P6.3:} Permitir al profesor crear asignaciones actividad-grupo (hora inicio/fin y fecha).
+        \item \textsf{Tarea P6.4:} Implementar la interfaz de asignación.
+        \item \textsf{Tarea P6.5:} Crear la conexión cliente-BD para mostrar actividades y usuarios disponibles \hfill \textbf{(1/2 -- Minerva)}
+        \item \textsf{Tarea P6.6:} Probar que la conexión funciona desde el cliente hasta la respuesta de la BD \hfill \textbf{(1/2 -- Minerva)}
+    \end{itemize}
+
+    \item \textbf{HU-E1: Iniciar sesión (Estudiante)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea E1.1:} Diseñar interfaz con pictogramas \hfill \textbf{(1/2 -- Ángela)}
+        \item \textsf{Tarea E1.2:} Diseñar interfaz con texto \hfill \textbf{(1/2 -- Ángela)}
+        \item \textsf{Tarea E1.3:} Programar el selector de login.
+        \item \textsf{Tarea E1.4:} Programar el login que usa texto.
+        \item \textsf{Tarea E1.5:} Programar el login que usa pictogramas.
+        \item \textsf{Tarea E1.6:} Programar lo necesario en la Base de Datos \hfill \textbf{(1/4 -- Pedro)}
+        \item \textsf{Tarea E1.7:} Programar funcionalidad en el backend \hfill \textbf{(1/2 -- Pedro)}
+        \item \textsf{Tarea E1.8:} Comprobar test de integración \hfill \textbf{(Pedro)}
+        \item \textsf{Tarea E1.9:} Comprobar criterios de accesibilidad y calidad.
+    \end{itemize}
+
+    \item \textbf{HU-E2: Consultar agenda (Estudiante)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea E2.1:} Diseñar interfaz con pictograma \hfill \textbf{(1/2 -- Ángela)}
+        \item \textsf{Tarea E2.2:} Diseñar interfaz con texto \hfill \textbf{(1/2 -- Ángela)}
+        \item \textsf{Tarea E2.3:} Programar pantalla de agenda diaria \hfill \textbf{(3/4 -- Ángela)}
+        \item \textsf{Tarea E2.4:} Programar pantalla de agenda semanal \hfill \textbf{(3/4 -- Ángela)}
+        \item \textsf{Tarea E2.5:} Diseñar consultas a la BD \hfill \textbf{(1/4 -- Pedro)}
+        \item \textsf{Tarea E2.6:} Programar funcionalidad en el backend \hfill \textbf{(3/4 -- Pedro)}
+        \item \textsf{Tarea E2.7:} Comprobar pruebas de aceptación \hfill \textbf{(Pedro)}
+        \item \textsf{Tarea E2.8:} Comprobar criterios de accesibilidad y calidad \hfill \textbf{(1/2 -- Ángela)}
+    \end{itemize}
+
+    \item \textbf{HU-E3: Consultar información de una actividad (Estudiante)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea E3.1:} Diseñar la interfaz de consulta de una actividad \hfill \textbf{(1/2 -- Ángela)}
+        \item \textsf{Tarea E3.2:} Crear la conexión de datos con el backend \hfill \textbf{(1  -- Pedro)}
+        \item \textsf{Tarea E3.3:} Crear el componente de la interfaz \hfill \textbf{(1  -- Ángela)}
+        \item \textsf{Tarea E3.4:} Verificar las pruebas de aceptación \hfill \textbf{(1/2 -- Pedro)}
+    \end{itemize}
+
+    \item \textbf{HU-E4: Consultar actividades (Estudiante)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea E4.1:} Diseñar la interfaz de la agenda semanal \hfill \textbf{(1/2 -- Ángela)}
+        \item \textsf{Tarea E4.2:} Crear la interfaz de la agenda semanal \hfill \textbf{(1  -- Ángela)}
+        \item \textsf{Tarea E4.3:} Conexión con la BD para leer las actividades semanales \hfill \textbf{(1/4 -- Pedro)}
+        \item \textsf{Tarea E4.4:} Probar que la conexión funciona desde la petición hasta la BD \hfill \textbf{(1/4 -- Pedro)}
+    \end{itemize}
+
+    \item \textbf{HU-AT0: Montar infraestructura de la web (Administrador)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea AT0.1:} Configurar la infraestructura inicial del proyecto web \hfill \textbf{(1/2 -- Daniel)}
+        \item \textsf{Tarea AT0.2:} Configurar variables de entorno \hfill \textbf{(1/4 -- Daniel)}
+        \item \textsf{Tarea AT0.3:} Configurar la conexión base con el backend \hfill \textbf{(1/2 -- Daniel)}
+        \item \textsf{Tarea AT0.4:} Automatización del despliegue inicial en el servidor \hfill \textbf{(1/2 -- Daniel)}
+        \item \textsf{Tarea AT0.5:} Probar y verificar la conexión \hfill \textbf{(1/4 -- Daniel)}
+    \end{itemize}
+
+    \item \textbf{HU-A1: Crear usuario estudiante (Administrador)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea A1.1:} Boceto formulario de registro de un estudiante.
+        \item \textsf{Tarea A1.2:} Implementar formulario de registro.
+        \item \textsf{Tarea A1.3:} Comprobar que todos los campos obligatorios están rellenos.
+        \item \textsf{Tarea A1.4:} Comprobar que los datos introducidos tienen un formato válido.
+        \item \textsf{Tarea A1.5:} Verificar que el usuario no existe previamente en el sistema \hfill \textbf{(1/8 -- Daniel)}
+        \item \textsf{Tarea A1.6:} Guardar los datos válidos del estudiante y crear su cuenta \hfill \textbf{(1/8 -- Daniel)}
+        \item \textsf{Tarea A1.7:} Informar de que el usuario ha sido creado correctamente.
+        \item \textsf{Tarea A1.8:} Mostrar los errores correspondientes cuando falten datos o el usuario exista.
+    \end{itemize}
+
+    \item \textbf{HU-A2: Crear profesor y familiares (Administrador)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea A2.1:} Diseño e implementación del panel de administrador \hfill \textbf{(3/2 -- Ángela)}
+        \item \textsf{Tarea A2.2:} Añadir al panel la opción de insertar profesor \hfill \textbf{(1/4 -- Ángela)}
+        \item \textsf{Tarea A2.3:} Añadir al panel la opción de insertar familiar \hfill \textbf{(1/4 -- Ángela)}
+        \item \textsf{Tarea A2.4:} Diseñar las interfaces de añadir familiar y profesor \hfill \textbf{(3/4 -- Ángela)}
+        \item \textsf{Tarea A2.5:} Implementar la interfaz de añadir profesor \hfill \textbf{(3/4 -- Ángela)}
+        \item \textsf{Tarea A2.6:} Implementar la interfaz de añadir familiar \hfill \textbf{(3/4 -- Ángela)}
+        \item \textsf{Tarea A2.7:} Crear las estructuras necesarias en la BD \hfill \textbf{(1/2 -- Daniel)}
+        \item \textsf{Tarea A2.8:} Implementar la funcionalidad en el backend \hfill \textbf{(1/2 -- Daniel)}
+        \item \textsf{Tarea A2.9:} Comprobar que cumple los criterios de aceptación \hfill \textbf{(1/4 -- Daniel)}
+        \item \textsf{Tarea A2.10:} Comprobar criterios de accesibilidad y calidad \hfill \textbf{(1/2 -- Ángela)}
+    \end{itemize}
+
+    \item \textbf{HU-A4: Asignar estudiante y profesor a grupos (Administrador)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea A4.1:} Diseñar la interfaz para seleccionar usuarios y grupos para la asignación.
+        \item \textsf{Tarea A4.2:} Crear la interfaz para seleccionar usuarios y grupos para la asignación.
+        \item \textsf{Tarea A4.3:} Almacenar las asignaciones profesor/estudiante-grupo en BD \hfill \textbf{(1/2 -- Daniel)}
+        \item \textsf{Tarea A4.4:} Asegurar consistencia de usuarios y grupos para prevenir errores.
+    \end{itemize}
+
+    \item \textbf{HU-A5: Asignar un profesor a un alumno (Administrador)}
+    \begin{itemize}[label=$\circ$, leftmargin=1.5em, itemsep=2pt]
+        \item \textsf{Tarea A5.1:} Crear el formulario de asignación.
+        \item \textsf{Tarea A5.2:} Comprobar que se seleccionaron profesor y estudiante antes de asignar.
+        \item \textsf{Tarea A5.3:} Impedir la asignación si el profesor no existe \hfill \textbf{(1/4 -- Daniel)}
+        \item \textsf{Tarea A5.4:} Impedir la asignación si el estudiante no existe \hfill \textbf{(1/4 -- Daniel)}
+        \item \textsf{Tarea A5.5:} Evitar duplicar la asignación del mismo profesor al mismo alumno \hfill \textbf{(1/4 -- Daniel)}
+        \item \textsf{Tarea A5.6:} Guardar la relación profesor-alumno si las validaciones son correctas \hfill \textbf{(1/4 -- Daniel)}
+        \item \textsf{Tarea A5.7:} Permitir al profesor asignado consultar e interactuar según permisos \hfill \textbf{(1/4 -- Daniel)}
+        \item \textsf{Tarea A5.8:} Confirmar que la asignación se realizó correctamente.
+        \item \textsf{Tarea A5.9:} Informar de datos incompletos, usuarios inexistentes o asignaciones duplicadas.
+        \item \textsf{Tarea A5.10:} Diseñar la interfaz de asignación \hfill \textbf{(1/4 -- Ángela)}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Planificación Temporal e Itinerarios de Gantt por Integrante}
+
+A continuación se detalla la planificación diaria individualizada mediante Diagramas de Gantt con las fechas exactas del calendario (del 22 de octubre al 11 de noviembre de 2026) impresas en cada casilla individual para cada desarrollador:
+
+% Estilo común para los cuatro diagramas (se define una sola vez)
+\ganttset{miGantt/.style={
+    hgrid, vgrid,
+    x unit=0.7cm,
+    y unit title=0.7cm,
+    y unit chart=0.6cm,
+    title/.style={fill=azulPastelApagado, draw=azulPastelApagado!80!black},
+    title label font=\bfseries\small\color{white},
+    title label node/.append style={text=white},
+    bar/.style={fill=verdeApagado, draw=verdeApagado!80!black},
+    bar height=0.5,
+    bar label font=\footnotesize\color{textoOscuro},
+    bar label node/.append style={left=0.2cm}
+}}
+
+\subsubsection{Planificación de Minerva Cebrián Marín (Backend / QA)}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{ganttchart}[miGantt]{1}{21}
+\gantttitle{Octubre 2026}{10}
+\gantttitle{Noviembre 2026}{11} \\
+\gantttitlelist{22,23,24,25,26,27,28,29,30,31,1,2,3,4,5,6,7,8,9,10,11}{1} \\
+
+\ganttbar{Formación Backend}{1}{10} \\
+\ganttbar{P1.4: Credenciales}{11}{11} \\
+\ganttbar{P1.6: Acceso Válido}{12}{13} \\
+\ganttbar{P2.8: Pruebas Vista}{14}{14} \\
+\ganttbar{P6.5: Conexión BD}{15}{15} \\
+\ganttbar{P3.3: Guardar BD}{16}{17} \\
+\ganttbar{P3.4: Pruebas Cliente-BD}{18}{19} \\
+\ganttbar{P6.6: Pruebas Asignación}{20}{21}
+\end{ganttchart}%
+}
+\caption{Diagrama de Gantt individual: Minerva Cebrián Marín .}
+\end{figure}
+
+\subsubsection{Planificación de Ángela García Olmos (Frontend / UX)}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{ganttchart}[miGantt]{1}{21}
+\gantttitle{Octubre 2026}{10}
+\gantttitle{Noviembre 2026}{11} \\
+\gantttitlelist{22,23,24,25,26,27,28,29,30,31,1,2,3,4,5,6,7,8,9,10,11}{1} \\
+
+\ganttbar{Formación Frontend}{1}{7} \\
+\ganttbar{Diseños P2.1, P3.1, P6.1, E1.1, E1.2}{8}{11} \\
+\ganttbar{Diseños E2.1, E2.2, E3.1, E4.1, A2.1}{12}{14} \\
+\ganttbar{Programación Agenda E2.3, E2.4, E3.3}{16}{19} \\
+\ganttbar{Programación Admin A2.2, A2.3}{20}{20} \\
+\ganttbar{Tests Calidad A2.10, E2.8}{21}{21}
+\end{ganttchart}%
+}
+\caption{Diagrama de Gantt individual: Ángela García Olmos .}
+\end{figure}
+
+\subsubsection{Planificación de Pedro Javier Pérez Jiménez (Backend / Accesibilidad)}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{ganttchart}[miGantt]{1}{21}
+\gantttitle{Octubre 2026}{10}
+\gantttitle{Noviembre 2026}{11} \\
+\gantttitlelist{22,23,24,25,26,27,28,29,30,31,1,2,3,4,5,6,7,8,9,10,11}{1} \\
+
+\ganttbar{Formación Accesibilidad}{2}{3} \\
+\ganttbar{Plan Accesibilidad}{4}{4} \\
+\ganttbar{Formación Backend}{9}{14} \\
+\ganttbar{BD/Backend Login E1.6, E1.7}{15}{16} \\
+\ganttbar{Consultas Agenda E2.5, E2.6}{17}{18} \\
+\ganttbar{Conexión BD E3.2, E4.3}{19}{20} \\
+\ganttbar{Tests Integración E1.8, E2.7}{21}{21}
+\end{ganttchart}%
+}
+\caption{Diagrama de Gantt individual: Pedro Javier Pérez Jiménez .}
+\end{figure}
+
+\subsubsection{Planificación de Daniel Vega Jiménez (Infraestructura / Backend Admin)}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{ganttchart}[miGantt]{1}{21}
+\gantttitle{Octubre 2026}{10}
+\gantttitle{Noviembre 2026}{11} \\
+\gantttitlelist{22,23,24,25,26,27,28,29,30,31,1,2,3,4,5,6,7,8,9,10,11}{1} \\
+
+\ganttbar{AT0.1-AT0.5: Servidor y Docker}{1}{7} \\
+\ganttbar{A1.5, A1.6, A2.7: Backend Adm.}{8}{14} \\
+\ganttbar{A4.4, A5.4-A5.8: Asignaciones BD}{15}{21}
+\end{ganttchart}%
+}
+\caption{Diagrama de Gantt individual: Daniel Vega Jiménez .}
+\end{figure}
+
+\subsection{Carga de Trabajo}
+A continuación se especifica la dedicación del equipo en el sprint.
+
+\vspace{0.3cm}
+\begin{center}
+\rowcolors{2}{azulclaro!25}{white}
+\begin{tabularx}{\textwidth}{X c c c}
+\rowcolor{azulPastelApagado}
+\textbf{\color{white}Desarrollador} & \textbf{\color{white}Velocidad Inicial (días)} & \textbf{\color{white}Dedicación} & \textbf{\color{white}Tareas Aceptadas} \\
+Minerva Cebrián Marín & 6 & 30\% & 7 \\
+\textit{Jorge García Gámiz (solo MDA)} & 6 & 30\% & 0 \textit{(solo MDA)} \\
+Ángela García Olmos & 6 & 30\% & 22 \\
+Pedro Javier Pérez Jiménez & 6 & 30\% & 10 \\
+Daniel Vega Jiménez & 6 & 30\% & 16 \\
+\rowcolor{azulclaro!50}
+\textbf{TOTAL} & \textbf{30} & -- & \textbf{55} \\
+\end{tabularx}
+\end{center}
+\vspace{0.3cm}
+
+\subsection{Gestión de Desviaciones}
+
+Durante la primera semana de la iteración, el equipo se ha centrado principalmente en la preparación del entorno de desarrollo. Las actividades realizadas han incluido la configuración y puesta en marcha del servidor, la familiarización con las herramientas que se utilizarán durante el proyecto y la organización del trabajo entre los integrantes del equipo.
+
+Esta fase inicial ha sido necesaria para establecer una base de trabajo común y facilitar la posterior integración de los componentes de frontend y backend. No obstante, ha supuesto que el trabajo de implementación de las funcionalidades de la aplicación se haya planificado principalmente para las semanas posteriores.
+
+Para reducir el impacto de esta preparación inicial sobre el objetivo de la iteración, se ha planteado una distribución del trabajo basada en la especialización de los integrantes: Minerva Cebrián Marín, Pedro Javier Pérez Jiménez y Daniel Vega Jiménez se centrarán en el backend, mientras que Jorge García Gámiz y Ángela García Olmos se centrarán en el frontend.
+
+Durante las siguientes semanas se priorizarán las funcionalidades básicas de autenticación, gestión de usuarios, creación y asignación de actividades y consulta de agendas. Asimismo, se reservará tiempo para la integración entre los componentes, la corrección de errores y la comprobación de los criterios de aceptación.
+
+Al finalizar la iteración, se revisará el trabajo realizado frente a las estimaciones iniciales para identificar posibles desviaciones de esfuerzo, tareas pendientes y mejoras en la organización del equipo. Las funcionalidades que no se completen se trasladarán al backlog para valorar su inclusión en una iteración posterior.

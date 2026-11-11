@@ -1,0 +1,152 @@
+% =====================================================================
+% Requiere: pgfgantt, xcolor[table], tabularx, booktabs, float
+% Los colores se declaran con \providecolor: si ya los tienes definidos
+% en tu preámbulo se respetan los tuyos.
+% =====================================================================
+\providecolor{azulPastelApagado}{HTML}{5B7FA6}
+\providecolor{azulclaro}{HTML}{DCE6F2}
+\providecolor{textoOscuro}{HTML}{22303C}
+\providecolor{grisPlan}{HTML}{D5D9DE}
+\providecolor{verdeOk}{HTML}{5FA777}
+\providecolor{ambarParcial}{HTML}{E5A93D}
+\providecolor{rojoFallo}{HTML}{D1584F}
+\providecolor{azulNuevo}{HTML}{4A7FBF}
+
+% Estilo común de los dos diagramas
+\ganttset{cmp/.style={
+    hgrid, vgrid,
+    x unit=0.6cm,
+    y unit title=0.65cm,
+    y unit chart=0.62cm,
+    title height=1,
+    title/.style={fill=azulPastelApagado, draw=azulPastelApagado!70!black},
+    title label font=\bfseries\small\color{white},
+    title label node/.append style={text=white},
+    bar label font=\footnotesize\color{textoOscuro},
+    group label font=\footnotesize\bfseries\color{textoOscuro},
+    group/.append style={fill=textoOscuro, draw=textoOscuro},
+    group right peak width=0.2,
+    group left peak width=0.2,
+    vrule/.append style={rojoFallo, line width=1.2pt},
+    vrule label font=\scriptsize\bfseries\color{rojoFallo},
+    milestone/.append style={fill=rojoFallo, draw=rojoFallo!70!black}
+}}
+
+% \planreal{etiqueta}{ini plan}{fin plan}{ini real}{fin real}{color}
+% Barra gris ancha = planificado; barra fina de color = realidad
+\newcommand{\planreal}[6]{%
+  \ganttbar[bar height=0.85, bar/.append style={fill=grisPlan, draw=grisPlan!60!black}]{#1}{#2}{#3}%
+  \ganttbar[bar height=0.35, bar/.append style={fill=#6, draw=#6!60!black}]{}{#4}{#5}%
+  \ganttnewline}
+
+% Leyenda reutilizable
+\newcommand{\cajita}[1]{\fcolorbox{black!40}{#1}{\rule{0pt}{0.8ex}\rule{1.1em}{0pt}}}
+
+\section{Análisis Visual de las Iteraciones}
+
+Esta sección resume de forma visual qué se planificó, qué se consiguió realmente y cómo se traslada la deuda técnica a la siguiente iteración.
+
+\subsection{Iteración 1: Planificado frente a Realidad}
+
+En cada fila, la \textbf{barra gris ancha} muestra lo previsto en el plan inicial y la \textbf{barra fina de color} refleja lo ocurrido. La línea roja vertical marca la baja no prevista de un integrante del equipo de backend.
+
+\begin{center}
+\small
+\cajita{grisPlan}~Planificado \quad
+\cajita{verdeOk}~Completado \quad
+\cajita{ambarParcial}~Parcial / con retraso \quad
+\cajita{rojoFallo}~No completado (pasa a Iteración 2)
+\end{center}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{ganttchart}[cmp]{1}{21}
+  \gantttitle{Octubre 2026}{10}
+  \gantttitle{Noviembre 2026}{11} \\
+  \gantttitlelist{22,23,24,25,26,27,28,29,30,31,1,2,3,4,5,6,7,8,9,10,11}{1} \\
+
+  \ganttgroup{Front-End y Accesibilidad}{1}{21} \\
+  \planreal{Bocetos de todas las interfaces}{1}{8}{1}{8}{verdeOk}
+  \planreal{Implementar inicios de sesión}{9}{11}{9}{16}{ambarParcial}
+  \planreal{Implementar vistas (actividad, agenda, asignación)}{12}{18}{12}{21}{ambarParcial}
+  \planreal{Integración Front--Back}{19}{20}{19}{21}{rojoFallo}
+  \planreal{Revisión del contenido generado}{21}{21}{21}{21}{rojoFallo}
+
+  \ganttgroup{Back-End e Infraestructura}{1}{21} \\
+  \planreal{Infraestructura (Docker, MVC, MySQL)}{1}{5}{1}{5}{verdeOk}
+  \planreal{APIs de usuarios y verificación}{6}{9}{6}{9}{verdeOk}
+  \planreal{APIs de actividades}{10}{11}{10}{11}{verdeOk}
+  \planreal{API de grupos}{12}{13}{12}{15}{ambarParcial}
+  \planreal{APIs de asignaciones}{16}{18}{16}{21}{ambarParcial}
+  \planreal{Integración Front--Back}{14}{15}{14}{15}{ambarParcial}
+  \planreal{Revisión del contenido generado}{21}{21}{21}{21}{rojoFallo}
+
+  \ganttvrule{Baja de un integrante}{12}
+\end{ganttchart}%
+}
+\caption{Iteración 1: planificado (gris) frente a realidad (color).}
+\label{fig:gantt-it1-real}
+\end{figure}
+
+\vspace{0.2cm}
+\begin{table}[H]
+\centering
+\small
+\rowcolors{2}{azulclaro!25}{white}
+\begin{tabularx}{\textwidth}{l X X}
+\rowcolor{azulPastelApagado}
+\textbf{\color{white}Área} & \textbf{\color{white}Qué falló} & \textbf{\color{white}Causa principal} \\
+Frontend & Implementación incompleta; la integración y la revisión no se llegaron a cerrar. & Exámenes, prácticas y entregas de otras asignaturas, más formación técnica no prevista. \\
+Backend & Las APIs de grupos y asignaciones se retrasaron. & Baja de un integrante a mitad de iteración y reorganización de tareas. \\
+Transversal & No hubo apoyo del backend al frontend. & El equipo de backend quedó limitado al despliegue y a asesoramiento puntual. \\
+\end{tabularx}
+\caption{Resumen de desviaciones de la Iteración 1.}
+\end{table}
+
+\subsection{Iteración 2: Deuda Técnica frente a Nuevo Alcance}
+
+El siguiente diagrama coloca la Iteración 2 (12 de noviembre -- 2 de diciembre de 2026) y distingue qué trabajo es \textbf{deuda heredada de la Iteración 1} y cuál es \textbf{alcance nuevo}. Así se ve cuánto de la nueva iteración se consume en cerrar lo pendiente.
+
+\begin{center}
+\small
+\cajita{ambarParcial}~Deuda técnica de la Iteración 1 \quad
+\cajita{azulNuevo}~Alcance nuevo de la Iteración 2 \quad
+\cajita{verdeOk}~Pruebas e integración
+\end{center}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{ganttchart}[cmp, bar/.append style={draw=black!40}]{1}{21}
+  \gantttitle{Noviembre 2026}{19}
+  \gantttitle{Dic.}{2} \\
+  \gantttitlelist{12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,1,2}{1} \\
+
+  \ganttgroup{Front-End}{1}{21} \\
+  \ganttbar[bar/.append style={fill=ambarParcial}]{Inicios de sesión (profesor, estudiante) + Familia}{1}{5} \\
+  \ganttbar[bar/.append style={fill=ambarParcial}]{Interfaz de crear actividad y asignar}{6}{8} \\
+  \ganttbar[bar/.append style={fill=ambarParcial}]{Vista de actividad}{9}{10} \\
+  \ganttbar[bar/.append style={fill=ambarParcial}]{Interfaz de agenda}{11}{14} \\
+  \ganttbar[bar/.append style={fill=ambarParcial}]{Creación de usuarios y grupos}{15}{15} \\
+  \ganttbar[bar/.append style={fill=ambarParcial}]{Asignación estudiante-profesor y grupos}{16}{16} \\
+  \ganttbar[bar/.append style={fill=azulNuevo}]{Asignación estudiante-familiar (HU-A6)}{17}{17} \\
+  \ganttbar[bar/.append style={fill=verdeOk}]{Integración Front--Back}{18}{21} \\
+
+  \ganttgroup{Back-End}{1}{21} \\
+  \ganttbar[bar/.append style={fill=azulNuevo}]{API de login familiar (HU-F1)}{1}{2} \\
+  \ganttbar[bar/.append style={fill=azulNuevo}]{API de estudiantes asociados (HU-F2, HU-F5)}{3}{4} \\
+  \ganttbar[bar/.append style={fill=azulNuevo}]{API de completación de actividad y pasos (HU-E7)}{5}{8} \\
+  \ganttbar[bar/.append style={fill=ambarParcial}]{Apoyo al Frontend}{9}{11} \\
+  \ganttbar[bar/.append style={fill=verdeOk}]{Testeo de funcionalidades}{12}{13} \\
+  \ganttbar[bar/.append style={fill=verdeOk}]{Integración Front--Back}{14}{15} \\
+  \ganttbar[bar/.append style={fill=ambarParcial}]{Apoyo al Frontend}{16}{17} \\
+  \ganttbar[bar/.append style={fill=verdeOk}]{Integración Front--Back}{18}{19} \\
+  \ganttbar[bar/.append style={fill=verdeOk}]{Testeo de funcionalidades}{20}{21} \\
+
+  \ganttmilestone[milestone/.append style={fill=rojoFallo}]{Entrega Iteración 2}{21}
+\end{ganttchart}%
+}
+\caption{Iteración 2: deuda técnica heredada frente a alcance nuevo.}
+\label{fig:gantt-it2-deuda}
+\end{figure}
