@@ -1,35 +1,187 @@
-.aviso-error-actividad {
+/* Paleta oficial DobleM (Manual de Coordinación y Plan de Accesibilidad) */
+:root {
+    --verde-apagado: #A4BEA7;
+    --azul-pastel: #ABBBCB;
+    --azul-claro: #D1DBE4;
+    --texto-oscuro: #1A1A1A;
+    --borde-wireframe: #2C3E50;
+    --fondo-fuera: #E2E8F0;
+    --blanco: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px 0;
+    background-color: var(--fondo-fuera);
+    font-family: Arial, Helvetica, sans-serif; /* RNF3: Palo seco */
+    font-size: 18px; /* RNF3: Mínimo 18px */
+    color: var(--texto-oscuro);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* Marco simulador iPad Portrait (RNF5: 768x1024px) */
+.ipad-frame {
+    width: 768px;
+    min-height: 1024px;
+    background-color: var(--blanco);
+    border: 3px solid var(--borde-wireframe);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Barra superior idéntica a Figma */
+.ipad-top-bar {
+    height: 60px;
+    background-color: var(--azul-claro);
+    border-bottom: 2px solid var(--borde-wireframe);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 18px;
+}
+
+.icono-box {
+    width: 44px;
+    height: 44px; /* RNF4: Touch target >= 44x44px */
+    border: 2px solid var(--borde-wireframe);
+    background-color: var(--blanco);
     display: flex;
     align-items: center;
-    gap: 16px;
-    background-color: #D1DBE4; /* azulclaro */
-    border: 2px solid #ABBBCB; /* azulPastelApagado */
-    border-radius: 8px;
-    padding: 24px;
-    max-width: 600px;
-    margin: 30px auto;
-    color: #1A1A1A;
-    font-family: Arial, sans-serif;
-}
-.texto-alerta h2 {
-    margin: 0 0 8px 0;
+    justify-content: center;
     font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--texto-oscuro);
 }
-.texto-alerta p {
-    margin: 0 0 16px 0;
-    font-size: 1.125rem; /* 18px */
+
+.icono-box:focus,
+.icono-box:hover {
+    outline: 3px solid #000;
 }
-.btn-volver {
+
+/* Cuerpo central */
+.ipad-body {
+    flex: 1;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 24px 0;
+    color: var(--texto-oscuro);
+}
+
+/* Tarjeta central del formulario (Boceto Figma: iPad — Crear Actividad) */
+.card-formulario-crear {
+    width: 100%;
+    max-width: 580px;
+    background-color: var(--azul-claro); /* #D1DBE4 */
+    border: 3px solid var(--borde-wireframe);
+    border-radius: 12px;
+    padding: 28px 32px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-campo {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-campo label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 1.1rem;
+    color: var(--texto-oscuro);
+}
+
+.form-input {
+    min-height: 48px; /* RNF4: Touch target accesible */
+    padding: 10px 14px;
+    border: 2px solid var(--borde-wireframe);
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--blanco);
+    color: var(--texto-oscuro);
+}
+
+.form-input:focus {
+    outline: 3px solid #000000;
+}
+
+.fila-horas {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.fila-horas .form-campo {
+    flex: 1;
+}
+
+/* Caja de errores de validación accesible */
+.box-errores-cliente {
+    background-color: #FDEDEC;
+    border: 2px solid #C0392B;
+    border-radius: 8px;
+    padding: 14px 18px;
+    color: #1A1A1A;
+    margin-bottom: 20px;
+    width: 100%;
+    display: none;
+}
+
+/* Botón Crear accesible con ratio de contraste WCAG AA */
+.btn-crear-actividad {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
-    padding: 10px 20px;
-    background-color: #A4BEA7; /* verdeApagado */
-    color: #000000;
-    text-decoration: none;
+    min-height: 48px;
+    min-width: 170px;
+    padding: 10px 28px;
+    background-color: var(--verde-apagado); /* #A4BEA7 */
+    color: var(--texto-oscuro);
+    border: 2px solid var(--borde-wireframe);
+    border-radius: 8px;
+    font-size: 1.15rem;
     font-weight: bold;
-    border-radius: 6px;
-    font-size: 1.125rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-crear-actividad:focus,
+.btn-crear-actividad:hover {
+    outline: 3px solid #000;
+    background-color: #8fae93;
+}
+
+/* Barra inferior del iPad */
+.ipad-bottom-bar {
+    height: 44px;
+    background-color: var(--azul-claro);
+    border-top: 2px solid var(--borde-wireframe);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 18px;
 }
