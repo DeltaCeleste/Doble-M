@@ -1,5 +1,4 @@
 <?php
-// Manejo seguro de sesión sin bloquear la ejecución si el archivo no está en la ruta
 $sesionManager = __DIR__ . '/../services/sesion_manager.php';
 if (file_exists($sesionManager)) {
     require_once $sesionManager;
@@ -16,7 +15,6 @@ if (file_exists($sesionManager)) {
     <title>Crear Actividad - Doble Agenda</title>
     <link rel="stylesheet" href="../css/personal.css">
     <style>
-        /* Estilos integrados para garantizar fidelidad al wireframe iPad — Crear Actividad */
         body {
             margin: 0;
             padding: 20px 0;
@@ -176,13 +174,11 @@ if (file_exists($sesionManager)) {
         <main class="ipad-body">
             <h1 class="titulo-pantalla">Crear Actividad</h1>
 
-            <!-- Boceto de Figma: iPad — Crear Actividad -->
             <section class="card-formulario-crear" aria-labelledby="form-titulo">
                 <h2 id="form-titulo" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">
                     Formulario para crear nueva actividad
                 </h2>
 
-                <!-- Contenedor accesible para errores de validación (SCRUM-23) -->
                 <div id="contenedor-errores" class="box-errores-cliente" role="alert" aria-live="assertive" tabindex="-1"></div>
 
                 <form id="form-crear-actividad" action="crear_actividad.php" method="POST" novalidate>
