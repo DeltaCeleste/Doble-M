@@ -1,93 +1,35 @@
-/* Base e tipografia accessibile (Sans-Serif) */
-body {
-    background-color: #F4F6F8;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: #2D3748;
-    margin: 2rem;
+.aviso-error-actividad {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: #D1DBE4; /* azulclaro */
+    border: 2px solid #ABBBCB; /* azulPastelApagado */
+    border-radius: 8px;
+    padding: 24px;
+    max-width: 600px;
+    margin: 30px auto;
+    color: #1A1A1A;
+    font-family: Arial, sans-serif;
 }
-
-/* Card principale del dettaglio attività */
-.actividad-detalle-card { 
-    background-color: #FFFFFF; 
-    border: 2px solid #ABBCCB; /* azulPastelApagado */ 
-    border-radius: 12px; 
-    padding: 2rem; 
-    max-width: 650px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-} 
-
-/* Intestazione */
-.actividad-header { 
-    display: flex; 
-    align-items: center; 
-    gap: 1.25rem; 
-    margin-bottom: 1.5rem; 
-    border-bottom: 2px solid #D1DBE4; /* azulclaro */ 
-    padding-bottom: 1rem; 
-} 
-
-.actividad-pictograma { 
-    width: 64px; 
-    height: 64px; 
-    object-fit: contain; 
-} 
-
-.actividad-titulo { 
-    font-size: 1.6rem; 
-    font-weight: 700;
-    color: #1A202C; 
-    margin: 0;
-} 
-
-/* Sezioni di contenuto */
-.actividad-seccion { 
-    margin-bottom: 1.25rem; 
-} 
-
-.actividad-seccion h3 { 
-    font-size: 1.1rem; 
-    font-weight: 600;
-    color: #2B6CB0; /* tono blu coordinato */
-    margin-bottom: 0.4rem; 
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-} 
-
-.actividad-seccion p {
-    margin: 0.3rem 0;
-    line-height: 1.5;
-    font-size: 1rem;
+.texto-alerta h2 {
+    margin: 0 0 8px 0;
+    font-size: 1.3rem;
 }
-
-.etiqueta-grupo {
-    margin-bottom: 0.6rem !important;
+.texto-alerta p {
+    margin: 0 0 16px 0;
+    font-size: 1.125rem; /* 18px */
 }
-
-/* Lista studenti */
-.lista-alumnado { 
-    list-style: none; 
-    padding: 0; 
-    margin: 0.5rem 0 0 0;
-    display: flex; 
-    flex-direction: column; 
-    gap: 0.5rem; 
-} 
-
-.item-estudiante { 
-    display: flex; 
-    align-items: center; 
-    gap: 0.75rem; 
-    background-color: #F7FAFC; 
-    border: 1px solid #E2E8F0;
-    padding: 0.6rem 1rem; 
-    border-radius: 8px; 
-    font-size: 0.95rem;
-    font-weight: 500;
-} 
-
-.avatar-mini { 
-    width: 32px; 
-    height: 32px; 
-    border-radius: 50%; 
-    object-fit: cover; 
+.btn-volver {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px 20px;
+    background-color: #A4BEA7; /* verdeApagado */
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    font-size: 1.125rem;
 }
