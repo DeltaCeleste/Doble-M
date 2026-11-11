@@ -1,0 +1,93 @@
+\section{Cronograma}
+Para garantizar un seguimiento riguroso del desarrollo de la Segunda Iteración (comprendida entre el 12 de noviembre y el 2 de diciembre de 2026), el equipo ha estructurado la distribución temporal de tareas diferenciando los bloques de trabajo del \textit{Front-End} y del \textit{Back-End}. 
+
+Dado el reajuste de alcance aplicado tras la primera iteración, la planificación actual se focaliza en consolidar las funcionalidades de inicio de sesión de familias, selección de alumnos, marcado de progreso en actividades y la asignación de relaciones en el panel de administración. 
+
+A continuación, se presenta esta planificación detallada en dos formatos complementarios: en primer lugar, el desglose cronológico por fases, entregables e hitos en formato tabular; y en segundo lugar, la representación visual del calendario mediante un Diagrama de Gantt.
+\subsection{Vista en Tabla}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l l l X}
+\toprule
+\textbf{Fase} & \textbf{Tipo} & \textbf{Fecha} & \textbf{Principales resultados} \\
+\midrule
+Frontend & Desarrollo & 12/11 -- 16/11 & Implementar inicios de sesión. \\
+Frontend & Desarrollo & 17/11 -- 19/11 & Implementar interfaz de crear actividad y asignar. \\
+Frontend & Desarrollo & 20/11 -- 21/11 & Implementar vista de actividad. \\
+Frontend & Desarrollo & 22/11 -- 25/11 & Implementar interfaz de agenda. \\
+Frontend & Desarrollo & 26/11 & Implementar interfaz de creación de usuarios y grupos. \\
+Frontend & Desarrollo & 27/11 & Implementar interfaz de asignación estudiante-profesor y grupos. \\
+Frontend & Desarrollo & 28/11 & Implementar interfaz de asignación estudiante-familiar. \\
+Frontend & Integración & 29/11 -- 02/12 & Integración Frontend-Backend. \\
+\midrule
+Backend & API & 12/11 -- 13/11 & API de login familiar. \\
+Backend & API & 14/11 -- 15/11 & API de estudiantes asociados a familiares. \\
+Backend & API & 16/11 -- 19/11 & API de completación de una actividad y sus pasos. Revisión de BD. \\
+Backend & Soporte & 20/11 -- 22/11 & Apoyo al Frontend. \\
+Backend & QA & 23/11 -- 24/11 & Testeo de funcionalidades. \\
+Backend & Integración & 25/11 -- 26/11 & Integración Frontend-Backend. \\
+Backend & Soporte & 27/11 -- 28/11 & Apoyo al Frontend. \\
+Backend & Integración & 29/11 -- 30/11 & Integración Frontend-Backend. \\
+Backend & QA & 01/12 -- 02/12 & Testeo de funcionalidades. \\
+\bottomrule
+\end{tabularx}
+\caption{Cronograma en formato tabla (Iteración 2).}
+\label{tab:cronograma-tabla}
+\end{table}
+
+\subsection{Vista en Diagrama de Gantt}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{ganttchart}[
+    x unit=0.55cm,
+    y unit title=0.6cm,
+    y unit chart=0.6cm,
+    vgrid,
+    hgrid,
+    title height=1,
+    title label font=\tiny\bfseries,
+    bar label font=\tiny,
+    group label font=\tiny\bfseries,
+    bar/.append style={fill=blue!40},
+    bar complete/.append style={fill=blue!80},
+    group right peak width=0.2,
+    group left peak width=0.2
+]{1}{21}
+  % Días de Noviembre (12 a 30) y Diciembre (1 a 2)
+  \gantttitle{Noviembre 2026}{19}
+  \gantttitle{Diciembre}{2} \\
+  \gantttitlelist{12,...,30}{1}
+  \gantttitlelist{1,...,2}{1} \\
+
+  % --- FRONT-END ---
+  \ganttgroup{Front-End}{1}{21} \\
+  \ganttbar{Implementar Inicios de sesión}{1}{5} \\
+  \ganttbar{Implementar interfaz de crear actividad y asignar}{6}{8} \\
+  \ganttbar{Implementar vista de actividad}{9}{10} \\
+  \ganttbar{Implementar interfaz agenda}{11}{14} \\
+  \ganttbar{Implementar interfaz creación usuarios y grupos}{15}{15} \\
+  \ganttbar{Implementar interfaz asignación estudiante-profesor y grupos}{16}{16} \\
+  \ganttbar{Implementar interfaz asignación estudiante-familiar}{17}{17} \\
+  \ganttbar{Integración Front-Backend}{18}{21} \\
+
+  % --- BACK-END ---
+  \ganttgroup{Back-End}{1}{21} \\
+  \ganttbar{Api de login familiar}{1}{2} \\
+  \ganttbar{Api de estudiantes asociados a Familiares}{3}{4} \\
+  \ganttbar{Api completación actividad y pasos / Revisión BD}{5}{8} \\
+  \ganttbar{Apoyo al Frontend}{9}{11} \\
+  \ganttbar{Testeo de funcionalidades}{12}{13} \\
+  \ganttbar{Integración Front-Backend}{14}{15} \\
+  \ganttbar{Apoyo al Frontend}{16}{17} \\
+  \ganttbar{Integración Front-Backend}{18}{19} \\
+  \ganttbar{Testeo de funcionalidades}{20}{21}
+
+\end{ganttchart}
+}
+\caption{Diagrama de Gantt — Planificación detallada de la Iteración 2.}
+\label{fig:gantt-iteracion2}
+\end{figure}
