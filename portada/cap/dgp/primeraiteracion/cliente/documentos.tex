@@ -162,7 +162,7 @@ Para finalizar, la aplicación cuenta con una pantalla de error. En caso de que 
 
 
 
-
+\newpage
 \section{Manual de Calidad}
 
 \subsection{Objeto y Alcance del Manual de Calidad}
@@ -187,7 +187,7 @@ Para el software desarrollado en la arquitectura MVC (PHP, Twig, JavaScript, HTM
 \begin{itemize}
     \item \textbf{Estándares de Nomenclatura (100\%):} Cumplimiento estricto del formato \texttt{camelCase} para variables y funciones, \texttt{PascalCase} para clases y \texttt{UPPER\_SNAKE\_CASE} para constantes. Los identificadores deben escribirse en inglés y los comentarios explicativos en español.
     \item \textbf{Modularidad y Tamaño de Funciones:} Ninguna función o método del backend o frontend superará las 50 líneas de código para garantizar su mantenibilidad.
-    \item \textbf{Reutilización y Duplicación (<5\%):} La duplicación del código fuente se mantendrá por debajo del 5\% mediante la modularización de componentes en Twig y funciones globales en PHP/JavaScript.
+    \item \textbf{Reutilización y Duplicación ($<$5\%):} La duplicación del código fuente se mantendrá por debajo del 5\% mediante la modularización de componentes en Twig y funciones globales en PHP/JavaScript.
     \item \textbf{Integridad de la Rama Principal (\texttt{main}):} El código subido a la rama principal del repositorio GitHub debe estar libre de errores sintácticos y permitir el flujo de usuario completo sin fallos en tiempo de ejecución.
 \end{itemize}
 
@@ -218,5 +218,226 @@ Para asegurar la cohesión del equipo y el cumplimiento de los compromisos adqui
     \item \textbf{Gestión de Estados:} Modificación en tiempo real del estado, fecha de inicio y finalización de cada tarea asignada en Jira.
 \end{itemize}
 
+\newpage
+\section{Manual de Despliegue, Arquitectura y Especificación de la API}
+\label{sec:guia-tecnica-app}
+
+El presente documento constituye la guía técnica oficial para el despliegue del entorno local, la organización del repositorio y la integración entre los subsistemas de \textit{Front-end} y \textit{Back-end}.
+
+% -----------------------------------------------------------------
+% SUBSECCIÓN: PREPARACIÓN DEL ENTORNO LOCAL
+% -----------------------------------------------------------------
+\subsection{Preparación del Entorno y Despliegue con Docker}
+
+El proyecto utiliza contenedores mediante \textbf{Docker Compose} para estandarizar el entorno de desarrollo. Siga las instrucciones correspondientes a su estado inicial.
+
+\subsubsection{Inicialización por primera vez (Instalación limpia)}
+Si nunca se ha compilado el entorno ni realizado la descarga del repositorio, ejecute en la terminal desde la carpeta raíz \texttt{app/}:
+
+\begin{quote}
+\small\ttfamily
+cd app\\
+docker compose up
+\end{quote}
+
+\subsubsection{Recompilación del entorno (Entorno previamente montado)}
+Si ya contaba con el contenedor y se han integrado cambios en la configuración base, fuerce la reconstrucción sin uso de caché:
+
+\begin{quote}
+\small\ttfamily
+docker compose down\\
+docker compose build --no-cache\\
+docker compose up -d
+\end{quote}
+
+\subsubsection{Instalación del motor de plantillas Twig}
+Una vez que el servidor esté en ejecución, instale las dependencias necesarias ejecutando Composer dentro del contenedor:
+
+\begin{quote}
+\small\ttfamily
+docker compose exec webserver composer require "twig/twig:\^{}3.0"
+\end{quote}
+
+\vspace{0.3cm}
+\noindent
+\colorbox{azulclaro!40}{%
+  \parbox{\dimexpr\textwidth-2\fboxsep\relax}{%
+    \vspace{6pt}
+    \textbf{\color{textoOscuro}Importante (Front-end):} Para poder renderizar plantillas de Twig correctamente, es \textbf{obligatorio} incluir el autoloader de Composer al inicio de cualquier archivo PHP destinado a renderizado:
+    
+    \vspace{4pt}
+    {\small\ttfamily\hspace*{1em}require\_once \_\_DIR\_\_ . '/vendor/autoload.php';}
+    \vspace{4pt}
+  }%
+}
+\vspace{0.3cm}
+
+\vspace{0.5cm}
+\subsubsection{Despliegue e Importación de la Base de Datos}
+Para mantener sincronizado el esquema de la base de datos con los últimos cambios de \textit{Back-end}, siga el siguiente procedimiento:
+
+\begin{enumerate}
+    \item Asegúrese de que el servidor está activo y acceda a \textbf{phpMyAdmin} en su navegador mediante \url{http://localhost/phpmyadmin}.
+    \item En el panel izquierdo, busque la base de datos \texttt{agenda}. 
+    \item \textbf{Si ya existe:} Selecciónela, diríjase a la pestaña \textit{Operaciones} y ejecute la opción \textbf{Eliminar la base de datos (DROP)}.
+    \item \textbf{Creación de BD limpia:} Haga clic en \textit{Nueva} en el menú izquierdo, introduzca el nombre \texttt{agenda} y pulse \textit{Crear}.
+    \item \textbf{Importación del Backup:} Seleccione la base de datos \texttt{agenda}, acuda a la pestaña superior \textit{Importar}, cargue el archivo situado en:
+    \begin{center}
+        \texttt{app/BD Backup/agenda.sql}
+    \end{center}
+    y confirme la operación con el botón \textit{Importar}.
+\end{enumerate}
+
+% -----------------------------------------------------------------
+% SUBSECCIÓN: ESTRUCTURA DE ARCHIVOS Y DIRECTORIOS
+% -----------------------------------------------------------------
+\newpage
+\subsection{Arquitectura y Estructura del Proyecto}
+
+Toda la aplicación se encuentra encapsulada dentro del directorio \texttt{app/}. A continuación se especifica la responsabilidad de cada subdirectorio y su equipo encargado:
+
+\begin{table}[H]
+\centering
+\small
+\rowcolors{2}{white}{azulclaro!30}
+\begin{tabularx}{\textwidth}{l c X}
+\toprule
+\rowcolor{azulPastelApagado}
+\textbf{\color{textoOscuro}Directorio / Archivo} & \textbf{\color{textoOscuro}Responsable} & \textbf{\color{textoOscuro}Descripción y Propósito} \\
+\midrule
+\texttt{app/api/} & Back-end & Endpoints PHP invocados vía JavaScript/Fetch para responder datos de la BD en formato JSON. \\
+\texttt{app/assets/} & Compartido & Recursos globales (hojas de estilo estáticas base, favicon, imágenes globales). \\
+\texttt{app/BD Backup/} & Back-end & Contiene los scripts SQL (\texttt{agenda.sql}) con el estado más reciente de la BD. \\
+\texttt{app/css/} & Front-end & Estilos CSS específicos de la aplicación web. \\
+\texttt{app/js/} & Front-end & Archivos JavaScript con la lógica de interactividad, animaciones y peticiones asíncronas (\textit{Fetch}). \\
+\texttt{app/services/} & Back-end & Servicios del sistema (gestores de sesión, controladores de conexión a la BD). \\
+\texttt{app/templates/} & Front-end & Plantillas Twig y vistas parciales HTML (headers, footers, componentes visuales). \\
+\texttt{app/utils/} & Back-end & Funciones auxiliares y glosario de utilidades para consultas a la base de datos. \\
+\texttt{app/vendor/} & Sistema & Librerías y autoloader gestionados por Composer (\textbf{no modificar}). \\
+\texttt{app/renders/} & Front-end & \textit{(Opcional)} Directorio recomendado para organizar los controladores PHP de renderizado de vistas. \\
+\bottomrule
+\end{tabularx}
+\caption{Organización del directorio principal de la aplicación.}
+\end{table}
+
+\paragraph{Archivos del Entorno Base (No modificar)}
+Los archivos \texttt{index.php}, \texttt{phpinfo.php}, \texttt{test\_db.php}, \texttt{test\_db\_pdo.php}, \texttt{composer.json} y \texttt{composer.lock} pertenecen a la infraestructura LAMP y gestores de paquetes. No deben editarse salvo requerimiento expreso del equipo.
+
+% -----------------------------------------------------------------
+% SUBSECCIÓN: GUÍA DE INTEGRACIÓN Y ENDPOINTS DE LA API
+% -----------------------------------------------------------------
+\newpage
+\subsection{Especificación de la API HTTP / JSON}
+
+El flujo de información en la plataforma sigue el patrón cliente-servidor asíncrono. Un archivo de renderizado invoca la plantilla Twig; esta carga un script JS que consulta la API pública enviando y recibiendo estructuras JSON.
+
+\subsubsection{Estándar de Respuesta JSON}
+Todos los endpoints ubicados en \texttt{app/api/} devuelven una respuesta con la siguiente estructura base:
+
+\begin{quote}
+\small\ttfamily
+\{\\
+\ \ "success": true,\ \ \ // Booleano: indica si la operación fue exitosa\\
+\ \ "code": 0,\ \ \ \ \ \ \ \ // Entero: código de estado/error específico\\
+\ \ "message": "..."\ \ // String: descripción legible del resultado o fallo\\
+\}
+\end{quote}
+
+\subsubsection{Catálogo de Endpoints Disponibles}
+
+\begin{enumerate}
+    \item \texttt{crear\_estudiante.php}
+    \begin{itemize}
+        \item \textbf{Función:} Registra un nuevo perfil de estudiante.
+        \item \textbf{Parámetros GET/POST:} \texttt{name} (Nombre de usuario), \texttt{pass} (Contraseña).
+        \item \textbf{Códigos posibles:} \texttt{0} (Éxito), \texttt{100} (Falta parámetro), \texttt{200} (Usuario ya existe).
+    \end{itemize}
+
+    \item \texttt{crear\_profesor.php}
+    \begin{itemize}
+        \item \textbf{Función:} Registra un nuevo perfil de docente.
+        \item \textbf{Parámetros GET/POST:} \texttt{name} (Nombre de usuario), \texttt{pass} (Contraseña).
+        \item \textbf{Códigos posibles:} \texttt{0}, \texttt{100}, \texttt{200}.
+    \end{itemize}
+
+    \item \texttt{crear\_familiar.php}
+    \begin{itemize}
+        \item \textbf{Función:} Registra un perfil para tutores o familiares.
+        \item \textbf{Parámetros GET/POST:} \texttt{name} (Nombre de usuario), \texttt{pass} (Contraseña).
+        \item \textbf{Códigos posibles:} \texttt{0}, \texttt{100}, \texttt{200}.
+    \end{itemize}
+
+    \item \texttt{crear\_pertenece.php}
+    \begin{itemize}
+        \item \textbf{Función:} Asigna la pertenencia de un usuario a un grupo concreto.
+        \item \textbf{Parámetros GET/POST:} \texttt{user} (Usuario), \texttt{group} (Grupo destino).
+        \item \textbf{Códigos posibles:} \texttt{0}, \texttt{100}, \texttt{201} (Asignación previa), \texttt{300}, \texttt{301} (Grupo no existe), \texttt{400}.
+    \end{itemize}
+
+    \item \texttt{crear\_asociacion.php}
+    \begin{itemize}
+        \item \textbf{Función:} Asocia a un estudiante con su responsable legal o docente.
+        \item \textbf{Parámetros GET/POST:} \texttt{student} (Estudiante), \texttt{responsible} (Profesor/Familiar).
+        \item \textbf{Códigos posibles:} \texttt{0}, \texttt{100}, \texttt{202} (Asociación existente), \texttt{300}, \texttt{400}.
+    \end{itemize}
+
+    \item \texttt{consultar\_responsable\_asociado\_estudiante.php}
+    \begin{itemize}
+        \item \textbf{Función:} Verifica la vinculación de responsabilidad entre un estudiante y un tutor/docente.
+        \item \textbf{Parámetros GET/POST:} \texttt{student}, \texttt{responsible}.
+        \item \textbf{Códigos posibles:} \texttt{0} (Asociado), \texttt{1} (No asociado / \texttt{success: false}), \texttt{100}.
+    \end{itemize}
+
+    \item \texttt{login\_estudiante.php}
+    \begin{itemize}
+        \item \textbf{Función:} Valida credenciales e inicia sesión para la cuenta de estudiante.
+        \item \textbf{Parámetros GET/POST:} \texttt{name}, \texttt{pass}.
+        \item \textbf{Códigos posibles:} \texttt{0}, \texttt{100}, \texttt{203} (Password incorrecta), \texttt{300}, \texttt{400}, \texttt{401} (Cuenta inactiva).
+    \end{itemize}
+
+    \item \texttt{consultar\_agenda\_estudiante.php}
+    \begin{itemize}
+        \item \textbf{Función:} Recupera la agenda de actividades personalizada del alumno en sesión.
+        \item \textbf{Parámetros Opcionales:} \texttt{view} (\texttt{'daily'} por defecto o \texttt{'weekly'}), \texttt{date} (\texttt{YYYY-MM-DD}), \texttt{startDate}, \texttt{endDate}.
+        \item \textbf{Códigos posibles:} \texttt{0} (Devuelve array de tareas o array vacío si no hay datos), \texttt{400} (Sesión inválida/no autorizada).
+    \end{itemize}
+
+    \item \texttt{consultar\_actividad\_estudiante.php}
+    \begin{itemize}
+        \item \textbf{Función:} Extrae la información detallada de una tarea (estado actual y desglose de subtareas).
+        \item \textbf{Parámetros GET/POST:} \texttt{id\_actividad} (Identificador único).
+        \item \textbf{Códigos posibles:} \texttt{0}, \texttt{100}, \texttt{300}, \texttt{400}.
+    \end{itemize}
+\end{enumerate}
+
+% -----------------------------------------------------------------
+% SUBSECCIÓN: DICCIONARIO DE CÓDIGOS DE ERROR
+% -----------------------------------------------------------------
+\subsubsection{Diccionario de Códigos de Respuesta}
+
+\begin{table}[H]
+\centering
+\small
+\rowcolors{2}{white}{azulclaro!30}
+\begin{tabularx}{\textwidth}{c c X}
+\toprule
+\rowcolor{azulPastelApagado}
+\textbf{\color{textoOscuro}Código} & \textbf{\color{textoOscuro}Estado} & \textbf{\color{textoOscuro}Descripción e Interpretación} \\
+\midrule
+\textbf{0} & Éxito & Operación realizada correctamente. \\
+\textbf{1} & Éxito Evaluatorio & Consulta completada pero la condición resulta falsa (\texttt{success: false}). \\
+\textbf{100} & Error Parámetros & Falta una o varias variables requeridas para procesar la petición. \\
+\textbf{200} & Error Duplicado & El nombre de usuario especificado ya se encuentra registrado. \\
+\textbf{201} & Error Duplicado & La relación de pertenencia a grupo ya existe. \\
+\textbf{202} & Error Duplicado & La asociación entre estudiante y responsable ya está registrada. \\
+\textbf{203} & Error Credenciales & La contraseña proporcionada no es válida. \\
+\textbf{300} & No Encontrado & El recurso solicitado (usuario, actividad, etc.) no existe en el sistema. \\
+\textbf{301} & No Encontrado & El grupo especificado no existe. \\
+\textbf{400} & No Autorizado & Permisos insuficientes o ausencia de sesión activa. \\
+\textbf{401} & Cuenta Bloqueada & El usuario se encuentra dado de baja o inactivo. \\
+\bottomrule
+\end{tabularx}
+\caption{Codificación estándar de respuestas de la API.}
+\end{table}
 
 
