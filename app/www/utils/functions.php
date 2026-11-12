@@ -256,6 +256,49 @@
         return true;
     }
 
+    // Actividades ------------------------------------------------------------------------------------
+    // Consulta las actividades programadas entre dos fechas
+    function getActivitiesByDateRange($startDate, $endDate){
+        $conn = connect();
+
+        $stmt = "SELECT * FROM agenda.actividad WHERE fecha_inicio BETWEEN ? AND ? ORDER BY fecha_inicio ASC;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("ss", $startDate, $endDate);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $activities = array();
+        while ($row = $result->fetch_assoc()) {
+            $activities[] = $row;
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $activities;
+    }
+
+    // Consulta los detalles de una actividad dado su id
+    function getActivityDetail($activityId){
+        $conn = connect();
+
+        $stmt = "SELECT * FROM agenda.actividad WHERE id_actividad=?;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("i", $activityId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $activity = null;
+        if ($result->num_rows > 0) {
+            $activity = $result->fetch_assoc();
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $activity;
+    }
+
 // Inserciones =============================================================================================================
     // Usuario --------------------------------------------------------------------------------------
     // Crea un nuevo usuario de cualquier categoría en la base de datos si no existe y la categoría esta en la base de datos
@@ -369,48 +412,6 @@
     }
 
 // Cosas de actividades, a falta de actualizar la bd (hace falta para los pasos de actividady demas)
-    // Consulta las actividades programadas entre dos fechas
-    function getActivitiesByDateRange($startDate, $endDate){
-        $conn = connect();
-
-        $stmt = "SELECT * FROM agenda.actividad WHERE fecha_inicio BETWEEN ? AND ? ORDER BY fecha_inicio ASC;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("ss", $startDate, $endDate);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $activities = array();
-        while ($row = $result->fetch_assoc()) {
-            $activities[] = $row;
-        }
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $activities;
-    }
-
-    // Consulta los detalles de una actividad dado su id
-    function getActivityDetail($activityId){
-        $conn = connect();
-
-        $stmt = "SELECT * FROM agenda.actividad WHERE id_actividad=?;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("i", $activityId);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $activity = null;
-        if ($result->num_rows > 0) {
-            $activity = $result->fetch_assoc();
-        }
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $activity;
-    }
-
     // Consulta los pasos de una actividad ordenados secuencialmente
     function getActivitySteps($activityId){
         $conn = connect();

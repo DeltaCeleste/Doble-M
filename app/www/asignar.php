@@ -10,7 +10,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 }
 
 // Configurar Twig apuntando a la carpeta de plantillas
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/plantillas');
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
 $twig = new \Twig\Environment($loader);
 
 // Datos de prueba para el select de alumnos y campos
