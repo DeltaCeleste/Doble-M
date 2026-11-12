@@ -21,7 +21,7 @@ if (empty($userId) || empty($activityId) || empty($date) || empty($startTime) ||
 }
 
 // existe? 300
-if (!userExistsById($userId) || !activityExistsById($activityId)) {
+if (!studentExistsById($userId) || !activityExistsById($activityId)) {
     echo json_encode([
         "success" => false,
         "code"    => 300,
