@@ -2,8 +2,6 @@
 
     require_once __DIR__ . "/../services/bd_manager.php"; 
 
-
-
 //IMPORTANTE
 // Las variables y funciones utilizan el formato camelCase.
 // Las clases utilizan el formato PascalCase.
@@ -119,6 +117,59 @@
         return true;
     }
 
+    // Obtiene los datos de autenticación de un usuario por su nombre
+    function getUserAuthData($name) {
+        $conn = connect();
+
+        $stmt = "SELECT id_usuario, nombre_usuario, contraseña, categoria_usuario, estado_usuario 
+                 FROM agenda.usuario 
+                 WHERE nombre_usuario = ?;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("s", $name);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $userData = null;
+        if ($result->num_rows > 0) {
+            $userData = $result->fetch_assoc();
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $userData;
+    }
+
+    // Autentica a un estudiante y gestiona su sesión
+    function loginStudentUser($name, $pass) {
+        $userData = getUserAuthData($name);
+
+        if (!$userData) {
+            return 300; // Usuario no existe
+        }
+
+        if ($userData['categoria_usuario'] !== 'estudiante') {
+            return 400; // Categoría inválida
+        }
+
+        if ($userData['estado_usuario'] == 0) {
+            return 401; // Usuario inactivo / dado de baja
+        }
+
+        if (!password_verify($pass, $userData['contraseña'])) {
+            return 203; // Contraseña incorrecta
+        }
+
+        // Inicializar y poblar variables de sesión
+        cargarSesion();
+        $_SESSION['anonimo'] = false;
+        $_SESSION['id']      = $userData['id_usuario'];
+        $_SESSION['nombre']  = $userData['nombre_usuario'];
+        $_SESSION['rol']     = 'estudiante';
+
+        return 0; // Éxito
+    }
+
     // Grupo --------------------------------------------------------------------------------------
     // Consulta el mayor id de grupo en la BD y lo devuelve incrementado
     function getNextGroupID(){
@@ -159,6 +210,26 @@
         disconnect($conn);
 
         return $idgrp;
+    }
+
+    // Consulta todos los grupos para el desplegable del profesor
+    function getAllGroups(){
+        $conn = connect();
+
+        $stmt = "SELECT * FROM agenda.grupo ORDER BY nombre_grupo ASC;";
+        $result = $conn->query($stmt);
+
+        $groups = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $groups[] = $row;
+            }
+        }
+
+        $result->close();
+        disconnect($conn);
+
+        return $groups;
     }
 
     // Comprueba si un grupo existe (true) o no (false)
@@ -206,6 +277,31 @@
             return false;
         }
         return true;
+    }
+
+    // Consulta los estudiantes activos que pertenecen a un grupo concreto
+    function getStudentsByGroup($groupId){
+        $conn = connect();
+
+        $stmt = "SELECT u.id_usuario, u.nombre_usuario 
+                 FROM agenda.usuario u 
+                 JOIN agenda.pertenece p ON u.id_usuario = p.id_usuario 
+                 WHERE p.id_grupo=? AND u.categoria_usuario='estudiante' AND u.estado_usuario=1 
+                 ORDER BY u.nombre_usuario ASC;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("i", $groupId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $students = array();
+        while ($row = $result->fetch_assoc()) {
+            $students[] = $row;
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $students;
     }
 
     // Relación asociación --------------------------------------------------------------------------
@@ -297,6 +393,185 @@
         disconnect($conn);
 
         return $activity;
+    }
+
+    // Obtiene los detalles de una actividad asignada a un estudiante específico
+    function getStudentActivityDetails($userId, $activityId) {
+        $conn = connect();
+        // Las fechas están en la tabla actividad
+        $stmt = "SELECT a.id_actividad, a.nombre_actividad, a.fecha_inicio, a.fecha_fin 
+                 FROM agenda.actividad a
+                 JOIN agenda.asignacion_actividad aa ON a.id_actividad = aa.id_actividad
+                 WHERE aa.id_usuario = ? AND a.id_actividad = ?;";
+
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("ii", $userId, $activityId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $activity = null;
+        if ($result->num_rows > 0) {
+            $activity = $result->fetch_assoc();
+        }
+        $prepare->close();
+        disconnect($conn);
+        return $activity;
+    }
+
+    // Consulta los pasos de una actividad ordenados secuencialmente
+    function getActivitySteps($activityId){
+        $conn = connect();
+
+        $stmt = "SELECT num_paso, titulo_paso, completado FROM agenda.paso_actividad WHERE id_actividad=? ORDER BY num_paso ASC;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("i", $activityId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $steps = array();
+        while ($row = $result->fetch_assoc()) {
+            $steps[] = $row;
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $steps;
+    }
+    
+    // Consulta todas las actividades para el desplegable del profesor
+    function getAllActivities(){
+        $conn = connect();
+
+        $stmt = "SELECT * FROM agenda.actividad ORDER BY fecha_inicio DESC;";
+        $result = $conn->query($stmt);
+
+        $activities = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $activities[] = $row;
+            }
+        }
+
+        $result->close();
+        disconnect($conn);
+
+        return $activities;
+    }
+
+    // Asignación actividad -------------------------------------------------------------------------------
+    // Consulta los estudiantes asignados a una actividad
+    function getActivityStudents($activityId){
+        $conn = connect();
+
+        $stmt = "SELECT u.id_usuario, u.nombre_usuario 
+                 FROM agenda.usuario u 
+                 JOIN agenda.asignacion_actividad aa ON u.id_usuario = aa.id_usuario 
+                 WHERE aa.id_actividad=? AND u.categoria_usuario='estudiante';";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("i", $activityId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $students = array();
+        while ($row = $result->fetch_assoc()) {
+            $students[] = $row;
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $students;
+    }
+
+    // Consulta las actividades asignadas a un estudiante en un intervalo de fechas (diario o semanal)
+    function getStudentActivitiesByDateRange($userId, $startDate, $endDate) {
+        $conn = connect();
+        $stmt = "SELECT a.id_actividad, a.nombre_actividad, a.fecha_inicio, a.fecha_fin 
+                 FROM agenda.actividad a
+                 JOIN agenda.asignacion_actividad aa ON a.id_actividad = aa.id_actividad
+                 WHERE aa.id_usuario = ? AND a.fecha_inicio BETWEEN ? AND ?
+                 ORDER BY a.fecha_inicio ASC;";
+
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("iss", $userId, $startDate, $endDate);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $activities = array();
+        while ($row = $result->fetch_assoc()) {
+            $activities[] = $row;
+        }
+        $prepare->close();
+        disconnect($conn);
+        return $activities;
+    }
+
+    // Comprueba si una actividad ya esta asignada a un usuario
+    function assignmentExists($userId, $activityId){
+        $conn = connect();
+
+        $stmt = "SELECT count(*) FROM agenda.asignacion_actividad WHERE id_usuario=? AND id_actividad=?;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("ii", $userId, $activityId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $count = 0;
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $count = $row["count(*)"];
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $count > 0;
+    }
+
+    // Inserta la asignacion de la actividad al alumno
+    function insertActivityAssignment($userId, $activityId){
+        if (assignmentExists($userId, $activityId)) {
+            return false;
+        }
+
+        $conn = connect();
+
+        $stmt = "INSERT INTO agenda.asignacion_actividad(id_usuario, id_actividad) VALUES (?, ?);";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("ii", $userId, $activityId);
+        $result = $prepare->execute();
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $result;
+    }
+
+    // Preferencias ---------------------------------------------------------------------------------------
+    // Consulta las preferencias de un estudiante dado su ID
+    function getStudentPreferences($userId) {
+        $conn = connect();
+
+        $stmt = "SELECT p.* 
+                 FROM agenda.preferencia p 
+                 JOIN agenda.configura c ON p.id_preferencia = c.id_preferencia 
+                 WHERE c.id_usuario = ?;";
+        
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("i", $userId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $preferences = null;
+        if ($result->num_rows > 0) {
+            $preferences = $result->fetch_assoc();
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $preferences;
     }
 
 // Inserciones =============================================================================================================
@@ -411,284 +686,7 @@
         return 0;
     }
 
-// Cosas de actividades, a falta de actualizar la bd (hace falta para los pasos de actividady demas)
-    // Consulta los pasos de una actividad ordenados secuencialmente
-    function getActivitySteps($activityId){
-        $conn = connect();
-
-        $stmt = "SELECT num_paso, titulo_paso, completado FROM agenda.paso_actividad WHERE id_actividad=? ORDER BY num_paso ASC;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("i", $activityId);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $steps = array();
-        while ($row = $result->fetch_assoc()) {
-            $steps[] = $row;
-        }
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $steps;
-    }
-
-    // Consulta los estudiantes asignados a una actividad
-    function getActivityStudents($activityId){
-        $conn = connect();
-
-        $stmt = "SELECT u.id_usuario, u.nombre_usuario 
-                 FROM agenda.usuario u 
-                 JOIN agenda.asignacion_actividad aa ON u.id_usuario = aa.id_usuario 
-                 WHERE aa.id_actividad=? AND u.categoria_usuario='estudiante';";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("i", $activityId);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $students = array();
-        while ($row = $result->fetch_assoc()) {
-            $students[] = $row;
-        }
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $students;
-    }
-
-    // Asignacion Actividades 
-
-    // Consulta todas las actividades para el desplegable del profesor
-    function getAllActivities(){
-        $conn = connect();
-
-        $stmt = "SELECT * FROM agenda.actividad ORDER BY fecha_inicio DESC;";
-        $result = $conn->query($stmt);
-
-        $activities = array();
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $activities[] = $row;
-            }
-        }
-
-        $result->close();
-        disconnect($conn);
-
-        return $activities;
-    }
-
-    // Consulta todos los grupos para el desplegable del profesor
-    function getAllGroups(){
-        $conn = connect();
-
-        $stmt = "SELECT * FROM agenda.grupo ORDER BY nombre_grupo ASC;";
-        $result = $conn->query($stmt);
-
-        $groups = array();
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $groups[] = $row;
-            }
-        }
-
-        $result->close();
-        disconnect($conn);
-
-        return $groups;
-    }
-
-    // Consulta los estudiantes activos que pertenecen a un grupo concreto
-    function getStudentsByGroup($groupId){
-        $conn = connect();
-
-        $stmt = "SELECT u.id_usuario, u.nombre_usuario 
-                 FROM agenda.usuario u 
-                 JOIN agenda.pertenece p ON u.id_usuario = p.id_usuario 
-                 WHERE p.id_grupo=? AND u.categoria_usuario='estudiante' AND u.estado_usuario=1 
-                 ORDER BY u.nombre_usuario ASC;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("i", $groupId);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $students = array();
-        while ($row = $result->fetch_assoc()) {
-            $students[] = $row;
-        }
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $students;
-    }
-
-    // Comprueba si una actividad ya esta asignada a un usuario
-    function assignmentExists($userId, $activityId){
-        $conn = connect();
-
-        $stmt = "SELECT count(*) FROM agenda.asignacion_actividad WHERE id_usuario=? AND id_actividad=?;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("ii", $userId, $activityId);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $count = 0;
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $count = $row["count(*)"];
-        }
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $count > 0;
-    }
-
-    // Inserta la asignacion de la actividad al alumno
-    function insertActivityAssignment($userId, $activityId){
-        if (assignmentExists($userId, $activityId)) {
-            return false;
-        }
-
-        $conn = connect();
-
-        $stmt = "INSERT INTO agenda.asignacion_actividad(id_usuario, id_actividad) VALUES (?, ?);";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("ii", $userId, $activityId);
-        $result = $prepare->execute();
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $result;
-    }
-
-    // Consulta las preferencias de un estudiante dado su ID
-    function getStudentPreferences($userId) {
-        $conn = connect();
-
-        $stmt = "SELECT p.* 
-                 FROM agenda.preferencia p 
-                 JOIN agenda.configura c ON p.id_preferencia = c.id_preferencia 
-                 WHERE c.id_usuario = ?;";
-        
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("i", $userId);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $preferences = null;
-        if ($result->num_rows > 0) {
-            $preferences = $result->fetch_assoc();
-        }
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $preferences;
-    }
-
-    // Consulta las actividades asignadas a un estudiante en un intervalo de fechas (diario o semanal)
-    function getStudentActivitiesByDateRange($userId, $startDate, $endDate) {
-        $conn = connect();
-        $stmt = "SELECT a.id_actividad, a.nombre_actividad, a.fecha_inicio, a.fecha_fin 
-                 FROM agenda.actividad a
-                 JOIN agenda.asignacion_actividad aa ON a.id_actividad = aa.id_actividad
-                 WHERE aa.id_usuario = ? AND a.fecha_inicio BETWEEN ? AND ?
-                 ORDER BY a.fecha_inicio ASC;";
-
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("iss", $userId, $startDate, $endDate);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $activities = array();
-        while ($row = $result->fetch_assoc()) {
-            $activities[] = $row;
-        }
-        $prepare->close();
-        disconnect($conn);
-        return $activities;
-    }
-
-    // Obtiene los datos de autenticación de un usuario por su nombre
-    function getUserAuthData($name) {
-        $conn = connect();
-
-        $stmt = "SELECT id_usuario, nombre_usuario, contraseña, categoria_usuario, estado_usuario 
-                 FROM agenda.usuario 
-                 WHERE nombre_usuario = ?;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("s", $name);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $userData = null;
-        if ($result->num_rows > 0) {
-            $userData = $result->fetch_assoc();
-        }
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $userData;
-    }
-
-    // Autentica a un estudiante y gestiona su sesión
-    function loginStudentUser($name, $pass) {
-        $userData = getUserAuthData($name);
-
-        if (!$userData) {
-            return 300; // Usuario no existe
-        }
-
-        if ($userData['categoria_usuario'] !== 'estudiante') {
-            return 400; // Categoría inválida
-        }
-
-        if ($userData['estado_usuario'] == 0) {
-            return 401; // Usuario inactivo / dado de baja
-        }
-
-        if (!password_verify($pass, $userData['contraseña'])) {
-            return 203; // Contraseña incorrecta
-        }
-
-        // Inicializar y poblar variables de sesión
-        cargarSesion();
-        $_SESSION['anonimo'] = false;
-        $_SESSION['id']      = $userData['id_usuario'];
-        $_SESSION['nombre']  = $userData['nombre_usuario'];
-        $_SESSION['rol']     = 'estudiante';
-
-        return 0; // Éxito
-    }
-
-    // Obtiene los detalles de una actividad asignada a un estudiante específico
-    function getStudentActivityDetails($userId, $activityId) {
-        $conn = connect();
-        // Las fechas están en la tabla actividad
-        $stmt = "SELECT a.id_actividad, a.nombre_actividad, a.fecha_inicio, a.fecha_fin 
-                 FROM agenda.actividad a
-                 JOIN agenda.asignacion_actividad aa ON a.id_actividad = aa.id_actividad
-                 WHERE aa.id_usuario = ? AND a.id_actividad = ?;";
-
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("ii", $userId, $activityId);
-        $prepare->execute();
-        $result = $prepare->get_result();
-
-        $activity = null;
-        if ($result->num_rows > 0) {
-            $activity = $result->fetch_assoc();
-        }
-        $prepare->close();
-        disconnect($conn);
-        return $activity;
-    }
-
+    // Actividades ----------------------------------------------------------------------------------
     // HU-P3: Crear actividad (Profesor)
     function createActivity($activityName, $startDate, $endDate) {
         $conn = connect();
