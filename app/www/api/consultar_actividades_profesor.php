@@ -3,26 +3,43 @@ header("Content-Type: application/json; charset=UTF-8");
 
 require_once __DIR__ . "/../utils/functions.php";
 
-if (isset($_GET['id_actividad'])) {
+// Si pasan id_actividad sacamos su detalle completo
+if (isset($_GET['id_actividad']) && !empty(trim($_GET['id_actividad']))) {
     $activityId = intval($_GET['id_actividad']);
     
     $activity = getActivityDetail($activityId);
 
+    // existe? 300
     if ($activity != null) {
-        $activity['steps'] = getActivitySteps($activityId);
+        $activity['steps']    = getActivitySteps($activityId);
         $activity['students'] = getActivityStudents($activityId);
         
-        echo json_encode(["success" => true, "activity" => $activity]);
+        // si va 0
+        echo json_encode([
+            "success"  => true, 
+            "code"     => 0, 
+            "activity" => $activity
+        ]);
     } else {
-        echo json_encode(["success" => false, "message" => "No existe la actividad"]);
+        echo json_encode([
+            "success" => false, 
+            "code"    => 300, 
+            "message" => "No existe la actividad."
+        ]);
     }
 } 
-// Si no nos pasan id saca el listado de actividades por rango de fechas, para q saque algo  aunque
+// Si no pasan id saca el listado de actividades asignadas por rango de fechas
 else {
-    $startDate = $_GET['fecha_inicio'] ?? date('Y-m-d 00:00:00');
-    $endDate   = $_GET['fecha_fin']    ?? date('Y-m-d 23:59:59');
+    $startDate = $_GET['fecha_inicio'] ?? date('Y-m-d');
+    $endDate   = $_GET['fecha_fin']    ?? date('Y-m-d');
 
     $activityList = getActivitiesByDateRange($startDate, $endDate);
-    echo json_encode(["success" => true, "activities" => $activityList]);
+
+    // si va 0
+    echo json_encode([
+        "success"    => true, 
+        "code"       => 0, 
+        "activities" => $activityList
+    ]);
 }
 ?>

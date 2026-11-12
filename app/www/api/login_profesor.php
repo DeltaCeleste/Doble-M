@@ -1,53 +1,62 @@
 <?php // Minerva
-// www/api/login_profesor.php
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . "/../utils/functions.php";
 
-// Leer credenciales enviadas desde el formulario o JS
+// Leemos credenciales 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$email = trim($data['email'] ?? '');
-$password = trim($data['password'] ?? '');
+$username = trim($data['nombre_usuario'] ?? $_REQUEST['nombre_usuario'] ?? '');
+$password = trim($data['contrasena']     ?? $_REQUEST['contrasena']     ?? '');
 
-if (empty($email) || empty($password)) {
-    http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Faltan credenciales por ingresar."]);
+// vacios? 100
+if (empty($username) || empty($password)) {
+    echo json_encode([
+        "success" => false,
+        "code"    => 100,
+        "message" => "Faltan credenciales por ingresar (nombre_usuario, contrasena)."
+    ]);
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT id, nombre, email, password_hash, rol FROM usuarios WHERE email = :email AND rol = 'profesor'");
-$stmt->execute(['email' => $email]);
-$user = $stmt->fetch();
+// Buscamos al profesor en la BD
+$user = getTeacherByUsername($username);
 
-// Comprobar y acceder
-if (!$user || !password_verify($password, $user['password_hash'])) {
-    http_response_code(401);
+// existe y coincide contraseña? 300
+$validPassword = false;
+if ($user) {
+    $validPassword = password_verify($password, $user['contrasena']) || ($password === $user['contrasena']);
+}
+
+if (!$user || !$validPassword) {
     echo json_encode([
-        "success" => false, 
+        "success" => false,
+        "code"    => 300,
         "message" => "Credenciales incorrectas o el usuario no es un profesor/a."
     ]);
     exit;
 }
 
+// Iniciamos sesión PHP
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$_SESSION['user_id'] = $user['id'];
-$_SESSION['rol']     = $user['rol'];
-$_SESSION['nombre']  = $user['nombre'];
+$_SESSION['id_usuario']        = (int)$user['id_usuario'];
+$_SESSION['nombre_usuario']    = $user['nombre_usuario'];
+$_SESSION['categoria_usuario'] = $user['categoria_usuario'];
 
-http_response_code(200);
+// si va 0
 echo json_encode([
     "success" => true,
+    "code"    => 0,
     "message" => "Acceso concedido.",
     "usuario" => [
-        "id"     => $user['id'],
-        "nombre" => $user['nombre'],
-        "email"  => $user['email'],
-        "rol"    => $user['rol']
+        "id_usuario"        => (int)$user['id_usuario'],
+        "nombre_usuario"    => $user['nombre_usuario'],
+        "categoria_usuario" => $user['categoria_usuario']
     ]
 ]);
+?>
