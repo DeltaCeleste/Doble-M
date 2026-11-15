@@ -52,6 +52,6 @@
     $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/templates');
     $twig = new \Twig\Environment($loader);
 
-    echo $twig->render('asignar_estudiante_responsable.twig', ['message' => $msg, 'teachers' => $teachers, 'students' => $students, 'error' => $err]);
+    echo $twig->render('asociar_estudiante_responsable.twig', ['message' => $msg, 'teachers' => $teachers, 'students' => $students, 'error' => $err]);
 
 ?>
