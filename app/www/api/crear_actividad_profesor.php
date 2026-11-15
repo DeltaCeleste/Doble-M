@@ -4,8 +4,8 @@ header("Content-Type: application/json; charset=UTF-8");
 require_once __DIR__ . "/../utils/functions.php";
 
 // Leemos los parámetros de la actividad
-$activityName = $_REQUEST['nombre_actividad'] ?? null;
-$description  = $_REQUEST['descripcion']      ?? null;
+$activityName = trim((string)($_REQUEST['nombre_actividad'] ?? ''));
+$description  = isset($_REQUEST['descripcion']) ? trim((string)$_REQUEST['descripcion']) : null;
 
 $image = null;
 if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
@@ -15,7 +15,7 @@ if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
 }
 
 // vacios? 100 (solo nombre_actividad es obligatorio; descripcion e img pueden ser opcionales)
-if (empty(trim($activityName))) {
+if (empty($activityName)) {
     echo json_encode([
         "success" => false,
         "code"    => 100,
