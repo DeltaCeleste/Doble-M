@@ -282,10 +282,11 @@
         return true;
     }
     // Busca un profesor por su nombre_usuario
+    // Busca un profesor activo por su nombre_usuario
     function getTeacherByUsername($username) {
         $conn = connect();
 
-        $stmt = "SELECT id_usuario, nombre_usuario, contrasena, categoria_usuario 
+        $stmt = "SELECT id_usuario, nombre_usuario, contraseña, categoria_usuario, estado_usuario 
                 FROM agenda.usuario 
                 WHERE nombre_usuario = ? AND categoria_usuario = 'profesor'
                 LIMIT 1;";
@@ -495,15 +496,12 @@
         $conn = connect();
 
         $stmt = "SELECT 
-                    pa.num_paso,
-                    a.id_actividad,
-                    a.nombre_actividad,
-                    a.descripcion,
-                    TO_BASE64(a.img) AS img
-                FROM agenda.paso_actividad pa
-                INNER JOIN agenda.actividad a ON pa.id_actividad_paso = a.id_actividad
-                WHERE pa.id_actividad_padre = ?
-                ORDER BY pa.num_paso ASC;";
+                    num_paso,
+                    titulo_paso,
+                    completado
+                FROM agenda.paso_actividad
+                WHERE id_actividad = ?
+                ORDER BY num_paso ASC;";
 
         $prepare = $conn->prepare($stmt);
         $prepare->bind_param("i", $activityId);
@@ -513,7 +511,7 @@
         $steps = array();
         while ($row = $result->fetch_assoc()) {
             $row['num_paso'] = (int)$row['num_paso'];
-            $row['id_actividad'] = (int)$row['id_actividad'];
+            $row['completado'] = (int)$row['completado'];
             $steps[] = $row;
         }
 

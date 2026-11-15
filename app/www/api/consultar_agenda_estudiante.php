@@ -26,19 +26,19 @@
 
     $selectedDate = $_GET['date'] ?? date('Y-m-d');
 
-    // Calcula el rango de fechas según la vista solicitada
+    // Calcula el rango de fechas en formato YYYY-MM-DD (coincide con DATE en BD)
     if ($viewMode === 'weekly') {
         if (!empty($_GET['startDate']) && !empty($_GET['endDate'])) {
             $startDate = $_GET['startDate'];
             $endDate   = $_GET['endDate'];
         } else {
             $timestamp = strtotime($selectedDate);
-            $startDate = date('Y-m-d 00:00:00', strtotime('monday this week', $timestamp));
-            $endDate   = date('Y-m-d 23:59:59', strtotime('sunday this week', $timestamp));
+            $startDate = date('Y-m-d', strtotime('monday this week', $timestamp));
+            $endDate   = date('Y-m-d', strtotime('sunday this week', $timestamp));
         }
     } else {
-        $startDate = $selectedDate . ' 00:00:00';
-        $endDate   = $selectedDate . ' 23:59:59';
+        $startDate = $selectedDate;
+        $endDate   = $selectedDate;
     }
 
     $activities = getStudentActivitiesByDateRange($studentId, $startDate, $endDate);
