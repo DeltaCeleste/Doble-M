@@ -8,7 +8,7 @@
         $student = $_GET['student'];
         $responsible = $_GET['responsible'];
 
-        $result = insertUsrAssoc($student, $responsible);
+        $result = insertUsrAssocByName($student, $responsible);
 
         switch($result){
             case 0:
@@ -19,9 +19,6 @@
                 break;
             case 300:
                 echo json_encode(["success" => false, "code" => 300, "message" => "Some users don't exist"]);
-                break;
-            case 301:
-                echo json_encode(["success" => false, "code" => 301, "message" => "Group does not exist"]);
                 break;
             case 400:
                 echo json_encode(["success" => false, "code" => 400, "message" => "Student has to be 'estudiante' and responsible 'profesor' or 'familia' (category)"]);

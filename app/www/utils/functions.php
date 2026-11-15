@@ -51,12 +51,17 @@
 
     // Consulta la categoría del usuario de nombre proporcionado. Si no existe devuelve -1
     function getUserCategory($name){
+        return getUserCategoryByID(getUserID($name));
+    }
+
+    // Consulta la categoría del usuario de nombre proporcionado. Si no existe devuelve -1
+    function getUserCategoryById($id){
         $conn = connect();
 
-        $stmt = "SELECT categoria_usuario FROM agenda.usuario WHERE nombre_usuario=?;";
+        $stmt = "SELECT categoria_usuario FROM agenda.usuario WHERE id_usuario=?;";
         $prepare = $conn->prepare($stmt);
 
-        $prepare->bind_param("s", $name);
+        $prepare->bind_param("i", $id);
         $prepare->execute();
         $result = $prepare->get_result();
         $prepare->close();
@@ -69,6 +74,50 @@
         disconnect($conn);
 
         return $cat;
+    }
+
+    // Obtiene todos los usuarios de una categoría dada (o en general si no se da una) que estén activos
+    function getUsers($category = 'all'){
+        $conn = connect();
+
+        if($category != 'all'){
+            $stmt = "SELECT id_usuario, nombre_usuario FROM agenda.usuario WHERE categoria_usuario=? and estado_usuario=1;";
+            $prepare = $conn->prepare($stmt);
+
+            $prepare->bind_param("s", $category);
+            $prepare->execute();
+            $result = $prepare->get_result();
+            $prepare->close();
+        }
+        else{
+            $stmt = "SELECT id_usuario, nombre_usuario FROM agenda.usuario WHERE estado_usuario=1;";
+            $result = $conn->query($stmt);
+        }
+        
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                $list[] = array(
+                    'id' => $row["id_usuario"],
+                    'name' => $row["nombre_usuario"],
+                );
+            }
+        }
+        else $list = -1;
+        $result->close();
+
+        disconnect($conn);
+
+        return $list;
+    }
+
+    // Obtiene todos los profesores que estén activos en el sistema
+    function getTeachers(){
+        return getUsers("profesor");
+    }
+
+    // Obtiene todos los profesores que estén activos en el sistema
+    function getStudents(){
+        return getUsers("estudiante");
     }
 
     // Comprueba si un usuario existe (true) o no (false)
@@ -573,7 +622,6 @@
     }
 
     // Asignación actividad -------------------------------------------------------------------------------
-    // Asignación actividad -------------------------------------------------------------------------------
     // Consulta los estudiantes asignados a una actividad
     function getActivityStudents($activityId) {
         $conn = connect();
@@ -789,16 +837,13 @@
 
     // Relación asociación --------------------------------------------------------------------------
     // Crea una asociación estudiante-responsable en la base de datos si ambos existen. El primer ID debe ser de un "estudiante" y el segundo de un "profesor" o "familia"
-    function insertUsrAssoc($studentName, $otherName){
-        $idstd  = getUserID($studentName);
-        $idothr = getUserID($otherName);
-
+    function insertUsrAssoc($idstd, $idothr){
         if($idstd == $idothr) return 400;                                              // Ambos usuario son el mismo
         if($idstd < 0 || $idothr < 0) return 300;                                      // Alguno de los usuarios no existe
         if(assocToExists($idstd, $idothr)) return 202;                                 // Asociación existente
-        $studentCategory = getUserCategory($studentName);
+        $studentCategory = getUserCategoryById($idstd);
         if($studentCategory != "estudiante") return 400;                               // Primer id es de categoría inválida
-        $otherCategory = getUserCategory($otherName);
+        $otherCategory = getUserCategoryById($idothr);
         if($otherCategory != "profesor" && $otherCategory != "familia") return 400;    // Segundo id es de categoría inválida
 
         $conn = connect();
@@ -811,6 +856,14 @@
         disconnect($conn);
 
         return 0;
+    }
+
+    // Crea una asociación estudiante-responsable en la base de datos si ambos existen. El primer nombre debe ser de un "estudiante" y el segundo de un "profesor" o "familia"
+    function insertUsrAssocByName($studentName, $otherName){
+        $idstd  = getUserID($studentName);
+        $idothr = getUserID($otherName);
+
+        return insertUsrAssoc($idstd, $idothr);
     }
 
     // Actividades ----------------------------------------------------------------------------------

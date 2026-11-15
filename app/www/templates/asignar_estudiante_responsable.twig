@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Asignación - Doble Agenda</title>
+    <link rel="stylesheet" href="../css/prueba_temporal.css">
+</head>
+<body>
+
+    <div class="ipad-frame">
+        <header class="ipad-top-bar">
+            <a href="agenda_profesor.php" class="icono-box" aria-label="Volver al panel principal">✕</a>
+            <div class="icono-box" aria-label="Menú administrador">☰</div>
+        </header>
+
+        <main class="ipad-body">
+            <h1 class="titulo-pantalla">Formulario de Asignación Profesor-Alumno</h1>
+
+            {% if message is not empty %}
+                <div class="box-feedback 
+                    {% if error|default(false) %}
+                        feedback-error
+                    {% else %}
+                        feedback-exito
+                    {% endif %}"
+                     role="
+                    {% if error|default(false) %}
+                        alert
+                    {% else %}
+                        status
+                    {% endif %}" 
+                    aria-live="polite">
+                    <span aria-hidden="true">
+                        {% if error|default(false) %}
+                            '⚠️' 
+                        {% else %}
+                            '✅'
+                        {% endif %}
+                    <div>{{ message }}</div>
+                </div>
+            {% endif %}
+
+            <!-- Estructura del Formulario (Tarea A5.2 / SCRUM-122) -->
+            <section class="card-formulario-asignacion" aria-labelledby="titulo-formulario">
+                <h2 id="titulo-formulario" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">
+                    Formulario para vincular un docente tutor con un estudiante
+                </h2>
+
+                <form id="form-crear-asignacion" action="asociar_estudiante_responsable.php" method="POST" novalidate>
+                    
+                    <fieldset class="seccion-form">
+                        <legend class="seccion-legend">Datos del Profesor Tutor</legend>
+                        <div class="form-campo">
+                            <label for="campo-profesor">Profesor Responsable: *</label>
+                            <select id="campo-profesor" name="profesor_id" class="form-select" required>
+                                <option value="">-- Seleccione un profesor --</option>
+                                {% for t in teachers %}
+                                    <option value="{{ t.id }}">
+                                        {{ t.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="seccion-form">
+                        <legend class="seccion-legend">Datos del Estudiante Tutorado</legend>
+                        <div class="form-campo">
+                            <label for="campo-estudiante">Estudiante Asignado: *</label>
+                            <select id="campo-estudiante" name="estudiante_id" class="form-select" required>
+                                <option value="">-- Seleccione un alumno --</option>
+                                {% for s in students %}
+                                    <option value="{{ s.id }}">
+                                        {{ s.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="seccion-form">
+                        <legend class="seccion-legend">Observaciones y Permisos de Seguimiento</legend>
+                        <div class="form-campo">
+                            <label for="campo-observaciones">Notas de Asignación (Opcional):</label>
+                            <textarea id="campo-observaciones" name="observaciones_tutor" class="form-textarea" rows="3" placeholder="Indique anotaciones sobre adaptaciones o coordinación"></textarea>
+                        </div>
+                    </fieldset>
+
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn-enviar-formulario">Crear Asignación</button>
+                    </div>
+
+                </form>
+            </section>
+        </main>
+
+        <footer class="ipad-bottom-bar">
+            <div class="icono-box" style="width: 32px; height: 32px; font-size: 1rem;" aria-label="Pie de página">⌂</div>
+        </footer>
+    </div>
+
+</body>
+</html>
