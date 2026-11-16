@@ -723,12 +723,12 @@
 
     // Preferencias ---------------------------------------------------------------------------------------
     // Consulta las preferencias de un estudiante dado su ID
-    function getStudentPreferences($userId) {
+        function getStudentPreferences($userId) {
         $conn = connect();
 
-        $stmt = "SELECT p.* 
+        $stmt = "SELECT p.id_preferencia, p.formato_visual, p.permite_vista_semanal, p.permitir_tiempo, p.paleta_color 
                  FROM agenda.preferencia p 
-                 JOIN agenda.configura c ON p.id_preferencia = c.id_preferencia 
+                 INNER JOIN agenda.configura c ON p.id_preferencia = c.id_preferencia 
                  WHERE c.id_usuario = ?;";
         
         $prepare = $conn->prepare($stmt);
@@ -739,6 +739,10 @@
         $preferences = null;
         if ($result->num_rows > 0) {
             $preferences = $result->fetch_assoc();
+            $preferences['id_preferencia']        = (int)$preferences['id_preferencia'];
+            $preferences['permite_vista_semanal'] = (int)$preferences['permite_vista_semanal'];
+            $preferences['permitir_tiempo']       = (int)$preferences['permitir_tiempo'];
+            $preferences['paleta_color']          = $preferences['paleta_color'] !== null ? (int)$preferences['paleta_color'] : null;
         }
 
         $prepare->close();
@@ -747,7 +751,9 @@
         return $preferences;
     }
 
+
 // Inserciones =============================================================================================================
+
     // Usuario --------------------------------------------------------------------------------------
     // Crea un nuevo usuario de cualquier categoría en la base de datos si no existe y la categoría esta en la base de datos
     function insertUser($name, $pass, $category){
@@ -887,5 +893,49 @@
         disconnect($conn);
 
         return $newId;
+    }
+
+
+
+    //Preferencias ---------------------------------------------------------------------------------------
+    // Crea o actualiza las preferencias de un estudiante ('picto' o 'texto')
+     function saveStudentPreferences($userId, $visualFormat, $allowWeeklyView = 1, $allowTime = 1, $colorPalette = null) {
+        if (!in_array($visualFormat, ['picto', 'texto'], true)) {
+            return false;
+        }
+
+        $existing = getStudentPreferences($userId);
+        $conn = connect();
+
+        if ($existing) {
+            $stmt = "UPDATE agenda.preferencia 
+                     SET formato_visual = ?, permite_vista_semanal = ?, permitir_tiempo = ?, paleta_color = ? 
+                     WHERE id_preferencia = ?;";
+            $prepare = $conn->prepare($stmt);
+            $prepare->bind_param("siiii", $visualFormat, $allowWeeklyView, $allowTime, $colorPalette, $existing['id_preferencia']);
+            $ok = $prepare->execute();
+            $prepare->close();
+            disconnect($conn);
+            return $ok;
+        } else {
+            $stmt = "INSERT INTO agenda.preferencia (formato_visual, permite_vista_semanal, permitir_tiempo, paleta_color) 
+                     VALUES (?, ?, ?, ?);";
+            $prepare = $conn->prepare($stmt);
+            $prepare->bind_param("siii", $visualFormat, $allowWeeklyView, $allowTime, $colorPalette);
+            $ok = $prepare->execute();
+            $newPrefId = $conn->insert_id;
+            $prepare->close();
+
+            if ($ok && $newPrefId) {
+                $stmtConf = "INSERT INTO agenda.configura (id_usuario, id_preferencia) VALUES (?, ?);";
+                $prepareConf = $conn->prepare($stmtConf);
+                $prepareConf->bind_param("ii", $userId, $newPrefId);
+                $ok = $prepareConf->execute();
+                $prepareConf->close();
+            }
+
+            disconnect($conn);
+            return $ok;
+        }
     }
 ?>
