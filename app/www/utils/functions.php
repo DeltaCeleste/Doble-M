@@ -1,6 +1,7 @@
 <?php
 
     require_once __DIR__ . "/../services/bd_manager.php"; 
+    require_once __DIR__ . "/../services/sesion_manager.php";
 
 //IMPORTANTE
 // Las variables y funciones utilizan el formato camelCase.
@@ -190,36 +191,71 @@
     }
 
     // Autentica a un estudiante y gestiona su sesión
-    function loginStudentUser($name, $pass) {
-        $userData = getUserAuthData($name);
 
-        if (!$userData) {
-            return 300; // Usuario no existe
+
+
+    // Autentica a cualquier usuario (estudiante, profesor, familia, admin) y gestiona su sesión
+    // Única función con las comprobaciones y los errores
+    function loginUser($username, $password, $expectedCategory = null) {
+        $username = trim((string)$username);
+        $password = trim((string)$password);
+
+        if (empty($username) || empty($password)) {
+            return ["success" => false, "code" => 100, "message" => "Faltan credenciales por ingresar."];
         }
 
-        if ($userData['categoria_usuario'] !== 'estudiante') {
-            return 400; // Categoría inválida
+        $user = getUserAuthData($username);
+
+        if (!$user) {
+            return ["success" => false, "code" => 300, "message" => "El usuario no existe."];
         }
 
-        if ($userData['estado_usuario'] == 0) {
-            return 401; // Usuario inactivo / dado de baja
+        if ($expectedCategory !== null && $user['categoria_usuario'] !== $expectedCategory) {
+            return ["success" => false, "code" => 400, "message" => "El usuario no pertenece a esta categoría."];
         }
 
-        if (!password_verify($pass, $userData['contraseña'])) {
-            return 203; // Contraseña incorrecta
+        if (isset($user['estado_usuario']) && $user['estado_usuario'] == 0) {
+            return ["success" => false, "code" => 401, "message" => "La cuenta está inactiva."];
         }
 
-        // Inicializar y poblar variables de sesión
-        cargarSesion();
-        $_SESSION['anonimo'] = false;
-        $_SESSION['id']      = $userData['id_usuario'];
-        $_SESSION['nombre']  = $userData['nombre_usuario'];
-        $_SESSION['rol']     = 'estudiante';
+        if (!password_verify($password, $user['contraseña']) && $password !== $user['contraseña']) {
+            return ["success" => false, "code" => 203, "message" => "Contraseña incorrecta."];
+        }
 
-        return 0; // Éxito
+        iniciarSesionUsuario($user);
+
+        $response = [
+            "success" => true,
+            "code"    => 0,
+            "message" => "Acceso concedido.",
+            "usuario" => [
+                "id_usuario"        => (int)$user['id_usuario'],
+                "nombre_usuario"    => $user['nombre_usuario'],
+                "categoria_usuario" => $user['categoria_usuario']
+            ]
+        ];
+
+        if ($user['categoria_usuario'] === 'estudiante') {
+            $response["preferences"] = getStudentPreferences((int)$user['id_usuario']);
+        }
+
+        return $response;
     }
 
-   
+    // Recicla loginUser() al 100% y solo añade "user" para la vista de Pedro
+    function loginStudentUser($name, $pass) {
+        $res = loginUser($name, $pass, 'estudiante');
+
+        if ($res['success']) {
+            $res['user'] = [
+                "id"   => $res['usuario']['id_usuario'],
+                "name" => $res['usuario']['nombre_usuario'],
+                "role" => $res['usuario']['categoria_usuario']
+            ];
+        }
+
+        return $res;
+    }
 
     // Comprueba si existe un estudiante activo por su ID
     function studentExistsById($userId) {
@@ -676,6 +712,70 @@
         disconnect($conn);
 
         return $activities;
+    }
+    // Consulta los estudiantes activos asociados a un responsable (familia o profesor)
+    function getStudentsByResponsible($responsibleId) {
+        $conn = connect();
+
+        $stmt = "SELECT 
+                    u.id_usuario, 
+                    u.nombre_usuario, 
+                    TO_BASE64(u.foto) AS foto
+                 FROM agenda.usuario u
+                 INNER JOIN agenda.asociado a ON u.id_usuario = a.id_estudiante
+                 WHERE a.id_responsable = ? 
+                   AND u.categoria_usuario = 'estudiante' 
+                   AND u.estado_usuario = 1
+                 ORDER BY u.nombre_usuario ASC;";
+
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("i", $responsibleId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $students = array();
+        while ($row = $result->fetch_assoc()) {
+            $row['id_usuario'] = (int)$row['id_usuario'];
+            $students[] = $row;
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $students;
+    }
+    // Obtiene el perfil completo de un estudiante activo por su ID
+    function getStudentProfileById($studentId) {
+        $conn = connect();
+
+        $stmt = "SELECT 
+                    u.id_usuario, 
+                    u.nombre_usuario, 
+                    u.categoria_usuario, 
+                    u.estado_usuario,
+                    TO_BASE64(u.foto) AS foto
+                 FROM agenda.usuario u
+                 WHERE u.id_usuario = ? 
+                   AND u.categoria_usuario = 'estudiante' 
+                   AND u.estado_usuario = 1;";
+
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("i", $studentId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $profile = null;
+        if ($result && $result->num_rows > 0) {
+            $profile = $result->fetch_assoc();
+            $profile['id_usuario']     = (int)$profile['id_usuario'];
+            $profile['estado_usuario'] = (int)$profile['estado_usuario'];
+            $profile['preferencias']   = getStudentPreferences((int)$studentId);
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        return $profile;
     }
     // Comprueba si esa asignación exacta (usuario, actividad, fecha y hora) ya existe
     function assignmentExists($userId, $activityId, $date, $startTime) {
