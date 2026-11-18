@@ -12,7 +12,7 @@
             session_start();
         }
 
-        if (isset($_SESSION['anonimo']) &&$_SESSION['anonimo'] === false) {
+        if (isset($_SESSION['anonimo']) && $_SESSION['anonimo'] === false) {
             return [
                 'id'     => (int)$_SESSION['id'],
                 'nombre' => $_SESSION['nombre'],
