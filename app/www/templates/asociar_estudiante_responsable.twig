@@ -52,12 +52,12 @@
                     <fieldset class="seccion-form">
                         <legend class="seccion-legend">Datos del Profesor Tutor</legend>
                         <div class="form-campo">
-                            <label for="campo-profesor">Profesor Responsable: *</label>
-                            <select id="campo-profesor" name="profesor_id" class="form-select" required>
-                                <option value="">-- Seleccione un profesor --</option>
-                                {% for t in teachers %}
-                                    <option value="{{ t.id }}">
-                                        {{ t.name }}
+                            <label for="campo-profesor">Responsable: *</label>
+                            <select id="campo-profesor" name="super_id" class="form-select" required>
+                                <option value="">-- Seleccione un responsable --</option>
+                                {% for s in super %}
+                                    <option value="{{ s.id }}">
+                                        {{ s.name }} ({{ s.category }})
                                     </option>
                                 {% endfor %}
                             </select>

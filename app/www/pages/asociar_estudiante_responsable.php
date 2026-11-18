@@ -9,6 +9,8 @@
     require_once dirname(__DIR__) . '/utils/functions.php';
 
     $teachers = getTeachers();
+    $family   = getRelatives();
+    $super    = array_merge($teachers, $family);
     $students = getStudents();
 
     $msg = '';
@@ -16,17 +18,17 @@
 
     // Si el formulario ha sido enviado lo analizamos y tratamos
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $teacherId   = trim($_POST['profesor_id'] ?? '');
+        $superId     = trim($_POST['superr_id'] ?? '');
         $studentId   = trim($_POST['estudiante_id'] ?? '');
 
         unset($_POST['profesor_id']);
         unset($_POST['estudiante_id']);
 
-        if (empty($teacherId) || empty($studentId)) {
+        if (empty($superId) || empty($studentId)) {
             $msg = 'Debe seleccionar obligatoriamente un profesor y un estudiante en el formulario.';
             $err = true;
         } else {
-            $code = insertUsrAssoc($studentId, $teacherId);
+            $code = insertUsrAssoc($studentId, $superId);
 
             switch($code){
                 case 0:
@@ -52,6 +54,6 @@
     $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/templates');
     $twig = new \Twig\Environment($loader);
 
-    echo $twig->render('asociar_estudiante_responsable.twig', ['message' => $msg, 'teachers' => $teachers, 'students' => $students, 'error' => $err]);
+    echo $twig->render('asociar_estudiante_responsable.twig', ['message' => $msg, 'super' => $super, 'students' => $students, 'error' => $err]);
 
 ?>
