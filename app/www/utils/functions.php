@@ -808,6 +808,55 @@
         return $count > 0;
     }
 
+    // valida si la fecha y horas de una actividad se solapan con la de una ya asignada
+    function validTime($userId, $date, $startTime, $endTime){
+        $conn = connect();
+        
+        $stmt = "SELECT hora_inicio, hora_fin  
+                FROM agenda.asignacion_actividad 
+                WHERE id_usuario = ? AND fecha=? AND principal=1;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("is", $userId, $date);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $times = array();
+        while ($row = $result->fetch_assoc()) {
+            $times[] = array(
+                'start' => $row["hora_inicio"],
+                'end' => $row["hora_fin"]
+            );
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        foreach ($times as $time){
+            $start = timeToSeconds($time['start']);
+            $end   = timeToSeconds($time['end']);
+            $newStart = timeToSeconds($startTime);
+            $newEnd   = timeToSeconds($endTime);
+
+            if($start < $newStart && $newStart < $end){
+                return false;
+            } else if($start < $newEnd && $newEnd < $end){
+                return false;
+            } else if($newStart < $start && $end < $newEnd){
+                return false;
+            } else if($newStart == $start || $end == $newEnd){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Función auxiliar para pasar una marca de tiempo a segundos
+    function timeToSeconds($time){
+        sscanf($time, "%d:%d:%d", $h, $m, $s);
+        return ($h * 3600) + ($m * 60) + $s;
+    }
+
     // Preferencias ---------------------------------------------------------------------------------------
     // Consulta las preferencias de un estudiante dado su ID
         function getStudentPreferences($userId) {
@@ -987,6 +1036,11 @@
     function insertActivityAssignment($userId, $activityId, $date, $startTime, $endTime, $main = 0) {
         // Evita duplicar exactamente la misma actividad en la misma fecha y hora de inicio
         if (assignmentExists($userId, $activityId, $date, $startTime)) {
+            return false;
+        }
+
+        //Comprobar el no solapamiento
+        if (validTime($userId, $activityId, $date, $startTime, $endTime)) {
             return false;
         }
 
