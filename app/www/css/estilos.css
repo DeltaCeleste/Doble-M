@@ -61,23 +61,23 @@ body {
     outline-offset: 2px;
 }
 
+/* Pantalla completa sin efecto ventana */
 .app-pantalla {
     display: flex;
     flex-direction: column;
     height: 100dvh;
     width: 100%;
-    max-width: 1280px;
     margin: 0 auto;
     overflow: hidden;
     background-color: var(--blanco);
 }
 
-/* Barras superior e inferior (#ABBBCB) */
+/* Barras superior e inferior (#ABBBCB) con margen lateral responsive */
 .barra-superior,
 .barra-inferior {
     background-color: var(--azul-pastel-apagado);
     height: clamp(50px, 6.8dvh, 62px);
-    padding: 0 clamp(16px, 3vw, 36px);
+    padding: 0 clamp(18px, 4vw, 56px);
     display: flex;
     align-items: center;
     flex-shrink: 0;
@@ -92,7 +92,7 @@ body {
 }
 
 .caja-icono {
-    min-width: clamp(68px, 9.5vw, 98px);
+    min-width: clamp(64px, 9vw, 96px);
     min-height: 44px;
     height: 74%;
     padding: 0 12px;
@@ -113,12 +113,12 @@ body {
 }
 
 .emoji-barra {
-    font-size: clamp(1.25rem, 2.2dvh, 1.65rem);
+    font-size: clamp(1.2rem, 2.2dvh, 1.6rem);
     line-height: 1;
 }
 
 .btn-hamburguesa {
-    min-width: 52px;
+    min-width: 50px;
     min-height: 44px;
     height: 74%;
     background-color: var(--blanco);
@@ -141,11 +141,10 @@ body {
     border-radius: 2px;
 }
 
-/* Panel desplegable accesible para teclado y tacto */
 .panel-menu {
     background-color: var(--azul-claro);
     border-bottom: 2px solid var(--borde-suave);
-    padding: 10px clamp(16px, 3vw, 36px);
+    padding: 10px clamp(18px, 4vw, 56px);
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
@@ -170,9 +169,12 @@ body {
     align-items: center;
 }
 
-/* Cabecera compacta con foto del estudiante */
+/* ==========================================================================
+   AGENDA DIARIA
+   ========================================================================== */
+
 .cabecera-agenda {
-    padding: clamp(8px, 1.4dvh, 16px) clamp(16px, 4vw, 48px) clamp(4px, 0.8dvh, 10px);
+    padding: clamp(12px, 1.8dvh, 22px) clamp(18px, 4vw, 56px) clamp(6px, 1dvh, 12px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -183,18 +185,18 @@ body {
 .tarjeta-cabecera {
     display: flex;
     align-items: center;
-    gap: clamp(18px, 3.2vw, 34px);
-    padding: clamp(10px, 1.4dvh, 16px) clamp(18px, 3vw, 32px);
+    gap: clamp(14px, 3vw, 32px);
+    padding: clamp(10px, 1.4dvh, 16px) clamp(16px, 3vw, 32px);
     background-color: var(--azul-claro);
     border: 2px solid var(--borde-suave);
-    border-radius: 24px;
+    border-radius: 22px;
     max-width: 100%;
     min-width: 0;
 }
 
 .circulo-foto-estudiante {
-    width: clamp(82px, 13.5dvh, 126px);
-    height: clamp(82px, 13.5dvh, 126px);
+    width: clamp(74px, 12.5dvh, 118px);
+    height: clamp(74px, 12.5dvh, 118px);
     border-radius: 50%;
     background-color: var(--blanco);
     border: 3px solid var(--borde-suave);
@@ -221,7 +223,7 @@ body {
 }
 
 .titulo-agenda {
-    font-size: clamp(1.75rem, 4dvh, 2.75rem);
+    font-size: clamp(1.7rem, 3.8dvh, 2.7rem);
     font-weight: 700;
     letter-spacing: 0.01em;
     color: var(--texto-oscuro);
@@ -245,13 +247,12 @@ body {
     white-space: nowrap;
 }
 
-/* Lista semántica de actividades */
 .lista-actividades {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: clamp(6px, 1.2dvh, 16px) clamp(16px, 4vw, 48px);
+    padding: clamp(10px, 1.6dvh, 20px) clamp(18px, 4vw, 56px);
     min-height: 0;
     overflow: hidden;
 }
@@ -283,13 +284,13 @@ body {
     width: 100%;
     height: 100%;
     min-height: 48px;
-    padding: clamp(8px, 1.2dvh, 14px) clamp(16px, 3vw, 32px);
+    padding: clamp(8px, 1.2dvh, 14px) clamp(14px, 3vw, 30px);
     display: flex;
     align-items: center;
-    gap: clamp(14px, 3vw, 32px);
+    gap: clamp(12px, 2.8vw, 28px);
     background-color: var(--azul-claro);
     border: 2px solid var(--borde-suave);
-    border-radius: 22px;
+    border-radius: 20px;
     text-decoration: none;
     color: var(--texto-oscuro);
     overflow: hidden;
@@ -304,7 +305,7 @@ body {
     height: 82%;
     aspect-ratio: 1 / 1;
     min-width: 48px;
-    max-width: 106px;
+    max-width: 104px;
     border-radius: 50%;
     background-color: var(--blanco);
     border: 2px solid var(--borde-suave);
@@ -351,9 +352,211 @@ body {
     white-space: nowrap;
 }
 
-/* Indicador de foco visible de alto contraste para teclado y pulsadores */
+/* ==========================================================================
+   DETALLE DE TAREA
+   ========================================================================== */
+
+.cabecera-tarea {
+    padding: clamp(12px, 1.8dvh, 22px) clamp(18px, 4vw, 56px) clamp(6px, 1dvh, 12px);
+    background-color: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-height: 0;
+}
+
+.tarjeta-cabecera-tarea {
+    justify-content: space-between;
+    width: 100%;
+    gap: clamp(12px, 2.5vw, 28px);
+}
+
+.datos-cabecera-tarea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+.titulo-tarea-linea {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    gap: clamp(6px, 1.2vw, 14px);
+    font-size: clamp(1.55rem, 3.6dvh, 2.5rem);
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    line-height: 1.15;
+}
+
+.etiqueta-lista-tareas {
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--borde-suave);
+}
+
+.separador-titulo {
+    font-size: 1em;
+    color: var(--borde-suave);
+}
+
+.titulo-tarea {
+    font-size: 1.12em;
+    font-weight: 700;
+    color: var(--texto-oscuro);
+}
+
+.cuadro-imagen-tarea {
+    width: clamp(74px, 12.5dvh, 118px);
+    height: clamp(74px, 12.5dvh, 118px);
+    background-color: var(--blanco);
+    border: 3px solid var(--borde-suave);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.cuadro-imagen-tarea img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    padding: 6px;
+}
+
+.zona-detalle-tarea {
+    flex: 1;
+    background-color: var(--azul-claro);
+    margin: clamp(6px, 1dvh, 12px) clamp(18px, 4vw, 56px);
+    border-radius: 22px;
+    border: 2px solid var(--borde-suave);
+    padding: clamp(14px, 2.2dvh, 26px) clamp(16px, 3vw, 36px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: clamp(12px, 2dvh, 22px);
+    min-height: 0;
+    overflow: hidden;
+}
+
+.zona-detalle-tarea:focus {
+    outline: none;
+}
+
+.bloque-descripcion {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1dvh, 10px);
+    min-height: 0;
+}
+
+.etiqueta-descripcion {
+    font-size: clamp(1.2rem, 2.4dvh, 1.65rem);
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    line-height: 1.2;
+}
+
+.caja-descripcion {
+    flex: 1;
+    min-height: 0;
+    background-color: var(--blanco);
+    border: 2px solid var(--borde-suave);
+    border-radius: 16px;
+    padding: clamp(12px, 2dvh, 22px) clamp(14px, 2.5vw, 26px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.6dvh, 18px);
+    overflow-y: auto;
+}
+
+.lista-pictogramas-descripcion {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(10px, 2vw, 18px);
+}
+
+.item-pictograma {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background-color: var(--azul-claro);
+    border: 2px solid var(--borde-suave);
+    border-radius: 14px;
+    max-width: 140px;
+}
+
+.item-pictograma img {
+    width: clamp(52px, 8.5dvh, 80px);
+    height: clamp(52px, 8.5dvh, 80px);
+    object-fit: contain;
+    display: block;
+}
+
+.item-pictograma figcaption {
+    font-size: clamp(0.95rem, 1.8dvh, 1.15rem);
+    font-weight: 700;
+    text-align: center;
+    color: var(--texto-oscuro);
+}
+
+.texto-descripcion {
+    font-size: clamp(1.15rem, 2.4dvh, 1.6rem);
+    line-height: 1.45;
+    color: var(--texto-oscuro);
+}
+
+.acciones-tarea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(14px, 4vw, 56px);
+    flex-shrink: 0;
+}
+
+.btn-accion {
+    flex: 1;
+    max-width: 280px;
+    min-height: clamp(54px, 9dvh, 80px);
+    background-color: var(--azul-pastel-apagado);
+    color: var(--texto-oscuro);
+    border: 2px solid var(--texto-oscuro);
+    border-radius: 16px;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: clamp(1.3rem, 2.9dvh, 1.9rem);
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease;
+}
+
+.btn-accion.esta-iniciada,
+.btn-accion.esta-finalizada {
+    background-color: var(--verde-apagado);
+}
+
+/* ==========================================================================
+   FOCO, MOVIMIENTO REDUCIDO Y AJUSTES RESPONSIVE
+   ========================================================================== */
+
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+.caja-descripcion:focus-visible {
     outline: 4px solid var(--foco-accesible);
     outline-offset: 3px;
 }
@@ -364,15 +567,42 @@ button:focus-visible {
     outline-offset: 2px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .franja-actividad {
-        transition: none;
+@media (max-width: 600px) {
+    .barra-superior,
+    .barra-inferior,
+    .panel-menu,
+    .cabecera-agenda,
+    .lista-actividades,
+    .cabecera-tarea {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .zona-detalle-tarea {
+        margin-left: 14px;
+        margin-right: 14px;
+        padding: 12px 14px;
+    }
+
+    .tarjeta-cabecera-tarea {
+        gap: 10px;
+        padding: 10px 12px;
+    }
+
+    .cuadro-imagen-tarea,
+    .circulo-foto-estudiante {
+        width: 64px;
+        height: 64px;
+    }
+
+    .acciones-tarea {
+        gap: 12px;
     }
 }
 
-@media (min-width: 1280px) {
-    .app-pantalla {
-        border-left: 2px solid var(--azul-pastel-apagado);
-        border-right: 2px solid var(--azul-pastel-apagado);
+@media (prefers-reduced-motion: reduce) {
+    .franja-actividad,
+    .btn-accion {
+        transition: none;
     }
 }

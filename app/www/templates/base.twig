@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Agenda{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/estilos.css">
+    {% block estilos_extra %}{% endblock %}
+</head>
+<body>
+
+    <a href="{% block enlace_salto %}#contenido-principal{% endblock %}" class="salto-contenido">
+        {% block texto_salto %}Saltar al contenido principal{% endblock %}
+    </a>
+
+    <div class="app-pantalla">
+        <header class="barra-superior" role="banner">
+            <nav aria-label="Navegación superior">
+                <a href="{{ url_inicio|default('agenda_diaria.php') }}"
+                   class="caja-icono"
+                   aria-label="{{ aria_inicio|default('Ir al inicio') }}">
+                    {% if logo_url is defined and logo_url %}
+                        <img src="{{ logo_url }}" alt="">
+                    {% else %}
+                        <span class="emoji-barra" aria-hidden="true">🏠</span>
+                    {% endif %}
+                </a>
+            </nav>
+
+            <button type="button"
+                    id="btn-menu"
+                    class="btn-hamburguesa"
+                    aria-label="Abrir menú de opciones"
+                    aria-expanded="false"
+                    aria-controls="panel-menu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </button>
+        </header>
+
+        <div id="panel-menu" class="panel-menu" role="region" aria-label="Opciones de navegación" hidden>
+            {% block opciones_menu %}
+                <a href="{{ url_agenda|default('agenda_diaria.php') }}" class="enlace-menu">Agenda diaria</a>
+                <a href="{{ url_siguiente|default('siguiente.php') }}" class="enlace-menu">Siguiente</a>
+            {% endblock %}
+        </div>
+
+        {% block contenido %}{% endblock %}
+
+        <footer class="barra-inferior" role="contentinfo">
+            <nav aria-label="Navegación inferior">
+                <a href="{{ url_siguiente|default('siguiente.php') }}"
+                   class="caja-icono"
+                   aria-label="{{ aria_siguiente|default('Ir a la siguiente sección') }}">
+                    {% if icono_inferior_url is defined and icono_inferior_url %}
+                        <img src="{{ icono_inferior_url }}" alt="">
+                    {% else %}
+                        <span class="emoji-barra" aria-hidden="true">➡️</span>
+                    {% endif %}
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

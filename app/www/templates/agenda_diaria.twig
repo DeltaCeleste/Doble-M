@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/estilos.css">
-</head>
-<body>
+{% extends "base.twig" %}
 
-    <a href="#contenido-principal" class="salto-contenido">Saltar al contenido principal</a>
+{% block titulo %}Agenda{% endblock %}
 
+<<<<<<< Updated upstream
     <div class="app-pantalla">
         <header class="barra-superior" role="banner">
             <nav aria-label="Navegación superior">
@@ -63,22 +53,43 @@
                         </p>
                     {% endif %}
                 </div>
+=======
+{% block contenido %}
+    <section class="cabecera-agenda" aria-labelledby="titulo-agenda-principal">
+        <div class="tarjeta-cabecera">
+            <div class="circulo-foto-estudiante">
+                {% if foto_estudiante is defined and foto_estudiante %}
+                    <img src="{{ foto_estudiante }}"
+                         alt="{{ nombre_estudiante ? 'Foto de perfil de ' ~ nombre_estudiante : 'Foto de perfil del estudiante' }}">
+                {% endif %}
+>>>>>>> Stashed changes
             </div>
-        </section>
 
-        <main id="contenido-principal" class="lista-actividades" tabindex="-1" aria-label="Actividades del día">
-            <ul class="lista-actividades-ul">
-                {% for actividad in actividades %}
-                    <li class="item-actividad">
-                        <a href="{{ actividad.url|default('#tarea-' ~ actividad.id) }}"
-                           class="franja-actividad {{ actividad.activa ? 'es-activa' : '' }}"
-                           data-actividad-id="{{ actividad.id }}"
-                           aria-label="Hora {{ actividad.hora }}, actividad {{ actividad.nombre }}{{ actividad.activa ? ', actividad actual' : '' }}">
+            <div class="datos-cabecera">
+                <h1 id="titulo-agenda-principal" class="titulo-agenda">Agenda</h1>
+                <p class="texto-fecha">
+                    <span class="sr-only">Fecha: {{ fecha_accesible|default('Jueves, 19 de Noviembre') }}</span>
+                    <span aria-hidden="true">{{ fecha|default('📅 Jueves, 19 de Noviembre') }}</span>
+                </p>
+                {% if nombre_estudiante is defined and nombre_estudiante %}
+                    <p class="nombre-estudiante">
+                        <span class="sr-only">Estudiante: </span>{{ nombre_estudiante }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 
-                            <span class="circulo-hora" aria-hidden="true">
-                                <time datetime="{{ actividad.hora }}">{{ actividad.hora }}</time>
-                            </span>
+    <main id="contenido-principal" class="lista-actividades" tabindex="-1" aria-label="Actividades del día">
+        <ul class="lista-actividades-ul">
+            {% for actividad in actividades %}
+                <li class="item-actividad">
+                    <a href="{{ actividad.url|default('#tarea-' ~ actividad.id) }}"
+                       class="franja-actividad {{ actividad.activa ? 'es-activa' : '' }}"
+                       data-actividad-id="{{ actividad.id }}"
+                       aria-label="Hora {{ actividad.hora }}, actividad {{ actividad.nombre }}{{ actividad.activa ? ', actividad actual' : '' }}">
 
+<<<<<<< Updated upstream
                             <span class="caja-nombre-actividad">
                                 {% if actividad.img is defined %}
                                     <img src="data:image/jpeg;base64,{{ actividad.img }}" alt="" aria-hidden="true" class="img-actividad">
@@ -90,20 +101,25 @@
                 {% endfor %}
             </ul>
         </main>
+=======
+                        <span class="circulo-hora" aria-hidden="true">
+                            <time datetime="{{ actividad.hora }}">{{ actividad.hora }}</time>
+                        </span>
+>>>>>>> Stashed changes
 
-        <footer class="barra-inferior" role="contentinfo">
-            <nav aria-label="Navegación inferior">
-                <a href="siguiente.php" class="caja-icono" aria-label="Ir a la siguiente sección">
-                    {% if icono_inferior_url is defined and icono_inferior_url %}
-                        <img src="{{ icono_inferior_url }}" alt="">
-                    {% else %}
-                        <span class="emoji-barra" aria-hidden="true">➡️</span>
-                    {% endif %}
-                </a>
-            </nav>
-        </footer>
-    </div>
+                        <span class="caja-nombre-actividad">
+                            {% if actividad.img is defined and actividad.img %}
+                                <img src="{{ actividad.img }}" alt="" aria-hidden="true" class="img-actividad">
+                            {% endif %}
+                            <span class="texto-actividad">{{ actividad.nombre }}</span>
+                        </span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
+{% endblock %}
 
+{% block scripts %}
     <script src="../js/agenda_diaria.js" defer></script>
-</body>
-</html>
+{% endblock %}

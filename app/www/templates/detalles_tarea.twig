@@ -1,0 +1,101 @@
+{% extends "base.twig" %}
+
+{% block titulo %}{{ titulo_superior|default('Lista de Tareas') }} · Tarea {{ numero_tarea|default(1) }}{% endblock %}
+
+{% block enlace_salto %}#contenido-tarea{% endblock %}
+{% block texto_salto %}Saltar al detalle de la tarea{% endblock %}
+
+{% block opciones_menu %}
+    <a href="{{ url_agenda|default('agenda_diaria.php') }}" class="enlace-menu">Agenda diaria</a>
+    {% if hay_siguiente %}
+        <a href="{{ url_siguiente }}" class="enlace-menu">Siguiente tarea</a>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+    <section class="cabecera-tarea" aria-labelledby="encabezado-tarea">
+        <div class="tarjeta-cabecera tarjeta-cabecera-tarea">
+            <div class="cuadro-imagen-tarea">
+                {% if img_tarea is defined and img_tarea %}
+                    <img src="{{ img_tarea }}"
+                         alt="Imagen asociada a la tarea {{ numero_tarea|default(1) }}">
+                {% endif %}
+            </div>
+
+            <div class="datos-cabecera-tarea">
+                <h1 id="encabezado-tarea" class="titulo-tarea-linea">
+                    <span class="etiqueta-lista-tareas">{{ titulo_superior|default('Lista de Tareas') }}</span>
+                    <span class="separador-titulo" aria-hidden="true">·</span>
+                    <span class="titulo-tarea">Tarea {{ numero_tarea|default(1) }}</span>
+                </h1>
+                {% if nombre_estudiante is defined and nombre_estudiante %}
+                    <p class="nombre-estudiante">
+                        <span class="sr-only">Estudiante: </span>{{ nombre_estudiante }}
+                    </p>
+                {% endif %}
+            </div>
+
+            <div class="circulo-foto-estudiante">
+                {% if foto_estudiante is defined and foto_estudiante %}
+                    <img src="{{ foto_estudiante }}"
+                         alt="{{ nombre_estudiante ? 'Foto de perfil de ' ~ nombre_estudiante : 'Foto de perfil del estudiante' }}">
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <main id="contenido-tarea"
+          class="zona-detalle-tarea"
+          tabindex="-1"
+          aria-label="Detalle y control de la tarea {{ numero_tarea|default(1) }}"
+          data-url-siguiente="{{ url_siguiente|default('agenda_diaria.php') }}"
+          data-hay-siguiente="{{ hay_siguiente ? '1' : '0' }}"
+          data-numero-tarea="{{ numero_tarea|default(1) }}">
+
+        <div class="bloque-descripcion">
+            <label for="texto-descripcion-tarea" class="etiqueta-descripcion">Descripción:</label>
+            <div id="texto-descripcion-tarea"
+                 class="caja-descripcion"
+                 role="region"
+                 aria-label="Descripción y pictogramas de la tarea">
+                {% if pictogramas_descripcion is defined and pictogramas_descripcion|length > 0 %}
+                    <div class="lista-pictogramas-descripcion" aria-label="Pictogramas de la descripción">
+                        {% for picto in pictogramas_descripcion %}
+                            <figure class="item-pictograma">
+                                <img src="{{ picto.src }}" alt="{{ picto.alt|default('Pictograma') }}">
+                                {% if picto.texto %}
+                                    <figcaption>{{ picto.texto }}</figcaption>
+                                {% endif %}
+                            </figure>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if descripcion_tarea %}
+                    <p class="texto-descripcion">{{ descripcion_tarea }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="estado-tarea-vivo" class="sr-only" role="status" aria-live="polite"></div>
+
+        <div class="acciones-tarea" role="group" aria-label="Acciones de la tarea">
+            <button type="button"
+                    id="btn-inicio-tarea"
+                    class="btn-accion btn-inicio"
+                    aria-pressed="false">
+                Inicio
+            </button>
+
+            <button type="button"
+                    id="btn-fin-tarea"
+                    class="btn-accion btn-fin">
+                Fin
+            </button>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="../js/detalles_tarea.js" defer></script>
+{% endblock %}
