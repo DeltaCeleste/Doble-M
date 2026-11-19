@@ -33,10 +33,10 @@
                 'nombre' => (string) $fila['nombre_actividad'],
                 'img' => $fila['img'],
                 'activa' => ($index === 0),
-                'url' => 'tarea.php?id=' . (int) $fila['id'] . '&fecha=' . urlencode((string) $fila['fecha']),
+                'url' => 'detalles_tarea.php?id_padre=' . (int) $fila['id'] . '&paso=1&fecha=' . urlencode((string) $fila['fecha']) . ($usuario['rol'] === 'familia' ? '&id_estudiante=' . $idUsuario : ''),
             ];
         }
-
+       
         if (empty($actividades)) {
             $actividades = [
                 [
