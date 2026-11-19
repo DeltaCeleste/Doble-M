@@ -46,7 +46,7 @@
             <div class="tarjeta-cabecera">
                 <div class="circulo-foto-estudiante">
                     {% if foto_estudiante is defined and foto_estudiante %}
-                        <img src="{{ foto_estudiante }}"
+                        <img src="data:image/jpeg;base64,{{ foto_estudiante }}"
                              alt="{{ nombre_estudiante ? 'Foto de perfil de ' ~ nombre_estudiante : 'Foto de perfil del estudiante' }}">
                     {% endif %}
                 </div>
@@ -80,8 +80,8 @@
                             </span>
 
                             <span class="caja-nombre-actividad">
-                                {% if actividad.img is defined and actividad.img %}
-                                    <img src="{{ actividad.img }}" alt="" aria-hidden="true" class="img-actividad">
+                                {% if actividad.img is defined %}
+                                    <img src="data:image/jpeg;base64,{{ actividad.img }}" alt="" aria-hidden="true" class="img-actividad">
                                 {% endif %}
                                 <span class="texto-actividad">{{ actividad.nombre }}</span>
                             </span>

@@ -134,7 +134,6 @@
         $stmt = "SELECT 
                     u.id_usuario, 
                     u.nombre_usuario, 
-                    u.categoria_usuario, 
                     u.estado_usuario,
                     TO_BASE64(u.foto) AS foto
                  FROM agenda.usuario u
@@ -152,6 +151,8 @@
             $profile = $result->fetch_assoc();
             $profile['id_usuario']     = (int)$profile['id_usuario'];
             $profile['estado_usuario'] = (int)$profile['estado_usuario'];
+            $profile['nombre_usuario'] = $profile['nombre_usuario'];
+            $profile['foro']           = $profile['foto'];
             $profile['preferencias']   = getStudentPreferences((int)$studentId);
         }
 
@@ -806,6 +807,40 @@
         disconnect($conn);
 
         return $count > 0;
+    }
+
+    // Obtiene las tareas asignadas a un estudiante en una fecha concreta
+    function getStudentActivitiesDetailsByDate($userId, $date){
+        $conn = connect();
+        
+        $stmt = "SELECT id_actividad, hora_inicio, hora_fin, completada
+                FROM agenda.asignacion_actividad 
+                WHERE id_usuario = ? AND fecha=? AND principal=1;";
+        $prepare = $conn->prepare($stmt);
+        $prepare->bind_param("is", $userId, $date);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $activitiesPre = array();
+        while ($row = $result->fetch_assoc()) {
+            $activitiesPre[] = array(
+                'id' => $row["id_actividad"],
+                'fecha' => $date,
+                'hora_inicio' => $row["hora_inicio"],
+                'hora_fin' => $row["hora_fin"],
+                'completada' => $row["completada"]
+            );
+        }
+
+        $prepare->close();
+        disconnect($conn);
+
+        $activities = array();
+        foreach ($activitiesPre as $a){
+            $activities[] = array_merge($a, getActivityDetail($a['id']));
+        }
+
+        return $activities;
     }
 
     // valida si la fecha y horas de una actividad se solapan con la de una ya asignada
