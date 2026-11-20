@@ -157,11 +157,14 @@ echo $twig->render('detalles_tarea.twig', [
     'descripcion_tarea'       => $descripcionTexto,
     'pictogramas_descripcion' => $pictogramas,
     'img_tarea'               => $imgPasoSrc,
+    'id_paso'                 => $pasoActual['id_actividad'],
+    'id_estudiante'           => $idUsuario,
     'foto_estudiante'         => $fotoEstudiante,
     'nombre_estudiante'       => $nombreEstudiante,
-    'hora_tarea'              => substr((string) ($actividadPadre['hora_inicio'] ?? '09:00'), 0, 5),
+    'hora_tarea'              => $actividadPadre['hora_inicio'],
     'url_inicio'              => $urlAgenda,
     'url_siguiente'           => $urlSiguienteTarea,
     'hay_siguiente'           => $haySiguiente,
     'url_agenda'              => $urlAgenda,
+    'fecha'                   => $fechaConsulta
 ]);
