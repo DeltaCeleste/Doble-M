@@ -2,8 +2,8 @@
     //Gestión de sesión
     require_once dirname(__DIR__) . '/services/sesion_manager.php';
     $usuario = cargarSesion();
-    $usuario['id'] = 1;
-    $usuario['rol'] = 'estudiante';
+    //$usuario['id'] = 1;
+    //$usuario['rol'] = 'estudiante';
     if($usuario['id'] != 0 && $usuario['rol'] == 'estudiante'){
         require_once dirname(__DIR__) . '/utils/functions.php';
 
