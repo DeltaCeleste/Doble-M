@@ -2,12 +2,13 @@
     //Gestión de sesión
     require_once dirname(__DIR__) . '/services/sesion_manager.php';
     $usuario = cargarSesion();
-    
+    //$usuario['id'] = 1;
+    //$usuario['rol'] = 'estudiante';
     if($usuario['id'] != 0 && $usuario['rol'] == 'estudiante'){
         require_once dirname(__DIR__) . '/utils/functions.php';
 
         $fechaConsulta = $_GET['fecha'] ?? date('Y-m-d');
-        $fechaConsulta = "2026-11-18";
+        $fechaConsulta = "2026-11-18"; // fecha de ejemplo
 
         $fotoEstudiante = '';
         $nombreEstudiante = '';
