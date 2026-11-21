@@ -1,0 +1,70 @@
+{% extends "base.twig" %}
+
+{% block titulo %}Iniciar sesión con PIN · {{ nombre_estudiante|default('Estudiante') }}{% endblock %}
+
+{% block enlace_salto %}#contenido-login-pin{% endblock %}
+{% block texto_salto %}Saltar al formulario de PIN{% endblock %}
+
+{% block opciones_menu %}
+    <a href="{{ url_inicio|default('seleccion_estudiante.php') }}" class="enlace-menu">Cambiar de estudiante</a>
+{% endblock %}
+
+{% block contenido %}
+    <main id="contenido-login-pin" class="zona-login-estudiante" tabindex="-1" aria-labelledby="titulo-login-pin">
+        <div class="tarjeta-login">
+            
+            <div class="circulo-foto-estudiante foto-login">
+                {% if foto_estudiante is defined and foto_estudiante %}
+                    <img src="{{ foto_estudiante }}"
+                         alt="{{ nombre_estudiante ? 'Foto de perfil de ' ~ nombre_estudiante : 'Foto de perfil del estudiante' }}">
+                {% else %}
+                    <span class="emoji-avatar" aria-hidden="true">👤</span>
+                {% endif %}
+            </div>
+
+            <h1 id="titulo-login-pin" class="titulo-login-estudiante">
+                {{ nombre_estudiante|default('Estudiante') }}
+            </h1>
+
+            {% if error_login is defined and error_login %}
+                <div class="alerta-error-login" role="alert">
+                    {{ error_login }}
+                </div>
+            {% endif %}
+
+            <form id="form-login-pin"
+                  action="{{ action_url|default('') }}"
+                  method="POST"
+                  class="formulario-login"
+                  novalidate>
+                
+                <input type="hidden" name="id_estudiante" value="{{ id_estudiante|default('') }}">
+                <input type="hidden" id="pin-completo" name="pin" value="">
+
+                <fieldset class="grupo-pin-login">
+                    <legend class="etiqueta-login">Introduce tu clave de 4 números:</legend>
+                    
+                    <div class="contenedor-casillas-pin">
+                        <input type="password" inputmode="numeric" maxlength="1" class="casilla-pin" aria-label="Primer dígito del PIN" required>
+                        <input type="password" inputmode="numeric" maxlength="1" class="casilla-pin" aria-label="Segundo dígito del PIN" required>
+                        <input type="password" inputmode="numeric" maxlength="1" class="casilla-pin" aria-label="Tercer dígito del PIN" required>
+                        <input type="password" inputmode="numeric" maxlength="1" class="casilla-pin" aria-label="Cuarto dígito del PIN" required>
+                    </div>
+
+                    <span id="error-js-pin" class="mensaje-error-js" role="alert" aria-live="polite"></span>
+                </fieldset>
+
+                <div class="acciones-login">
+                    <button type="submit" class="btn-accion btn-entrar">
+                        Entrar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="../js/login_estudiante.js" defer></script>
+{% endblock %}
