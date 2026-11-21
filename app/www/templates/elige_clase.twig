@@ -1,0 +1,78 @@
+
+{% extends "base.twig" %}
+
+{% block titulo %}Inicio de Sesión{% endblock %}
+
+{% block contenido %}
+
+    <main id="contenido-principal" class="pantalla-eleccion-clase">
+
+        <h1 class="titulo-inicio-sesion">Inicio de Sesión</h1>
+
+        <section class="panel-eleccion-clase" aria-labelledby="titulo-clases">
+
+            <h2 id="titulo-clases">ELIGE TU CLASE</h2>
+
+            {% if grupos is not empty %}
+
+                <div class="contenedor-clases" id="contenedor-clases">
+
+                    {% for grupo in grupos %}
+
+                        <div class="tarjeta-clase">
+
+                            <button
+                                type="button"
+                                class="opcion-clase"
+                                data-id-grupo="{{ grupo.id_grupo }}"
+                                aria-pressed="false"
+                                aria-label="Seleccionar clase {{ grupo.nombre_grupo }}"
+                            >
+                            {% if grupo.imagen is defined and grupo.imagen %}
+                                <img src="{{ grupo.imagen }}" alt="">
+                            {% else %}
+                                <span class="imagen-pendiente">
+                                    Imagen de la clase
+                                </span>
+                            {% endif %}
+                             </button>
+
+                        <span class="nombre-clase">
+                             {{ grupo.nombre_grupo }}
+                        </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <input type="hidden" id="grupo-seleccionado" name="id_grupo">
+
+                <div class="acciones-eleccion-clase">
+                    <button
+                        type="button"
+                        id="btn-siguiente-clase"
+                        class="boton-siguiente-clase"
+                        disabled
+                        aria-label="Continuar a la siguiente pantalla"
+                    >
+                        <span aria-hidden="true">➡️</span>
+                    </button>
+                </div>
+
+            {% else %}
+
+                <p>No hay clases disponibles.</p>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="../js/elige_clase.js" defer></script>
+{% endblock %}

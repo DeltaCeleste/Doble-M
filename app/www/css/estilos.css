@@ -606,3 +606,340 @@ button:focus-visible,
         transition: none;
     }
 }
+
+
+
+/* ==========================================================================
+   INICIO DE SESIÓN - ELECCIÓN DE CLASE
+   ========================================================================== */
+
+.pantalla-eleccion-clase {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(12px, 2dvh, 22px) clamp(18px, 4vw, 56px);
+    gap: clamp(12px, 2dvh, 20px);
+}
+
+.titulo-inicio-sesion {
+    width: 100%;
+    text-align: center;
+    font-size: clamp(1.7rem, 3.8dvh, 2.7rem);
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    line-height: 1.2;
+}
+
+/* Panel principal */
+.panel-eleccion-clase {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 1100px;
+    padding: clamp(16px, 2.5dvh, 28px) clamp(18px, 3vw, 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(16px, 3dvh, 28px);
+    background-color: var(--azul-claro);
+    border: 2px solid var(--borde-suave);
+    border-radius: 22px;
+}
+
+.panel-eleccion-clase h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.2dvh, 2.2rem);
+    font-weight: 700;
+    color: var(--texto-oscuro);
+}
+
+/* Contenedor de las clases */
+.contenedor-clases {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(16px, 3vw, 32px);
+}
+
+/* Tarjeta completa: imagen + nombre */
+.tarjeta-clase {
+    width: clamp(140px, 21vw, 230px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Cuadro blanco que contendrá la imagen */
+.opcion-clase {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blanco);
+    border: 2px solid var(--borde-suave);
+    border-radius: 20px;
+    color: var(--texto-oscuro);
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: clamp(1.1rem, 2.2dvh, 1.5rem);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Imagen que se cargue desde la base de datos */
+.opcion-clase img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Texto provisional dentro del cuadro blanco */
+.imagen-pendiente {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    text-align: center;
+}
+
+/* Nombre de la clase debajo del cuadro blanco */
+.nombre-clase {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--texto-oscuro);
+    margin-top: 2px;
+}
+
+/* Clase seleccionada */
+.opcion-clase[aria-pressed="true"] {
+    background-color: var(--verde-apagado);
+    border: 4px solid var(--foco-accesible);
+}
+
+/* Botón de avance dentro del panel */
+.acciones-eleccion-clase {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.boton-siguiente-clase {
+    width: clamp(64px, 9vw, 96px);
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blanco);
+    border: 2px solid var(--texto-oscuro);
+    border-radius: 10px;
+    font-size: clamp(1.5rem, 3dvh, 2rem);
+    cursor: pointer;
+}
+
+.boton-siguiente-clase:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.boton-siguiente-clase:not(:disabled):hover {
+    background-color: var(--verde-apagado);
+}
+
+/* En esta pantalla se mantiene la barra inferior, sin su enlace */
+.pantalla-eleccion-clase ~ .barra-inferior nav {
+    display: none;
+}
+
+/* Adaptación a móviles */
+@media (max-width: 600px) {
+
+    .pantalla-eleccion-clase {
+        padding: 12px 14px;
+        gap: 12px;
+    }
+
+    .panel-eleccion-clase {
+        padding: 16px 12px;
+        gap: 16px;
+    }
+
+    .contenedor-clases {
+        gap: 12px;
+    }
+
+    .tarjeta-clase {
+        width: clamp(120px, 38vw, 180px);
+    }
+
+    .nombre-clase {
+        font-size: 1.4rem;
+    }
+}
+
+/* Accesibilidad: reducir animaciones */
+@media (prefers-reduced-motion: reduce) {
+    .opcion-clase {
+        transition: none;
+    }
+}
+
+
+
+/* ==========================================================================
+   INICIO DE SESIÓN - ELECCIÓN DE PERFIL
+   ========================================================================== */
+
+.pantalla-eleccion-perfil {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(12px, 2dvh, 22px) clamp(18px, 4vw, 56px);
+    gap: clamp(12px, 2dvh, 20px);
+}
+
+.panel-eleccion-perfil {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 1100px;
+    padding: clamp(16px, 2.5dvh, 28px) clamp(18px, 3vw, 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(16px, 3dvh, 28px);
+    background-color: var(--azul-claro);
+    border: 2px solid var(--borde-suave);
+    border-radius: 22px;
+}
+
+.panel-eleccion-perfil h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.2dvh, 2.2rem);
+    font-weight: 700;
+    color: var(--texto-oscuro);
+}
+
+.contenedor-perfiles {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(16px, 3vw, 32px);
+}
+
+.tarjeta-perfil {
+    width: clamp(140px, 21vw, 230px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.opcion-perfil {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blanco);
+    border: 2px solid var(--borde-suave);
+    border-radius: 20px;
+    color: var(--texto-oscuro);
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    cursor: pointer;
+}
+
+.opcion-perfil[aria-pressed="true"] {
+    background-color: var(--verde-apagado);
+    border: 4px solid var(--foco-accesible);
+}
+
+.nombre-perfil {
+    width: 100%;
+    text-align: center;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--texto-oscuro);
+}
+
+.acciones-eleccion-perfil {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.boton-siguiente-perfil {
+    width: clamp(64px, 9vw, 96px);
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blanco);
+    border: 2px solid var(--texto-oscuro);
+    border-radius: 10px;
+    font-size: clamp(1.5rem, 3dvh, 2rem);
+    cursor: pointer;
+}
+
+.boton-siguiente-perfil:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.boton-siguiente-perfil:not(:disabled):hover {
+    background-color: var(--verde-apagado);
+}
+
+/* Ocultar el enlace de la barra inferior en elección de perfil */
+.pantalla-eleccion-perfil ~ .barra-inferior nav {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .pantalla-eleccion-perfil {
+        padding: 12px 14px;
+        gap: 12px;
+    }
+
+    .panel-eleccion-perfil {
+        padding: 16px 12px;
+        gap: 16px;
+    }
+
+    .contenedor-perfiles {
+        gap: 12px;
+    }
+
+    .tarjeta-perfil {
+        width: clamp(120px, 38vw, 180px);
+    }
+
+    .nombre-perfil {
+        font-size: 1.4rem;
+    }
+}

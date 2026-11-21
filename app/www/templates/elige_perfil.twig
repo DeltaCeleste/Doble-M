@@ -1,0 +1,61 @@
+
+{% extends "base.twig" %}
+
+{% block titulo %}Inicio de Sesión{% endblock %}
+
+{% block contenido %}
+
+    <main id="contenido-principal" class="pantalla-eleccion-perfil">
+
+        <h1 class="titulo-inicio-sesion">Inicio de Sesión</h1>
+
+        <section class="panel-eleccion-perfil" aria-labelledby="titulo-perfiles">
+
+            <h2 id="titulo-perfiles">¿QUIÉN ERES?</h2>
+
+            <div class="contenedor-perfiles">
+
+                <div class="tarjeta-perfil">
+                    <button type="button" class="opcion-perfil"
+                            data-perfil="alumno" aria-pressed="false">
+                        <span class="imagen-pendiente">Imagen de alumno</span>
+                    </button>
+                </div>
+
+                <div class="tarjeta-perfil">
+                    <button type="button" class="opcion-perfil"
+                            data-perfil="profesor" aria-pressed="false">
+                        <span class="imagen-pendiente">Imagen de profesor</span>
+                    </button>
+                </div>
+
+                <div class="tarjeta-perfil">
+                    <button type="button" class="opcion-perfil"
+                            data-perfil="familiar" aria-pressed="false">
+                        <span class="imagen-pendiente">Imagen de familiar</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <input type="hidden" id="perfil-seleccionado" name="perfil">
+
+            <div class="acciones-eleccion-perfil">
+                <button type="button"
+                        id="btn-siguiente-perfil"
+                        class="boton-siguiente-perfil"
+                        disabled
+                        aria-label="Continuar a la siguiente pantalla">
+                    <span aria-hidden="true">➡️</span>
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="../js/elige_perfil.js" defer></script>
+{% endblock %}
