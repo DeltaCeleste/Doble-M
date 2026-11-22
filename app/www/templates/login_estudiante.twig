@@ -26,18 +26,11 @@
                 {{ nombre_estudiante|default('Estudiante') }}
             </h1>
 
-            {% if error_login is defined and error_login %}
-                <div class="alerta-error-login" role="alert">
-                    {{ error_login }}
-                </div>
-            {% endif %}
-
             <form id="form-login-password"
-                action="{{ action_url|default('../api/login.php') }}"
-                method="POST"
-                class="formulario-login"
-                data-username="{{ nombre_estudiante }}"
-                novalidate>
+                  action="{{ action_url|default('') }}"
+                  method="POST"
+                  class="formulario-login"
+                  novalidate>
                 
                 <input type="hidden" name="id_estudiante" value="{{ id_estudiante|default('') }}">
 
@@ -47,10 +40,7 @@
                            id="input-password"
                            name="password"
                            class="campo-texto-login"
-                           autocomplete="current-password"
-                           required
-                           aria-required="true">
-                    <span id="error-js-login" class="mensaje-error-js" role="alert" aria-live="polite"></span>
+                           autocomplete="current-password">
                 </div>
 
                 <div class="acciones-login">

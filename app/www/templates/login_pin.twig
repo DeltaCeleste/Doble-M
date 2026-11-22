@@ -1,26 +1,18 @@
 {% extends "base.twig" %}
 
+{% block titulo %}Iniciar sesión con PIN · {{ nombre_estudiante|default('Estudiante') }}{% endblock %}
 
-{% block estilos %}
-    <link rel="stylesheet" href="../css/login_pin.css">
-{% endblock %}
-{% block titulo %}Iniciar sesión con pictogramas · {{ nombre_estudiante|default('Estudiante') }}{% endblock %}
-
-{% block enlace_salto %}#contenido-login-picto{% endblock %}
-{% block texto_salto %}Saltar al formulario de contraseña con pictogramas{% endblock %}
+{% block enlace_salto %}#contenido-login-pin{% endblock %}
+{% block texto_salto %}Saltar al formulario de PIN{% endblock %}
 
 {% block opciones_menu %}
-    <a href="{{ url_inicio|default('elige_perfil.php') }}" class="enlace-menu">Cambiar de estudiante</a>
+    <a href="{{ url_inicio|default('seleccion_estudiante.php') }}" class="enlace-menu">Cambiar de estudiante</a>
 {% endblock %}
 
 {% block contenido %}
-    <main id="contenido-login-picto" class="zona-login-estudiante" tabindex="-1" aria-labelledby="titulo-login-picto">
-        <div class="tarjeta-login tarjeta-login-picto">
-
-            <h1 id="titulo-login-picto" class="titulo-login-estudiante">
-                {{ nombre_estudiante|default('Estudiante') }}
-            </h1>
-
+    <main id="contenido-login-pin" class="zona-login-estudiante" tabindex="-1" aria-labelledby="titulo-login-pin">
+        <div class="tarjeta-login">
+            
             <div class="circulo-foto-estudiante foto-login">
                 {% if foto_estudiante is defined and foto_estudiante %}
                     <img src="{{ foto_estudiante }}"
@@ -30,68 +22,35 @@
                 {% endif %}
             </div>
 
-            {% if error_login is defined and error_login %}
-                <div class="alerta-error-login" role="alert">
-                    {{ error_login }}
-                </div>
-            {% endif %}
+            <h1 id="titulo-login-pin" class="titulo-login-estudiante">
+                {{ nombre_estudiante|default('Estudiante') }}
+            </h1>
 
-            <form id="form-login-picto"
-                  action="{{ action_url|default('login_picto.php') }}"
+            <form id="form-login-pin"
+                  action="{{ action_url|default('') }}"
                   method="POST"
-                  class="formulario-login-picto"
+                  class="formulario-login"
                   novalidate>
+                
+                <input type="hidden" name="id_estudiante" value="{{ id_estudiante|default('') }}">
+                <input type="hidden" id="pin-completo" name="pin" value="">
 
-                <input type="hidden" id="id-estudiante" name="id_estudiante" value="{{ id_estudiante|default('') }}">
-                <input type="hidden" id="secuencia-picto" name="pass" value="">
-
-                {# Fila superior: N pictogramas disponibles para pulsar #}
-                <section class="grupo-opciones-picto" aria-label="Pictogramas disponibles">
-                    <div class="rejilla-opciones-picto">
-                        {% for picto in pictogramas_opciones %}
-                            <button type="button"
-                                    class="btn-opcion-picto"
-                                    data-id-picto="{{ picto.id_pictograma }}"
-                                    data-nombre-picto="{{ picto.nombre }}"
-                                    data-img-picto="{{ picto.imagen }}"
-                                    aria-label="Elegir {{ picto.nombre }}">
-                                <img src="{{ picto.imagen }}" alt="{{ picto.nombre }}">
-                            </button>
-                        {% endfor %}
-                    </div>
-                </section>
-
-                {# Fila inferior: M huecos donde se va montando la contraseña #}
-                <section class="grupo-huecos-picto" aria-labelledby="etiqueta-contraseña-picto">
-                    <h2 id="etiqueta-contraseña-picto" class="etiqueta-login">Contraseña:</h2>
-
+                <fieldset class="grupo-pin-login">
+                    <legend class="etiqueta-login">Introduce tu clave de 4 números:</legend>
                     
-                    <div class="contenedor-huecos-picto" data-longitud="{{ longitud_contrasena|default(3) }}"
-                        data-esperada="{{ secuencia_esperada|default('') }}">
-                        {% for i in 1..(longitud_contraseña|default(3)) %}
-                            <button type="button"
-                                    class="hueco-picto"
-                                    data-posicion="{{ loop.index0 }}"
-                                    aria-label="Posición {{ i }} de la contraseña: vacía"
-                                    disabled>
-                            </button>
-                        {% endfor %}
+                    <div class="contenedor-casillas-pin">
+                        <input type="password" inputmode="numeric" maxlength="1" class="casilla-pin" aria-label="Primer dígito del PIN">
+                        <input type="password" inputmode="numeric" maxlength="1" class="casilla-pin" aria-label="Segundo dígito del PIN">
+                        <input type="password" inputmode="numeric" maxlength="1" class="casilla-pin" aria-label="Tercer dígito del PIN">
+                        <input type="password" inputmode="numeric" maxlength="1" class="casilla-pin" aria-label="Cuarto dígito del PIN">
                     </div>
+                </fieldset>
 
-                    <span id="error-js-picto" class="mensaje-error-js" role="alert" aria-live="polite"></span>
-                </section>
-
-                {# Botón de flecha abajo a la derecha #}
-                <div class="acciones-login-picto">
-                    <button type="submit"
-                            id="btn-entrar-picto"
-                            class="btn-flecha-login"
-                            aria-label="Entrar"
-                            disabled>
-                        <span aria-hidden="true">➡️</span>
+                <div class="acciones-login">
+                    <button type="submit" class="btn-accion btn-entrar">
+                        Entrar
                     </button>
                 </div>
-
             </form>
 
         </div>
@@ -99,5 +58,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="../js/login_pin.js" defer></script>
+    <script src="../js/login_estudiante.js" defer></script>
 {% endblock %}

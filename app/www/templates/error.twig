@@ -1,0 +1,46 @@
+{% extends "base.twig" %}
+
+{% block titulo %}{{ titulo_pagina|default('Inténtalo de nuevo') }}{% endblock %}
+
+{% block enlace_salto %}#contenido-error{% endblock %}
+{% block texto_salto %}Saltar al mensaje de aviso{% endblock %}
+
+{% block opciones_menu %}
+    <a href="{{ url_volver|default('javascript:history.back()') }}" class="enlace-menu">Volver</a>
+    <a href="{{ url_inicio|default('agenda_diaria.php') }}" class="enlace-menu">Inicio</a>
+{% endblock %}
+
+{% block contenido %}
+    <main id="contenido-error" class="zona-login-estudiante" tabindex="-1" aria-labelledby="titulo-error-general">
+        <div class="tarjeta-login">
+            
+            <div class="circulo-foto-estudiante foto-login">
+                {% if foto_usuario is defined and foto_usuario %}
+                    <img src="{{ foto_usuario }}"
+                         alt="{{ nombre_usuario ? 'Foto de perfil de ' ~ nombre_usuario : 'Foto de perfil' }}">
+                {% else %}
+                    <span class="emoji-avatar" aria-hidden="true">{{ icono_error|default('🤔') }}</span>
+                {% endif %}
+            </div>
+
+            <h1 id="titulo-error-general" class="titulo-login-estudiante">
+                {{ mensaje_error|default('¡Casi! Inténtalo de nuevo.') }}
+            </h1>
+
+            {% if detalle_error is defined and detalle_error %}
+                <p class="texto-ayuda-error">{{ detalle_error }}</p>
+            {% endif %}
+
+            <div class="acciones-login">
+                <a href="{{ url_volver|default('javascript:history.back()') }}" class="btn-accion btn-entrar enlace-boton">
+                    {{ texto_boton|default('Volver a intentarlo') }}
+                </a>
+            </div>
+
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="../js/login_estudiante.js" defer></script>
+{% endblock %}
