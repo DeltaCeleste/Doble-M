@@ -1,34 +1,4 @@
 <?php
-// Convierte BLOB binario o cadena Base64 de la BD en una data URI válida para <img>
-function construirDataUriImagen($valorBd, string $mimePorDefecto = 'image/png'): string
-{
-    if ($valorBd === null || $valorBd === false) {
-        return '';
-    }
-    if (is_resource($valorBd)) {
-        $valorBd = stream_get_contents($valorBd);
-        if ($valorBd === false) return '';
-    }
-    $raw = (string) $valorBd;
-    if (trim($raw) === '') return '';
-    if (str_starts_with(trim($raw), 'data:image/')) return trim($raw);
-
-    if (str_starts_with($raw, "\x89PNG") || str_starts_with($raw, "\xFF\xD8\xFF")) {
-        $mime = str_starts_with($raw, "\x89PNG") ? 'image/png' : 'image/jpeg';
-        return 'data:' . $mime . ';base64,' . base64_encode($raw);
-    }
-
-    $base64 = preg_replace('/\s+/', '', trim($raw)) ?? '';
-    if ($base64 === '') return '';
-
-    $mime = $mimePorDefecto;
-    if (str_starts_with($base64, 'iVBORw0KGgo')) $mime = 'image/png';
-    elseif (str_starts_with($base64, '/9j/')) $mime = 'image/jpeg';
-    elseif (str_starts_with($base64, 'R0lGOD')) $mime = 'image/gif';
-    elseif (str_starts_with($base64, 'UklGR')) $mime = 'image/webp';
-
-    return 'data:' . $mime . ';base64,' . $base64;
-}
 
 require_once dirname(__DIR__) . '/services/sesion_manager.php';
 require_once dirname(__DIR__) . '/utils/functions.php';

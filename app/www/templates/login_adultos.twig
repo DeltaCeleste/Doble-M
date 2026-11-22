@@ -1,0 +1,66 @@
+{% extends "base.twig" %}
+
+{% block titulo %}Iniciar sesión · Profesorado, familias y administración{% endblock %}
+
+{% block enlace_salto %}#contenido-login-adultos{% endblock %}
+{% block texto_salto %}Saltar al formulario de inicio de sesión{% endblock %}
+
+{% block opciones_menu %}
+    <a href="{{ url_inicio|default('elige_clase.php') }}" class="enlace-menu">Volver a elegir clase</a>
+{% endblock %}
+
+{% block contenido %}
+    <main id="contenido-login-adultos" class="zona-login-estudiante" tabindex="-1" aria-labelledby="titulo-login-adultos">
+        <div class="tarjeta-login">
+
+            <div class="circulo-foto-estudiante foto-login">
+                <span class="emoji-avatar" aria-hidden="true">🔑</span>
+            </div>
+
+            <h1 id="titulo-login-adultos" class="titulo-login-estudiante">
+                Acceso general
+            </h1>
+
+            <form id="form-login-adultos"
+                  action="{{ action_url|default('../api/login.php') }}"
+                  method="POST"
+                  class="formulario-login"
+                  novalidate>
+
+                <div class="grupo-input-login">
+                    <label for="input-usuario-adulto" class="etiqueta-login">Usuario:</label>
+                    <input type="text"
+                           id="input-usuario-adulto"
+                           name="nombre_usuario"
+                           class="campo-texto-login"
+                           autocomplete="username"
+                           required
+                           aria-required="true">
+                </div>
+
+                <div class="grupo-input-login">
+                    <label for="input-password-adulto" class="etiqueta-login">Contraseña:</label>
+                    <input type="password"
+                           id="input-password-adulto"
+                           name="contrasena"
+                           class="campo-texto-login"
+                           autocomplete="current-password"
+                           required
+                           aria-required="true">
+                    <span id="error-js-login-adultos" class="mensaje-error-js" role="alert" aria-live="polite"></span>
+                </div>
+
+                <div class="acciones-login">
+                    <button type="submit" id="btn-entrar-adultos" class="btn-accion btn-entrar">
+                        Entrar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="../js/login_adultos.js" defer></script>
+{% endblock %}

@@ -152,7 +152,7 @@
             $profile['id_usuario']     = (int)$profile['id_usuario'];
             $profile['estado_usuario'] = (int)$profile['estado_usuario'];
             $profile['nombre_usuario'] = $profile['nombre_usuario'];
-            $profile['foro']           = $profile['foto'];
+            $profile['foto']           = $profile['foto'];
             $profile['preferencias']   = getStudentPreferences((int)$studentId);
         }
 
@@ -318,7 +318,37 @@
         return $count > 0;
     }
 
-    
+    // Convierte BLOB binario o cadena Base64 de la BD en una data URI válida para <img>
+    function construirDataUriImagen($valorBd, string $mimePorDefecto = 'image/png'): string
+    {
+        if ($valorBd === null || $valorBd === false) {
+            return '';
+        }
+        if (is_resource($valorBd)) {
+            $valorBd = stream_get_contents($valorBd);
+            if ($valorBd === false) return '';
+        }
+        $raw = (string) $valorBd;
+        if (trim($raw) === '') return '';
+        if (str_starts_with(trim($raw), 'data:image/')) return trim($raw);
+
+        if (str_starts_with($raw, "\x89PNG") || str_starts_with($raw, "\xFF\xD8\xFF")) {
+            $mime = str_starts_with($raw, "\x89PNG") ? 'image/png' : 'image/jpeg';
+            return 'data:' . $mime . ';base64,' . base64_encode($raw);
+        }
+
+        $base64 = preg_replace('/\s+/', '', trim($raw)) ?? '';
+        if ($base64 === '') return '';
+
+        $mime = $mimePorDefecto;
+        if (str_starts_with($base64, 'iVBORw0KGgo')) $mime = 'image/png';
+        elseif (str_starts_with($base64, '/9j/')) $mime = 'image/jpeg';
+        elseif (str_starts_with($base64, 'R0lGOD')) $mime = 'image/gif';
+        elseif (str_starts_with($base64, 'UklGR')) $mime = 'image/webp';
+
+        return 'data:' . $mime . ';base64,' . $base64;
+    }
+
     // Grupo --------------------------------------------------------------------------------------
     // Consulta el mayor id de grupo en la BD y lo devuelve incrementado
     function getNextGroupID(){
@@ -454,28 +484,29 @@
 
     // Consulta los estudiantes activos que pertenecen a un grupo concreto
     function getStudentsByGroup($groupId){
-        $conn = connect();
+    $conn = connect();
 
-        $stmt = "SELECT u.id_usuario, u.nombre_usuario 
-                 FROM agenda.usuario u 
-                 JOIN agenda.pertenece p ON u.id_usuario = p.id_usuario 
-                 WHERE p.id_grupo=? AND u.categoria_usuario='estudiante' AND u.estado_usuario=1 
-                 ORDER BY u.nombre_usuario ASC;";
-        $prepare = $conn->prepare($stmt);
-        $prepare->bind_param("i", $groupId);
-        $prepare->execute();
-        $result = $prepare->get_result();
+    $stmt = "SELECT u.id_usuario, u.nombre_usuario, TO_BASE64(u.foto) AS foto 
+             FROM agenda.usuario u 
+             JOIN agenda.pertenece p ON u.id_usuario = p.id_usuario 
+             WHERE p.id_grupo=? AND u.categoria_usuario='estudiante' AND u.estado_usuario=1 
+             ORDER BY u.nombre_usuario ASC;";
+    $prepare = $conn->prepare($stmt);
+    $prepare->bind_param("i", $groupId);
+    $prepare->execute();
+    $result = $prepare->get_result();
 
-        $students = array();
-        while ($row = $result->fetch_assoc()) {
-            $students[] = $row;
-        }
-
-        $prepare->close();
-        disconnect($conn);
-
-        return $students;
+    $students = array();
+    while ($row = $result->fetch_assoc()) {
+        $row['foto_uri'] = construirDataUriImagen($row['foto'] ?? null);
+        $students[] = $row;
     }
+
+    $prepare->close();
+    disconnect($conn);
+
+    return $students;
+}
 
     // Relación asociación --------------------------------------------------------------------------
     // Comprueba si existe la asignación "usuario asociado a usuario" existe para los usuarios proporcionados
@@ -842,6 +873,68 @@
 
         return $activities;
     }
+    function getLoginPictograms() {
+    $conn = connect();
+
+    $sql = "SELECT id_pictograma, nombre, imagen FROM agenda.pictograma_login ORDER BY id_pictograma ASC";
+    $result = $conn->query($sql);
+
+    $pictogramas = [];
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $pictogramas[] = [
+                'id_pictograma' => (int) $row['id_pictograma'],
+                'nombre'        => $row['nombre'],
+                'imagen'        => !empty($row['imagen']) ? construirDataUriImagen($row['imagen']) : ''
+            ];
+        }
+    }
+
+    disconnect($conn);
+    return $pictogramas;
+}
+
+function getStudentPasswordSequence($studentId) {
+    $conn = connect();
+
+    $stmt = $conn->prepare("SELECT contraseña FROM agenda.usuario WHERE id_usuario = ? AND categoria_usuario = 'estudiante' LIMIT 1");
+    $stmt->bind_param("i", $studentId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $secuencia = [];
+    if ($result && $row = $result->fetch_assoc()) {
+        $pass = trim((string) ($row['contraseña'] ?? ''));
+        if ($pass !== '') {
+            $secuencia = array_values(array_filter(explode('-', $pass), fn($v) => $v !== ''));
+        }
+    }
+
+    $stmt->close();
+    disconnect($conn);
+    return $secuencia;
+}
+function getStudentPasswordLength($studentId) {
+    $conn = connect();
+
+    $stmt = $conn->prepare("SELECT contraseña FROM agenda.usuario WHERE id_usuario = ? AND categoria_usuario = 'estudiante' LIMIT 1");
+    $stmt->bind_param("i", $studentId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $longitud = 3; // valor por defecto
+    if ($result && $row = $result->fetch_assoc()) {
+        $pass = trim((string) ($row['contraseña'] ?? ''));
+        if ($pass !== '') {
+            $partes = array_filter(explode('-', $pass), fn($v) => $v !== '');
+            $longitud = max(1, count($partes));
+        }
+    }
+
+    $stmt->close();
+    disconnect($conn);
+    return $longitud;
+}
 
     // valida si la fecha y horas de una actividad se solapan con la de una ya asignada
     function validTime($userId, $date, $startTime, $endTime){

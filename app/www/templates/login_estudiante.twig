@@ -1,0 +1,69 @@
+{% extends "base.twig" %}
+
+{% block titulo %}Iniciar sesión · {{ nombre_estudiante|default('Estudiante') }}{% endblock %}
+
+{% block enlace_salto %}#contenido-login{% endblock %}
+{% block texto_salto %}Saltar al formulario de inicio de sesión{% endblock %}
+
+{% block opciones_menu %}
+    <a href="{{ url_inicio|default('seleccion_estudiante.php') }}" class="enlace-menu">Cambiar de estudiante</a>
+{% endblock %}
+
+{% block contenido %}
+    <main id="contenido-login" class="zona-login-estudiante" tabindex="-1" aria-labelledby="titulo-login">
+        <div class="tarjeta-login">
+            
+            <div class="circulo-foto-estudiante foto-login">
+                {% if foto_estudiante is defined and foto_estudiante %}
+                    <img src="{{ foto_estudiante }}"
+                         alt="{{ nombre_estudiante ? 'Foto de perfil de ' ~ nombre_estudiante : 'Foto de perfil del estudiante' }}">
+                {% else %}
+                    <span class="emoji-avatar" aria-hidden="true">👤</span>
+                {% endif %}
+            </div>
+
+            <h1 id="titulo-login" class="titulo-login-estudiante">
+                {{ nombre_estudiante|default('Estudiante') }}
+            </h1>
+
+            {% if error_login is defined and error_login %}
+                <div class="alerta-error-login" role="alert">
+                    {{ error_login }}
+                </div>
+            {% endif %}
+
+            <form id="form-login-password"
+                action="{{ action_url|default('../api/login.php') }}"
+                method="POST"
+                class="formulario-login"
+                data-username="{{ nombre_estudiante }}"
+                novalidate>
+                
+                <input type="hidden" name="id_estudiante" value="{{ id_estudiante|default('') }}">
+
+                <div class="grupo-input-login">
+                    <label for="input-password" class="etiqueta-login">Contraseña:</label>
+                    <input type="password"
+                           id="input-password"
+                           name="password"
+                           class="campo-texto-login"
+                           autocomplete="current-password"
+                           required
+                           aria-required="true">
+                    <span id="error-js-login" class="mensaje-error-js" role="alert" aria-live="polite"></span>
+                </div>
+
+                <div class="acciones-login">
+                    <button type="submit" class="btn-accion btn-entrar">
+                        Entrar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="../js/login_estudiante.js" defer></script>
+{% endblock %}

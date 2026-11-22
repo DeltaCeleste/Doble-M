@@ -1,4 +1,3 @@
-
 {% extends "base.twig" %}
 
 {% block titulo %}Inicio de Sesión{% endblock %}
@@ -31,15 +30,15 @@
                             {% if grupo.imagen is defined and grupo.imagen %}
                                 <img src="{{ grupo.imagen }}" alt="">
                             {% else %}
-                                <span class="imagen-pendiente">
-                                    Imagen de la clase
+                                <span class="nombre-clase">
+                                    {{ grupo.nombre_grupo }}
                                 </span>
                             {% endif %}
-                             </button>
+                            </button>
 
-                        <span class="nombre-clase">
-                             {{ grupo.nombre_grupo }}
-                        </span>
+                            <span class="nombre-clase">
+                                {{ grupo.nombre_grupo }}
+                            </span>
 
                         </div>
 
@@ -68,6 +67,13 @@
             {% endif %}
 
         </section>
+
+        {# Acceso alternativo por texto para lectores (profesores, familias, admin y alumnado lector) #}
+        <footer class="acceso-texto-alternativo">
+            <a href="{{ url_login_texto|default('login_adultos.php') }}" class="enlace-login-texto">
+                Inicia sesión por usuario y contraseña
+            </a>
+        </footer>
 
     </main>
 

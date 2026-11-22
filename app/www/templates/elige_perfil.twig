@@ -14,29 +14,26 @@
             <h2 id="titulo-perfiles">¿QUIÉN ERES?</h2>
 
             <div class="contenedor-perfiles">
-
-                <div class="tarjeta-perfil">
-                    <button type="button" class="opcion-perfil"
-                            data-perfil="alumno" aria-pressed="false">
-                        <span class="imagen-pendiente">Imagen de alumno</span>
-                    </button>
-                </div>
-
-                <div class="tarjeta-perfil">
-                    <button type="button" class="opcion-perfil"
-                            data-perfil="profesor" aria-pressed="false">
-                        <span class="imagen-pendiente">Imagen de profesor</span>
-                    </button>
-                </div>
-
-                <div class="tarjeta-perfil">
-                    <button type="button" class="opcion-perfil"
-                            data-perfil="familiar" aria-pressed="false">
-                        <span class="imagen-pendiente">Imagen de familiar</span>
-                    </button>
-                </div>
-
+                {% for alumno in alumnos %}
+                    <div class="tarjeta-perfil">
+                        <button type="button"
+                                class="opcion-perfil"
+                                data-id-usuario="{{ alumno.id_usuario }}"
+                                data-formato-visual="{{ alumno.formato_visual|default('picto') }}"
+                                aria-pressed="false">
+                            {% if alumno.foto_uri %}
+                                <img src="{{ alumno.foto_uri }}" alt="{{ alumno.nombre_usuario }}" class="imagen-perfil">
+                            {% else %}
+                                <span class="imagen-pendiente">{{ alumno.nombre_usuario }}</span>
+                            {% endif %}
+                        </button>
+                        <span class="nombre-perfil">{{ alumno.nombre_usuario }}</span>
+                    </div>
+                {% else %}
+                    <p>No hay alumnos registrados en esta clase.</p>
+                {% endfor %}
             </div>
+            
 
             <input type="hidden" id="perfil-seleccionado" name="perfil">
 
@@ -57,5 +54,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="../js/elige_perfil.js" defer></script>
+    <script src="../js/elige_perfil.js?v=2" defer></script>
 {% endblock %}

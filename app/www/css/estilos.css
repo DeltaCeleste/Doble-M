@@ -707,6 +707,90 @@ button:focus-visible,
     font-family: 'Atkinson Hyperlegible', sans-serif;
     font-size: 1.2rem;
     font-weight: 700;
+}
+/* ==========================================================================
+   LOGIN DE ESTUDIANTE (PASSWORD Y PIN)
+   ========================================================================== */
+
+.zona-login-estudiante {
+    min-height: calc(100dvh - 80px); /* Ajusta 80px si tu header mide un poco más o menos */
+    max-height: calc(100dvh - 80px);
+    width: 100%;
+    padding: clamp(0.5rem, 1.5vh, 1.25rem) clamp(0.75rem, 2vw, 1.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.zona-login-estudiante:focus {
+    outline: none;
+}
+
+.tarjeta-login {
+    width: 100%;
+    max-width: 560px;
+    background-color: var(--azul-claro);
+    border: 2px solid var(--borde-suave);
+    border-radius: 22px;
+    padding: clamp(20px, 3.5dvh, 36px) clamp(20px, 4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(14px, 2.2dvh, 22px);
+}
+
+.foto-login {
+    width: clamp(96px, 16dvh, 140px);
+    height: clamp(96px, 16dvh, 140px);
+}
+
+.emoji-avatar {
+    font-size: clamp(2.5rem, 6dvh, 4rem);
+}
+
+.titulo-login-estudiante {
+    font-size: clamp(1.6rem, 3.4dvh, 2.3rem);
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    text-align: center;
+    line-height: 1.15;
+}
+
+.formulario-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(16px, 2.5dvh, 24px);
+}
+
+.grupo-input-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.etiqueta-login {
+    font-size: clamp(1.15rem, 2.3dvh, 1.45rem);
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    text-align: center;
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.campo-texto-login {
+    width: 100%;
+    min-height: 54px;
+    background-color: var(--blanco);
+    border: 2px solid var(--borde-suave);
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: clamp(1.2rem, 2.5dvh, 1.5rem);
     color: var(--texto-oscuro);
     text-align: center;
 }
@@ -812,6 +896,26 @@ button:focus-visible,
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 2dvh, 22px) clamp(18px, 4vw, 56px);
+    gap: clamp(12px, 2dvh, 20px);
+    
+   
+
+}
+.campo-texto-login:focus-visible,
+.casilla-pin:focus-visible {
+    outline: 4px solid var(--foco-accesible);
+    outline-offset: 2px;
+
+}
+
+.grupo-pin-login {
+    border: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: clamp(12px, 2dvh, 22px) clamp(18px, 4vw, 56px);
     gap: clamp(12px, 2dvh, 20px);
 }
@@ -885,6 +989,12 @@ button:focus-visible,
     font-weight: 900;
     color: var(--texto-oscuro);
 }
+.opcion-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
 
 .acciones-eleccion-perfil {
     width: 100%;
@@ -942,4 +1052,247 @@ button:focus-visible,
     .nombre-perfil {
         font-size: 1.4rem;
     }
+}
+
+
+.contenedor-casillas-pin {
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 2.5vw, 20px);
+    margin-top: 8px;
+}
+
+.casilla-pin {
+    width: clamp(56px, 11vw, 76px);
+    height: clamp(62px, 10dvh, 82px);
+    background-color: var(--blanco);
+    border: 2px solid var(--borde-suave);
+    border-radius: 16px;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: clamp(1.6rem, 3.5dvh, 2.2rem);
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    text-align: center;
+}
+
+.alerta-error-login {
+    width: 100%;
+    background-color: #FEF3C7;
+    border: 2px solid #B45309;
+    color: #78350F;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.mensaje-error-js {
+    color: #92400E;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    min-height: 1.2em;
+}
+
+.campo-invalido {
+    border-color: #B45309 !important;
+    background-color: #FFFBEB !important;
+}
+
+.acciones-login {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.btn-entrar {
+    width: 100%;
+    max-width: 280px;
+}
+
+
+
+
+
+
+/*login picto*/
+.tarjeta-login.tarjeta-login-picto {
+    position: relative;
+    width: min(94vw, 680px);
+    max-height: 100%;
+    margin: 0 auto;
+    padding: clamp(0.85rem, 2vh, 1.5rem) clamp(1rem, 3vw, 2rem) clamp(3.5rem, 7vh, 4.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: clamp(0.5rem, 1.4vh, 1.1rem);
+    box-sizing: border-box;
+}
+
+.formulario-login-picto {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Fila superior: N pictogramas disponibles */
+.rejilla-opciones-picto {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+}
+
+.btn-opcion-picto {
+    width: 96px;
+    height: 96px;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    border: 3px solid #1e293b;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-opcion-picto:hover,
+.btn-opcion-picto:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+}
+
+.btn-opcion-picto img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Fila inferior: Contraseña y M huecos */
+.grupo-huecos-picto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.contenedor-huecos-picto {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+}
+
+.hueco-picto {
+    width: 96px;
+    height: 96px;
+    padding: 0.5rem;
+    background-color: #e2e8f0;
+    border: 3px dashed #475569;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.hueco-picto.hueco-ocupado {
+    background-color: #ffffff;
+    border-style: solid;
+    border-color: #1e293b;
+    cursor: pointer;
+}
+
+.hueco-picto.hueco-ocupado:hover,
+.hueco-picto.hueco-ocupado:focus-visible {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+.hueco-picto img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Botón flecha abajo a la derecha */
+.acciones-login-picto {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+}
+
+.btn-flecha-login {
+    width: 64px;
+    height: 54px;
+    border-radius: 14px;
+    border: 3px solid #1e293b;
+    background-color: #93c5fd;
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn-flecha-login:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-flecha-login:not(:disabled):hover {
+    transform: scale(1.06);
+}
+
+/* Pictograma en la posición correcta */
+.hueco-picto.hueco-correcto {
+    border-color: #16a34a;
+    background-color: #dcfce7;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.25);
+}
+
+/* Pictograma que debe cambiarse (ámbar sereno, sin rojo agresivo) */
+.hueco-picto.hueco-revisar {
+    border-color: #d97706;
+    background-color: #fef3c7;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.3);
+}
+
+
+
+.acceso-texto-alternativo {
+    margin-top: clamp(0.75rem, 2vh, 1.5rem);
+    text-align: center;
+    width: 100%;
+}
+
+.enlace-login-texto {
+    display: inline-block;
+    padding: 0.6rem 1.25rem;
+    font-size: clamp(0.95rem, 2vh, 1.1rem);
+    font-weight: 600;
+    color: #1e3a8a;
+    background-color: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.enlace-login-texto:hover,
+.enlace-login-texto:focus-visible {
+    background-color: #e2e8f0;
+    border-color: #2563eb;
+    outline: 3px solid rgba(37, 99, 235, 0.3);
+    outline-offset: 2px;
 }

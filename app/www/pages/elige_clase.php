@@ -2,7 +2,7 @@
 // Cargar las funciones comunes
 require_once dirname(__DIR__) . '/utils/functions.php';
 
-//Obtener todos los grupos disponibles
+// Obtener todos los grupos disponibles
 $grupos = getAllGroups();
 
 // Preparar los datos para la plantilla
@@ -10,6 +10,7 @@ $datosEligeClase = [
     'logo_url' => '',
     'icono_inferior_url' => '',
     'grupos' => $grupos,
+    'url_login_adultos' => 'login_adultos.php',
 ];
 
 // Configurar Twig
@@ -22,6 +23,3 @@ $twig = new \Twig\Environment($loader, [
 
 // Mostrar la pantalla
 echo $twig->render('elige_clase.twig', $datosEligeClase);
-
-
-?>
