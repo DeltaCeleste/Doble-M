@@ -58,7 +58,6 @@ async function endActivity(user, act, date, start) {
     try{
         let response = await fetch('../api/check_actividad.php?user='+user+'&activity='+act+'&date='+date+'&start='+start);
         let json_response = await response.json(); // Realmente no es muy necesario tratar el error puesto que nunca debería ocurrir
-        console.log(json_response);
     }
     catch (error){console.log(error)}
 }

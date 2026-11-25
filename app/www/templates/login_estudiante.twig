@@ -15,7 +15,7 @@
             
             <div class="circulo-foto-estudiante foto-login">
                 {% if foto_estudiante is defined and foto_estudiante %}
-                    <img src="{{ foto_estudiante }}"
+                    <img src="data:image/jpeg;base64,{{ foto_estudiante }}"
                          alt="{{ nombre_estudiante ? 'Foto de perfil de ' ~ nombre_estudiante : 'Foto de perfil del estudiante' }}">
                 {% else %}
                     <span class="emoji-avatar" aria-hidden="true">👤</span>
