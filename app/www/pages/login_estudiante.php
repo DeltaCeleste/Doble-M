@@ -16,8 +16,8 @@ if(isset($_GET['id_usuario'])){
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pass = trim($_POST['password'] ?? '');
-    if ($pass === '1234') {
-        $user['categoria_usuario'] = 'estudiante';
+    $user['categoria_usuario'] = 'estudiante';
+    if (loginUser($user['nombre_usuario'], $pass, $user['categoria_usuario'])) {
         iniciarSesionUsuario($user);
         header('Location: agenda_diaria.php');
         exit;
