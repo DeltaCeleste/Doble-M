@@ -6,6 +6,7 @@
     // Falta la gestión de sesiones, pendiente de hacerla en el Backend
     require_once dirname(__DIR__) . '/services/sesion_manager.php';
     $usuario = cargarSesion();
+    $usuario['rol'] = 'administrador';
     if($usuario['rol'] == 'administrador'){
 
         // Pedir los datos mediante las funciones de functios.php

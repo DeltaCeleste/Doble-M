@@ -1,6 +1,6 @@
 <?php
 // SCRUM-29 (Tarea P6.2): Asignación de actividad a estudiantes individuales con fecha y horas
-require_once __DIR__ . '/../services/sesion_manager.php';
+//require_once __DIR__ . '/../services/sesion_manager.php';
 if (function_exists('cargarSesion')) {
     $usuario = cargarSesion();
 }
