@@ -1,34 +1,31 @@
 <?php
 require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__DIR__) . '/utils/functions.php';
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-$loader = new FilesystemLoader(dirname(__DIR__) . '/templates');
-$twig = new Environment($loader);
+$twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pin = trim($_POST['pin'] ?? '');
-    if ($pin === '1234') {
-        header('Location: agenda_diaria.php');
-        exit;
-    }
+$idEstudiante = filter_input(INPUT_GET, 'id_usuario', FILTER_VALIDATE_INT);
+$estudiante   = $idEstudiante ? getStudentProfileById($idEstudiante) : null;
 
-    echo $twig->render('error.twig', [
-        'nombre_usuario' => 'Juan Pérez',
-        'foto_usuario'   => '',
-        'mensaje_error'  => '¡Casi! Inténtalo de nuevo.',
-        'url_volver'     => 'login_pin.php',
-        'url_inicio'     => 'elige_clase.php',
-        'url_siguiente'  => 'login_pin.php'
-    ]);
+if (!$estudiante) {
+    header('Location: elige_clase.php');
     exit;
 }
 
+$pictogramas = getLoginPictograms();
+$secuenciaCorrecta = getStudentPasswordSequence($estudiante['id_usuario']);
+$longitudPass = !empty($secuenciaCorrecta) ? count($secuenciaCorrecta) : 3;
+
 echo $twig->render('login_pin.twig', [
-    'id_estudiante'     => 1,
-    'nombre_estudiante' => 'Juan Pérez',
-    'foto_estudiante'   => '',
-    'url_inicio'        => 'elige_clase.php',
-    'url_siguiente'     => 'login_estudiante.php'
+    'id_estudiante'        => $estudiante['id_usuario'],
+    'nombre_estudiante'    => $estudiante['nombre_usuario'],
+    'foto_estudiante'      => !empty($estudiante['foto']) ? 'data:image/png;base64,' . $estudiante['foto'] : '',
+    'pictogramas_opciones' => $pictogramas,
+    'longitud_contraseña'  => $longitudPass,
+    'secuencia_esperada'   => implode('-', $secuenciaCorrecta),
+    'action_url'           => '../api/login_pictograma.php',
+    'url_inicio'           => 'elige_clase.php'
 ]);

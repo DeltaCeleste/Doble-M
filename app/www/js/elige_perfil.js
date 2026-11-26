@@ -41,11 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const destino = new URL(paginaDestino, window.location.href);
 
-        /*if (idGrupo) {
+        if (idGrupo) {
             destino.searchParams.set('id_grupo', idGrupo);
-        }*/
-
-        console.log(destino);
+        }
 
         destino.searchParams.set('id_usuario', perfilSeleccionado.value);
 
