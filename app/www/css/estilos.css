@@ -1296,14 +1296,3 @@ button:focus-visible,
     outline: 3px solid rgba(37, 99, 235, 0.3);
     outline-offset: 2px;
 }
-
-.texto-ayuda-error {
-    font-size: clamp(1.15rem, 2.3dvh, 1.5rem);
-    color: var(--texto-oscuro);
-    text-align: center;
-    line-height: 1.4;
-}
-
-.enlace-boton {
-    text-decoration: none;
-}

@@ -8,7 +8,7 @@
         require_once dirname(__DIR__) . '/utils/functions.php';
 
         $fechaConsulta = $_GET['fecha'] ?? date('Y-m-d');
-        $fechaConsulta = "2026-11-18"; // fecha de ejemplo
+        //$fechaConsulta = "2026-11-18"; // fecha de ejemplo
 
         $fotoEstudiante = '';
         $nombreEstudiante = '';
